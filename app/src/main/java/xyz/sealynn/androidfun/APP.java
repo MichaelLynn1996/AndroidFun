@@ -2,14 +2,12 @@ package xyz.sealynn.androidfun;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v7.app.AppCompatDelegate;
-import android.widget.Toast;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import xyz.sealynn.androidfun.utils.NightModeUtils;
-import xyz.sealynn.androidfun.utils.ToastUtils;
 
 /**
  * Created by SeaLynn0 on 2018/8/28 19:56

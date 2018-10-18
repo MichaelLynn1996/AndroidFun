@@ -2,8 +2,8 @@ package xyz.sealynn.androidfun.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 /**
  * Created by SeaLynn0 on 2018/10/13 11:52

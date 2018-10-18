@@ -2,15 +2,15 @@ package xyz.sealynn.androidfun.module.main;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.AppCompatButton;
+import androidx.annotation.NonNull;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.core.widget.NestedScrollView;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.AppCompatButton;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,9 +23,7 @@ import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.module.about.AboutActivity;
 import xyz.sealynn.androidfun.module.web.WebActivity;
 import xyz.sealynn.androidfun.module.year.YearProgressActivity;
-import xyz.sealynn.androidfun.utils.DateUtils;
 import xyz.sealynn.androidfun.utils.NightModeUtils;
-import xyz.sealynn.androidfun.utils.NotificationUtils;
 
 public class MainActivity extends BaseActivity<MainContract.Presenter>
         implements NavigationView.OnNavigationItemSelectedListener, MainContract.View {
@@ -55,7 +53,6 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
 
     @Override
     protected void prepareData() {
-
     }
 
     @Override
