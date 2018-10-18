@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="xyz.sealynn.androidfun">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application
+        android:name=".APP"
+        android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_descriptor"
+        android:icon="@drawable/wanandroid_logo_round"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/wanandroid_logo_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".module.web.WebActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="www.wanandroid.com"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".module.main.MainActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".module.splash.SplashActivity"
+            android:exported="true"
+            android:theme="@style/FullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+        <activity
+            android:name=".module.about.AboutActivity"
+            android:theme="@style/AppTheme.MaterialAboutActivity" />
+        <activity
+            android:name=".module.year.YearProgressActivity"
+            android:theme="@style/FullScreenTheme" />
+
+        <receiver android:name=".widget.ProgressWidgetWhite">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/progress_widget_white_info" />
+        </receiver>
+        <receiver android:name=".NotificationClickReceiver" />
+    </application>
+
+</manifest>

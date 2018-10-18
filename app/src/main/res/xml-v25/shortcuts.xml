@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_yearprogress_dark"
+        android:shortcutDisabledMessage="@string/yearprogress"
+        android:shortcutId="year_progress"
+        android:shortcutLongLabel="@string/yearprogress"
+        android:shortcutShortLabel="@string/yearprogress">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="xyz.sealynn.androidfun.module.year.YearProgressActivity"
+            android:targetPackage="xyz.sealynn.androidfun" />
+
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_collection_dark"
+        android:shortcutDisabledMessage="@string/collection"
+        android:shortcutId="collection"
+        android:shortcutLongLabel="@string/collection"
+        android:shortcutShortLabel="@string/collection">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="xyz.sealynn.androidfun.module.year.YearProgressActivity"
+            android:targetPackage="xyz.sealynn.androidfun" />
+
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/refresh"
+        android:title="@string/refresh"
+        android:icon="@drawable/ic_action_refresh"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/copy"
+        android:title="@string/copy"
+        android:icon="@drawable/ic_action_copy"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/share"
+        android:title="@string/share"
+        android:icon="@drawable/ic_action_share"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/open_external_browser"
+        android:title="@string/open_external_browser"
+        android:icon="@drawable/ic_action_open_in_broswer"
+        app:showAsAction="never"/>
+
+</menu>
