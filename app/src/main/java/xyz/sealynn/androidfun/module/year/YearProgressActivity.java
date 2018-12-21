@@ -4,13 +4,15 @@ import android.animation.ValueAnimator;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatTextView;
+
 import android.widget.ProgressBar;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import xyz.sealynn.androidfun.NotificationClickReceiver;
+import xyz.sealynn.androidfun.receiver.NotificationClickReceiver;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.utils.DateUtils;
@@ -41,6 +43,8 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     @BindString(R.string.progress_chanel)
     String name;
 
+    ValueAnimator animator;
+
     @Override
     protected YearProgressContract.Presenter createPresenter() {
         return new YearProgressPresenter(this);
@@ -60,12 +64,14 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     protected void initView() {
         year.setText(DateUtils.getYear());
 
-        final ValueAnimator animator = ValueAnimator.ofInt(0, DateUtils.getIntOfTheYearPassed());
+        animator = ValueAnimator.ofInt(0, DateUtils.getIntOfTheYearPassed());
         animator.setDuration(2000);
         animator.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
-            progressBar.setProgress(value);
-            percent.setText(String.valueOf(value + "%"));
+            if (progressBar != null && percent != null) {
+                progressBar.setProgress(value);
+                percent.setText(String.valueOf(value + "%"));
+            }
         });
         animator.start();
     }
@@ -97,5 +103,14 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
         notificationUtils.sendNotificationWithIntent("YearProgress", DateUtils.getYear() + " is "
                 + DateUtils.getPercentsofTheYearPassed()
                 + " complete!", pendingIntent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (animator != null) {
+            animator.cancel();
+            animator = null;
+        }
     }
 }

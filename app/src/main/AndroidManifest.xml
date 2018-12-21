@@ -54,6 +54,7 @@
         <activity
             android:name=".module.year.YearProgressActivity"
             android:theme="@style/FullScreenTheme" />
+        <activity android:name=".module.account.AccountActivity" />
 
         <receiver android:name=".widget.ProgressWidgetWhite">
             <intent-filter>
@@ -64,7 +65,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/progress_widget_white_info" />
         </receiver>
-        <receiver android:name=".NotificationClickReceiver" />
+        <receiver android:name=".receiver.NotificationClickReceiver" />
     </application>
 
 </manifest>

@@ -25,9 +25,15 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
-        <include layout="@layout/content_main" />
+        <xyz.sealynn.androidfun.view.CustomViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </xyz.sealynn.androidfun.view.CustomViewPager>
     </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,13 +43,14 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginBottom="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_action_up"/>
+        app:srcCompat="@drawable/ic_action_up" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom"
+        android:background="?android:attr/windowBackground"
         app:itemIconTint="@color/nav_color_bottom"
         app:itemTextColor="@color/nav_color_bottom"
         app:labelVisibilityMode="labeled"

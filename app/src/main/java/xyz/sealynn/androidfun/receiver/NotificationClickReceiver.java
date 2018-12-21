@@ -1,4 +1,4 @@
-package xyz.sealynn.androidfun;
+package xyz.sealynn.androidfun.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
