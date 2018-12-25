@@ -1,17 +1,16 @@
 package xyz.sealynn.androidfun.module.login;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatImageButton;
-import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityOptionsCompat;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
@@ -25,8 +24,6 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     TextInputEditText etPassword;
     @BindView(R.id.bt_go)
     AppCompatButton btGo;
-    @BindView(R.id.cv)
-    CardView cv;
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
@@ -47,7 +44,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
 
     @Override
     protected void initView() {
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
+            getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+        }
     }
 
 
@@ -72,7 +72,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
         fab.setOnClickListener(view -> {
             getWindow().setExitTransition(null);
             getWindow().setEnterTransition(null);
-            ActivityOptionsCompat oc2 = ActivityOptionsCompat.makeSceneTransitionAnimation(LoginActivity.this, fab, fab.getTransitionName());
+            ActivityOptions oc2 = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class), oc2.toBundle());
         });
     }
@@ -89,5 +89,15 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     protected void onResume() {
         super.onResume();
         fab.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

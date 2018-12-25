@@ -57,7 +57,7 @@
         <activity android:name=".module.login.LoginActivity" />
         <activity
             android:name=".module.register.RegisterActivity"
-            android:theme="@style/Translucent" />
+            android:theme="@style/Translucent"/>
 
         <receiver android:name=".widget.ProgressWidgetWhite">
             <intent-filter>
@@ -72,7 +72,7 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings"/>
     </application>
 
 </manifest>

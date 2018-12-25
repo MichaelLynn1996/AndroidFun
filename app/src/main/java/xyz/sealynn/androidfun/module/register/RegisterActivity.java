@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.os.Bundle;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.animation.AccelerateInterpolator;
@@ -12,16 +13,19 @@ import android.view.animation.AccelerateInterpolator;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import androidx.cardview.widget.CardView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 
 public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> implements RegisterContract.View {
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
-    @BindView(R.id.cv_add)
-    CardView cvAdd;
+    //    @BindView(R.id.fab)
+//    FloatingActionButton fab;
+//    @BindView(R.id.cv_add)
+//    CardView cvAdd;
+    @BindView(R.id.root)
+    CoordinatorLayout root;
 
     @Override
     protected RegisterContract.Presenter createPresenter() {
@@ -40,6 +44,10 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
 
     @Override
     protected void initView() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
+            getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+        }
         ShowEnterAnimation();
     }
 
@@ -50,7 +58,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
 
     @Override
     protected void initEvent() {
-        fab.setOnClickListener(v -> animateRevealClose());
+//        fab.setOnClickListener(v -> animateRevealClose());
     }
 
     private void ShowEnterAnimation() {
@@ -60,7 +68,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
         transition.addListener(new Transition.TransitionListener() {
             @Override
             public void onTransitionStart(Transition transition) {
-                cvAdd.setVisibility(View.GONE);
+                root.setVisibility(View.GONE);
             }
 
             @Override
@@ -89,7 +97,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
     }
 
     public void animateRevealShow() {
-        Animator mAnimator = ViewAnimationUtils.createCircularReveal(cvAdd, cvAdd.getWidth(),0, fab.getWidth() / 2, cvAdd.getHeight());
+        Animator mAnimator = ViewAnimationUtils.createCircularReveal(root, root.getWidth() - 44, 44, 28, root.getWidth());
         mAnimator.setDuration(500);
         mAnimator.setInterpolator(new AccelerateInterpolator());
         mAnimator.addListener(new AnimatorListenerAdapter() {
@@ -100,7 +108,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
 
             @Override
             public void onAnimationStart(Animator animation) {
-                cvAdd.setVisibility(View.VISIBLE);
+                root.setVisibility(View.VISIBLE);
                 super.onAnimationStart(animation);
             }
         });
@@ -108,15 +116,15 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
     }
 
     public void animateRevealClose() {
-        Animator mAnimator = ViewAnimationUtils.createCircularReveal(cvAdd,cvAdd.getWidth(),0, cvAdd.getHeight(), fab.getWidth() / 2);
+        Animator mAnimator = ViewAnimationUtils.createCircularReveal(root, root.getWidth(), root.getHeight(), root.getWidth(), 28);
         mAnimator.setDuration(500);
         mAnimator.setInterpolator(new AccelerateInterpolator());
         mAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                cvAdd.setVisibility(View.INVISIBLE);
+                root.setVisibility(View.INVISIBLE);
                 super.onAnimationEnd(animation);
-                fab.setImageResource(R.drawable.ic_action_add_person);
+//                fab.setImageResource(R.drawable.ic_action_add_person);
                 RegisterActivity.super.onBackPressed();
             }
 
@@ -127,8 +135,19 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
         });
         mAnimator.start();
     }
+
     @Override
     public void onBackPressed() {
         animateRevealClose();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                animateRevealClose();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
