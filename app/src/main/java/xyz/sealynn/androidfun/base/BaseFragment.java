@@ -1,5 +1,7 @@
 package xyz.sealynn.androidfun.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -89,5 +91,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
         }
         super.onDestroyView();
         mUnbinder.unbind();
+    }
+
+    @Override
+    public Context getContext() {
+        return super.getContext();
     }
 }

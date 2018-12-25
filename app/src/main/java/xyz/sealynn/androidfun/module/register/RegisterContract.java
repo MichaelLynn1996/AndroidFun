@@ -1,19 +1,18 @@
-package xyz.sealynn.androidfun.module.web;
+package xyz.sealynn.androidfun.module.register;
 
 import xyz.sealynn.androidfun.base.BasePresenter;
 import xyz.sealynn.androidfun.base.BaseView;
 
 /**
- * Created by SeaLynn0 on 2018/9/5 0:32
+ * Created by SeaLynn0 on 2018/12/25 18:09
  * <p>
  * Email：sealynndev@gmail.com
  */
-class WebContract {
+public class RegisterContract {
 
     interface View extends BaseView<Presenter> {
     }
 
     interface Presenter extends BasePresenter {
-        void openBrowser(String url);
     }
 }

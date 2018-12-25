@@ -14,7 +14,6 @@ import com.orhanobut.logger.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.AppCompatButton;
@@ -27,13 +26,14 @@ import androidx.fragment.app.Fragment;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.APP;
 import xyz.sealynn.androidfun.R;
+import xyz.sealynn.androidfun.SettingsActivity;
 import xyz.sealynn.androidfun.adapter.ViewPagerAdapter;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.module.about.AboutActivity;
-import xyz.sealynn.androidfun.module.account.AccountActivity;
 import xyz.sealynn.androidfun.module.guidance.GuidanceFragment;
 import xyz.sealynn.androidfun.module.home.HomeFragment;
 import xyz.sealynn.androidfun.module.knowledgetree.KnowledgeTreeFragment;
+import xyz.sealynn.androidfun.module.login.LoginActivity;
 import xyz.sealynn.androidfun.module.project.ProjectFragment;
 import xyz.sealynn.androidfun.module.web.WebActivity;
 import xyz.sealynn.androidfun.module.wechat.WeChatFragment;
@@ -64,8 +64,6 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     View headerView;
     AppCompatImageView avater;
     AppCompatTextView TVusername;
-
-    private static final int LOGIN_REQUEST_CODE = 101;
 
     @Override
     protected MainContract.Presenter createPresenter() {
@@ -103,13 +101,11 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     }
 
     private void initHeader() {
-        View headerView = navigationView.getHeaderView(0);
+        headerView = navigationView.getHeaderView(0);
         avater = headerView.findViewById(R.id.imageView);
         TVusername = headerView.findViewById(R.id.textView);
 
-        avater.setOnClickListener(v -> {
-            startActivityForResult(new Intent(MainActivity.this, AccountActivity.class), LOGIN_REQUEST_CODE);
-        });
+        avater.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, LoginActivity.class)));
     }
 
     private void initViewPager() {
@@ -158,7 +154,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             } else if (id == R.id.nav_collection) {
 
             } else if (id == R.id.nav_setting) {
-
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
             } else if (id == R.id.nav_about_us) {
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
             }
@@ -227,20 +223,5 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == LOGIN_REQUEST_CODE) {
-            if (requestCode == LOGIN_REQUEST_CODE) {
-                String three = null;
-                if (data != null) {
-                    three = data.getStringExtra("username");
-                }
-                //设置结果显示框的显示数值
-                TVusername.setText(String.valueOf(three));
-            }
-        }
     }
 }

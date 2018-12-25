@@ -48,6 +48,22 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
 
     String url;
 
+    private WebChromeClient mWebChromeClient = new WebChromeClient() {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            actionBar.setTitle(title);
+        }
+    };
+
+    private WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            actionBar.setTitle("加载中......");
+        }
+    };
+
     @Override
     protected WebContract.Presenter createPresenter() {
         return new WebPresenter(this);
@@ -136,7 +152,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 mAgentWeb.getUrlLoader().reload();
                 return true;
             case R.id.open_external_browser:
-                openBrowser(getAgentWebView().getUrl());
+                mPresenter.openBrowser(getAgentWebView().getUrl());
                 return true;
             case R.id.copy:
                 ShareUtils.copyText(WebActivity.this, getAgentWebView().getUrl());
@@ -169,40 +185,8 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         return mAgentWeb.handleKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
-    private WebChromeClient mWebChromeClient = new WebChromeClient() {
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            actionBar.setTitle(title);
-        }
-    };
-
-    private WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            actionBar.setTitle("加载中......");
-        }
-    };
-
     private WebView getAgentWebView() {
         return mAgentWeb.getWebCreator().getWebView();
     }
 
-    /**
-     * 打开浏览器
-     *
-     * @param targetUrl 外部浏览器打开的地址
-     */
-    private void openBrowser(String targetUrl) {
-        if (TextUtils.isEmpty(targetUrl) || targetUrl.startsWith("file://")) {
-            Toast.makeText(this, targetUrl + " 该链接无法使用浏览器打开。", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        Uri mUri = Uri.parse(targetUrl);
-        intent.setData(mUri);
-        startActivity(intent);
-    }
 }

@@ -1,5 +1,7 @@
 package xyz.sealynn.androidfun.base;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +29,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected P mPresenter;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(bindLayout());
         // ButterKnife绑定布局
@@ -122,7 +124,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
-    public Toolbar getToolbar() {
+    protected Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }
