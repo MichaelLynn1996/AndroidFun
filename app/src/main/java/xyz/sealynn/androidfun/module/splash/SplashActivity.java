@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.module.main.MainActivity;
+import xyz.sealynn.androidfun.utils.ActivityUtils;
 
 /**
  * Created by SeaLynn0 on 2018/10/13 1:36
@@ -53,8 +54,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void jumpToMain() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        ActivityUtils.startActivity(this, MainActivity.class);
         finish();
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }

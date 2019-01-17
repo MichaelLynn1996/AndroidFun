@@ -15,7 +15,7 @@ public class DateUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static String getPercentsofTheYearPassed() {
+    public static String getPercentsOfTheYearPassed() {
         return String.valueOf((int) Math.floor((float) getDaysofTheYearPassed() / (float) getDaysofTheYear() * 100)) + "%";
     }
 

@@ -26,11 +26,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1-alpha01'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     //Rx Retrofit
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
@@ -44,8 +44,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //ButterKnife
-    implementation 'com.jakewharton:butterknife:9.0.0-rc1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
 //    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.just.agentweb:agentweb:4.0.2'
@@ -53,11 +53,9 @@ dependencies {
 //    implementation 'com.just.agentweb:download:4.0.2' // (可选)
     //    compile 'com.just.agentweb:filechooser:4.0.2'// (可选)
     implementation 'com.google.android.material:material:1.0.0'
+    //logger
     implementation 'com.orhanobut:logger:2.2.0'
-    //leakcanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
-    // Optional, if you use support library fragments:
-    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.1'
-    implementation 'com.github.daniel-stoneuk:material-about-library:2.3.0'
+    implementation 'com.github.daniel-stoneuk:material-about-library:2.4.2'
+//BasePopup
+    implementation 'com.github.razerdp:BasePopup:2.1.6'
 }

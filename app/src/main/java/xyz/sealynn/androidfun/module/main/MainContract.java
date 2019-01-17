@@ -14,5 +14,6 @@ class MainContract {
     }
 
     interface Presenter extends BasePresenter {
+        void checkYearProgress();
     }
 }

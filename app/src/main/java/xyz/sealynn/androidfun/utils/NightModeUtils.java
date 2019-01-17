@@ -2,6 +2,7 @@ package xyz.sealynn.androidfun.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -12,25 +13,19 @@ import androidx.appcompat.app.AppCompatDelegate;
  */
 public class NightModeUtils {
 
-    private NightModeUtils(){
+    private NightModeUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static Boolean getNightModeState(Context context) {
+    public static int getNightModeState(Context context) {
         SharedPreferences pref = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-        return pref.getBoolean("night_mode", false);
+        return pref.getInt("night_mode", AppCompatDelegate.MODE_NIGHT_NO);
     }
 
-    public static void setNightModeOff(AppCompatActivity activity) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        SharedPreferencesUtils.editDefaultConfig(activity,"night_mode",false);
-        activity.recreate();
-    }
-
-    public static void setNightModeOn(AppCompatActivity activity) {
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        SharedPreferencesUtils.editDefaultConfig(activity,"night_mode",true);
+    public static void setNightModeState(AppCompatActivity activity, int mode) {
+        AppCompatDelegate.setDefaultNightMode(mode);
+        SharedPreferencesUtils.editDefaultConfig(activity, "night_mode", mode);
         activity.recreate();
     }
 }

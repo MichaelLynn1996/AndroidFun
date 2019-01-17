@@ -2,22 +2,18 @@ package xyz.sealynn.androidfun.module.web;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
+
 import com.google.android.material.appbar.AppBarLayout;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.text.TextUtils;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.just.agentweb.AgentWeb;
@@ -29,7 +25,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
-import xyz.sealynn.androidfun.utils.ShareUtils;
+import xyz.sealynn.androidfun.utils.SharedUtils;
 
 /**
  * Created by SeaLynn0 on 2018/8/28 13:58
@@ -143,7 +139,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 String value = getAgentWebView().getTitle()
                         + " "
                         + getAgentWebView().getUrl();
-                ShareUtils.shareText(WebActivity.this, value);
+                SharedUtils.shareText(WebActivity.this, value);
                 return true;
             case android.R.id.home:
                 finish();
@@ -155,7 +151,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 mPresenter.openBrowser(getAgentWebView().getUrl());
                 return true;
             case R.id.copy:
-                ShareUtils.copyText(WebActivity.this, getAgentWebView().getUrl());
+                SharedUtils.copyText(WebActivity.this, getAgentWebView().getUrl());
                 return true;
         }
         return super.onOptionsItemSelected(item);

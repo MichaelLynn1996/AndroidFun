@@ -7,4 +7,11 @@ package xyz.sealynn.androidfun.base;
  */
 public class Constants {
 
+    public class SHARED_PREFERENCE_KEY {
+        public static final String YEAR_PROGRESS_PERCENT = "YEAR_PROGRESS_PERCENT";
+        public static final String YEAR_PROGRESS_MODE = "YEAR_PROGRESS_MODE";
+    }
+
+    public static final String NIGHT_MODE_CHANGE_INTENT = "xyz.sealynn0.androidfun.nightmodechange";
+
 }

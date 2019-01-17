@@ -21,7 +21,7 @@ public class ProgressWidgetWhite extends AppWidgetProvider {
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.progress_widget_white);
-        views.setTextViewText(R.id.tv_percent, DateUtils.getPercentsofTheYearPassed());
+        views.setTextViewText(R.id.tv_percent, DateUtils.getPercentsOfTheYearPassed());
         views.setTextViewText(R.id.tv_year, DateUtils.getYear());
         views.setProgressBar(R.id.progress_bar, 100, DateUtils.getIntOfTheYearPassed(), false);
 

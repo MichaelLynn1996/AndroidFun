@@ -1,8 +1,6 @@
 package xyz.sealynn.androidfun.module.year;
 
 import android.animation.ValueAnimator;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -12,12 +10,10 @@ import android.widget.ProgressBar;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import xyz.sealynn.androidfun.receiver.NotificationClickReceiver;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.utils.DateUtils;
-import xyz.sealynn.androidfun.utils.NotificationUtils;
-import xyz.sealynn.androidfun.utils.ShareUtils;
+import xyz.sealynn.androidfun.utils.SharedUtils;
 
 /**
  * Created by SeaLynn0 on 2018/10/13 15:57
@@ -88,21 +84,14 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
             String text = year.getText() + " is "
                     + percent.getText()
                     + " complete! - Shared Via WanAndroid - Year Progress";
-            ShareUtils.copyText(YearProgressActivity.this, text);
+            SharedUtils.copyText(YearProgressActivity.this, text);
         });
         share.setOnClickListener(v -> {
             String text = year.getText() + " is "
                     + percent.getText()
                     + " complete! - Shared Via WanAndroid - Year Progress";
-            ShareUtils.shareText(YearProgressActivity.this, text);
+            SharedUtils.shareText(YearProgressActivity.this, text);
         });
-
-        Intent intent = new Intent(YearProgressActivity.this, NotificationClickReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(YearProgressActivity.this, 0, intent, 0);
-        NotificationUtils notificationUtils = new NotificationUtils(this, "progress_channel", name);
-        notificationUtils.sendNotificationWithIntent("YearProgress", DateUtils.getYear() + " is "
-                + DateUtils.getPercentsofTheYearPassed()
-                + " complete!", pendingIntent);
     }
 
     @Override

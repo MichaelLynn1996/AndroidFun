@@ -14,9 +14,9 @@ import xyz.sealynn.androidfun.R;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class ShareUtils {
+public class SharedUtils {
 
-    private ShareUtils(){
+    private SharedUtils(){
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }

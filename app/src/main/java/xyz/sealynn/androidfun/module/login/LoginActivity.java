@@ -1,13 +1,17 @@
 package xyz.sealynn.androidfun.module.login;
 
+import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,6 +19,7 @@ import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.module.register.RegisterActivity;
+import xyz.sealynn.androidfun.utils.ActivityUtils;
 
 public class LoginActivity extends BaseActivity<LoginContract.Presenter> implements LoginContract.View {
 
@@ -25,7 +30,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @BindView(R.id.bt_go)
     AppCompatButton btGo;
     @BindView(R.id.fab)
-    FloatingActionButton fab;
+    AppCompatButton fab;
 
     @Override
     protected LoginContract.Presenter createPresenter() {
@@ -59,41 +64,14 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     protected void initEvent() {
         btGo.setOnClickListener(view -> {
-//            Explode explode = new Explode();
-//            explode.setDuration(500);
-//
-//            getWindow().setExitTransition(explode);
-//            getWindow().setEnterTransition(explode);
-//            ActivityOptions oc2 = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
-//            Intent i2 = new Intent(LoginActivity.this,AActivityThree.class);
-//            startActivity(i2, oc2.toBundle());
             finish();
         });
-        fab.setOnClickListener(view -> {
-            getWindow().setExitTransition(null);
-            getWindow().setEnterTransition(null);
-            ActivityOptions oc2 = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this);
-            startActivity(new Intent(LoginActivity.this, RegisterActivity.class), oc2.toBundle());
-        });
-    }
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        fab.setVisibility(View.GONE);
-    }
-
-    @SuppressLint("RestrictedApi")
-    @Override
-    protected void onResume() {
-        super.onResume();
-        fab.setVisibility(View.VISIBLE);
+        fab.setOnClickListener(view -> ActivityUtils.startActivity(this, RegisterActivity.class));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 return true;

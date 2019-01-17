@@ -10,6 +10,11 @@ import android.content.pm.ApplicationInfo;
  */
 public class DebugUtils {
 
+    private DebugUtils(){
+        /* cannot be instantiated */
+        throw new UnsupportedOperationException("cannot be instantiated");
+    }
+
     /**
      * 判断当前应用是否是debug状态
      */

@@ -2,11 +2,11 @@ package xyz.sealynn.androidfun;
 
 import android.app.Application;
 import android.content.Context;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import xyz.sealynn.androidfun.utils.NightModeUtils;
 
 /**
@@ -17,7 +17,7 @@ import xyz.sealynn.androidfun.utils.NightModeUtils;
 public class APP extends Application {
 
     private static Context appContext;
-    private static long exitTime = 0;
+//    private static long exitTime = 0;
 
     /**
      * 获取Application的Context
@@ -33,11 +33,12 @@ public class APP extends Application {
         super.onCreate();
         Logger.addLogAdapter(new AndroidLogAdapter());
         appContext = getApplicationContext();
-        if (NightModeUtils.getNightModeState(getAppContext())){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        AppCompatDelegate.setDefaultNightMode(NightModeUtils.getNightModeState(getAppContext()));
+//        if (NightModeUtils.getNightModeState(getAppContext())){
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//        }else {
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//        }
     }
 
     /**
