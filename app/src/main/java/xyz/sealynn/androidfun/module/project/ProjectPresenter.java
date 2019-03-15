@@ -7,12 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class ProjectPresenter extends BasePresenterImpl implements ProjectContract.Presenter {
-
-    private final ProjectContract.View mView;
+public class ProjectPresenter extends BasePresenterImpl<ProjectContract.View> implements ProjectContract.Presenter {
 
     public ProjectPresenter(ProjectContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

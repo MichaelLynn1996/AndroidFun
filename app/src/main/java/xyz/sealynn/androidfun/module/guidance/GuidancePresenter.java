@@ -7,11 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class GuidancePresenter extends BasePresenterImpl implements GuidanceContract.Presenter {
+public class GuidancePresenter extends BasePresenterImpl<GuidanceContract.View> implements GuidanceContract.Presenter {
 
-    private final GuidanceContract.View mView;
     public GuidancePresenter(GuidanceContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

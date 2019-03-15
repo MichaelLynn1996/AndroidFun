@@ -1,6 +1,5 @@
 package xyz.sealynn.androidfun.base;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,18 +18,18 @@ import butterknife.Unbinder;
  * Email：sealynndev@gmail.com
  */
 public abstract class BaseFragment<P extends BasePresenter> extends Fragment
-        implements BaseView<P> {
+        implements BaseView {
 
     private Unbinder mUnbinder;
-    protected P mPresenter;
+    private P mPresenter;
 
     @Nullable
     @Override
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPresenter = createPresenter();
-        if (mPresenter != null) {
-            mPresenter.onStart();
-        }
+//        if (mPresenter != null) {
+//            mPresenter.onStart();
+//        }
         View root = inflater.inflate(bindLayout(), container, false);
         mUnbinder = ButterKnife.bind(this, root);
         prepareData(savedInstanceState);
@@ -45,10 +44,10 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     protected abstract P createPresenter();
 
 
-    @Override
-    public void setPresenter(P presenter) {
-        mPresenter = presenter;
-    }
+//    @Override
+//    public void setPresenter(P presenter) {
+//        mPresenter = presenter;
+//    }
 
     /**
      * 准备数据
@@ -86,9 +85,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
     @Override
     public void onDestroyView() {
-        if (mPresenter != null) {
-            mPresenter.onDestroy();
-        }
+//        if (mPresenter != null) {
+//            mPresenter.onDestroy();
+//        }
         super.onDestroyView();
         mUnbinder.unbind();
     }
@@ -96,5 +95,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     @Override
     public Context getContext() {
         return super.getContext();
+    }
+
+    protected P getPresenter(){
+        return mPresenter;
     }
 }

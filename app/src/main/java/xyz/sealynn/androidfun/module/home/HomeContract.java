@@ -10,9 +10,10 @@ import xyz.sealynn.androidfun.base.BaseView;
  */
 public interface HomeContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
+        void loading(Boolean isLoading);
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
     }
 }

@@ -7,11 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class HomePresenter extends BasePresenterImpl implements HomeContract.Presenter {
+public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {
 
-    private final HomeContract.View mView;
     public HomePresenter(HomeContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

@@ -25,9 +25,7 @@ public class ActivityUtils {
     }
 
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.add(frameId, fragment);
-        transaction.commit();
+        fragmentManager.beginTransaction().add(frameId, fragment).commit();
     }
 
     public static void addFragmentToActivityBackStack(FragmentManager fragmentManager, Fragment fragment, int frameId) {
@@ -39,5 +37,9 @@ public class ActivityUtils {
 
     public static void startActivity(Context packageContext, Class<?> cls, Bundle bundle) {
         packageContext.startActivity(new Intent(packageContext, cls), bundle);
+    }
+
+    public static void replaceFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId){
+        fragmentManager.beginTransaction().replace(frameId,fragment).show(fragment).commit();
     }
 }

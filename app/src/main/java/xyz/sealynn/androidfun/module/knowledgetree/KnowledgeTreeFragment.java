@@ -4,24 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import xyz.sealynn.androidfun.R;
-import xyz.sealynn.androidfun.base.BaseLazyLoadFragment;
-import xyz.sealynn.androidfun.module.home.HomeContract;
+import xyz.sealynn.androidfun.base.BaseFragment;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 20:05
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class KnowledgeTreeFragment extends BaseLazyLoadFragment<KnowledgeTreeContarct.Presenter> implements KnowledgeTreeContarct.View {
-    @Override
-    protected void initViews(View rootView) {
-
-    }
-
-    @Override
-    protected void lazyLoadData() {
-
-    }
+public class KnowledgeTreeFragment extends BaseFragment<KnowledgeTreeContarct.Presenter> implements KnowledgeTreeContarct.View {
 
     @Override
     protected KnowledgeTreeContarct.Presenter createPresenter() {
@@ -36,6 +26,16 @@ public class KnowledgeTreeFragment extends BaseLazyLoadFragment<KnowledgeTreeCon
     @Override
     protected int bindLayout() {
         return R.layout.fragment_knowledge_tree;
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    protected void initView(View rootView) {
+
     }
 
     @Override

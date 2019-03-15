@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.AppBarLayout;
+
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.appcompat.app.ActionBar;
 
@@ -25,6 +26,7 @@ import com.orhanobut.logger.Logger;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
 import xyz.sealynn.androidfun.utils.SharedUtils;
 
 /**
@@ -32,7 +34,7 @@ import xyz.sealynn.androidfun.utils.SharedUtils;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class WebActivity extends BaseActivity<WebContract.Presenter> implements WebContract.View {
+public class WebActivity extends ToolbarBaseActivity<WebContract.Presenter> implements WebContract.View {
 
     @BindView(R.id.web_contain)
     CoordinatorLayout webContain;
@@ -148,7 +150,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 mAgentWeb.getUrlLoader().reload();
                 return true;
             case R.id.open_external_browser:
-                mPresenter.openBrowser(getAgentWebView().getUrl());
+                getPresenter().openBrowser(getAgentWebView().getUrl());
                 return true;
             case R.id.copy:
                 SharedUtils.copyText(WebActivity.this, getAgentWebView().getUrl());

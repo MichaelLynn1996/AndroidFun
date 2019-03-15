@@ -1,9 +1,12 @@
 package xyz.sealynn.androidfun.utils;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
 
 import com.orhanobut.logger.Logger;
 
@@ -45,5 +48,23 @@ public class SharedUtils {
             if (cm.getPrimaryClip().getItemAt(0).getText().toString().equals(text))
                 ToastUtils.shortToast(context, R.string.copy_succ);
         }
+    }
+
+    public static void goToMarket(Context context){
+        Uri uri = Uri.parse("market://details?id=" + AppUtils.getPackageName(context));
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            context.startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void mailToDeveloper(Context context){
+        Intent data=new Intent(Intent.ACTION_SENDTO);
+        data.setData(Uri.parse("mailto:sealinxy@outlook.com"));
+        data.putExtra(Intent.EXTRA_SUBJECT, "这是标题");
+        data.putExtra(Intent.EXTRA_TEXT, "这是内容");
+        context.startActivity(data);
     }
 }

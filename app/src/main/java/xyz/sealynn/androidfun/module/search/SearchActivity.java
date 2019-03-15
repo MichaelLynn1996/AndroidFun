@@ -8,13 +8,14 @@ import android.widget.Toast;
 import androidx.appcompat.widget.SearchView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
 
 /**
  * Created by SeaLynn0 on 2018/12/26 13:16
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class SearchActivity extends BaseActivity<SearchContract.Presenter> implements SearchContract.View {
+public class SearchActivity extends ToolbarBaseActivity<SearchContract.Presenter> implements SearchContract.View {
     @Override
     protected SearchContract.Presenter createPresenter() {
         return new SearchPresenter(this);

@@ -8,12 +8,12 @@ import xyz.sealynn.androidfun.base.BaseView;
  * <p>
  * Email：sealynndev@gmail.com
  */
-class WebContract {
+public interface WebContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
         void openBrowser(String url);
     }
 }

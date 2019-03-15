@@ -42,6 +42,11 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     ValueAnimator animator;
 
     @Override
+    protected void initToolbar() {
+
+    }
+
+    @Override
     protected YearProgressContract.Presenter createPresenter() {
         return new YearProgressPresenter(this);
     }
@@ -61,7 +66,7 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
         year.setText(DateUtils.getYear());
 
         animator = ValueAnimator.ofInt(0, DateUtils.getIntOfTheYearPassed());
-        animator.setDuration(2000);
+        animator.setDuration(1000);
         animator.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
             if (progressBar != null && percent != null) {

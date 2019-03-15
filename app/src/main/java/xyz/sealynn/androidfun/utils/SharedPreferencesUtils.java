@@ -3,6 +3,15 @@ package xyz.sealynn.androidfun.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+import com.orhanobut.logger.Logger;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+
+import androidx.annotation.NonNull;
+import xyz.sealynn.androidfun.model.Result;
+
 /**
  * Created by SeaLynn0 on 2018/10/13 12:04
  * <p>

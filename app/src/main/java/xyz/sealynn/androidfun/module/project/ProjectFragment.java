@@ -24,7 +24,7 @@ public class ProjectFragment extends BaseLazyLoadFragment<ProjectContract.Presen
 
     @Override
     protected ProjectContract.Presenter createPresenter() {
-        return null;
+        return new ProjectPresenter(this);
     }
 
     @Override

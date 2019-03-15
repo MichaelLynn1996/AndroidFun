@@ -7,11 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class SearchPresenter extends BasePresenterImpl implements SearchContract.Presenter {
+public class SearchPresenter extends BasePresenterImpl<SearchContract.View> implements SearchContract.Presenter {
 
-    private final SearchContract.View mView;
     public SearchPresenter(SearchContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

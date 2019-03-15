@@ -14,9 +14,10 @@ import androidx.appcompat.widget.AppCompatButton;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
 import xyz.sealynn.androidfun.module.register.RegisterActivity;
 
-public class TodoActivity extends BaseActivity<TodoContract.Presenter> implements TodoContract.View {
+public class TodoActivity extends ToolbarBaseActivity<TodoContract.Presenter> implements TodoContract.View {
 
     @Override
     protected TodoContract.Presenter createPresenter() {

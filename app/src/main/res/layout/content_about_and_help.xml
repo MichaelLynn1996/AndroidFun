@@ -24,37 +24,41 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/about"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackground"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="8dp"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingBottom="8dp"
             android:text="@string/about"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_vertical"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/licence"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackground"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="8dp"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingBottom="8dp"
             android:text="@string/open_source_licence"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_vertical"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/feedback"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackground"
             android:paddingStart="@dimen/activity_horizontal_margin"
             android:paddingTop="8dp"
             android:paddingEnd="@dimen/activity_horizontal_margin"
             android:paddingBottom="8dp"
             android:text="@string/comment_and_feedback"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:gravity="center_vertical"/>
 
         <LinearLayout
             android:id="@+id/item_check_update"

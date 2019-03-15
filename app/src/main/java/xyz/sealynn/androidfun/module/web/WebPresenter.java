@@ -13,13 +13,10 @@ import xyz.sealynn.androidfun.base.BasePresenter;
  * <p>
  * Email：sealynndev@gmail.com
  */
-class WebPresenter extends BasePresenterImpl implements WebContract.Presenter {
-
-    private final WebContract.View mView;
+class WebPresenter extends BasePresenterImpl<WebContract.View> implements WebContract.Presenter {
 
     WebPresenter(WebContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 
     /**
@@ -29,13 +26,13 @@ class WebPresenter extends BasePresenterImpl implements WebContract.Presenter {
      */
     public void openBrowser(String targetUrl) {
         if (TextUtils.isEmpty(targetUrl) || targetUrl.startsWith("file://")) {
-            Toast.makeText(mView.getContext(), targetUrl + " 该链接无法使用浏览器打开。", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getView().getContext(), targetUrl + " 该链接无法使用浏览器打开。", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = new Intent();
         intent.setAction("android.intent.action.VIEW");
         Uri mUri = Uri.parse(targetUrl);
         intent.setData(mUri);
-        mView.getContext().startActivity(intent);
+        getView().getContext().startActivity(intent);
     }
 }

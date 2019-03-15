@@ -8,11 +8,11 @@ import xyz.sealynn.androidfun.base.BaseView;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class CollectionContract {
+public interface CollectionContract {
 
-    interface View extends BaseView<Presenter> {
+    interface View extends BaseView {
     }
 
-    interface Presenter extends BasePresenter {
+    interface Presenter extends BasePresenter<View> {
     }
 }

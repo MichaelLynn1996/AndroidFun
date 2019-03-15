@@ -12,14 +12,15 @@ android {
     }
     buildTypes {
         release {
+            0
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
     buildToolsVersion '28.0.3'
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -31,31 +32,40 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-
-    //Rx Retrofit
+    // Room依赖
+    implementation 'androidx.room:room-runtime:2.1.0-alpha04'
+    annotationProcessor "androidx.room:room-compiler:2.1.0-alpha04"
+    // optional - RxJava support for Room
+    implementation 'androidx.room:room-rxjava2:2.1.0-alpha04'
+    //Rx Retrofit Gson
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-java8:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.3.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
-
-//    implementation 'com.google.code.gson:gson:2.8.5'
+    //    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.just.agentweb:agentweb:4.0.2'
     // (必选)
-//    implementation 'com.just.agentweb:download:4.0.2' // (可选)
+    //    implementation 'com.just.agentweb:download:4.0.2' // (可选)
     //    compile 'com.just.agentweb:filechooser:4.0.2'// (可选)
     implementation 'com.google.android.material:material:1.0.0'
     //logger
     implementation 'com.orhanobut:logger:2.2.0'
+    //about
     implementation 'com.github.daniel-stoneuk:material-about-library:2.4.2'
-//BasePopup
-    implementation 'com.github.razerdp:BasePopup:2.1.6'
+    //leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
 }

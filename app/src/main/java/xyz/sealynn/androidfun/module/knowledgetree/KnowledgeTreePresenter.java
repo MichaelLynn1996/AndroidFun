@@ -7,11 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class KnowledgeTreePresenter extends BasePresenterImpl implements KnowledgeTreeContarct.Presenter {
+public class KnowledgeTreePresenter extends BasePresenterImpl<KnowledgeTreeContarct.View> implements KnowledgeTreeContarct.Presenter {
 
-    private final KnowledgeTreeContarct.View mView;
     public KnowledgeTreePresenter(KnowledgeTreeContarct.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

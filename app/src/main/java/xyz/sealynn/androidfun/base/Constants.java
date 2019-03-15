@@ -5,13 +5,12 @@ package xyz.sealynn.androidfun.base;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class Constants {
-
-    public class SHARED_PREFERENCE_KEY {
-        public static final String YEAR_PROGRESS_PERCENT = "YEAR_PROGRESS_PERCENT";
-        public static final String YEAR_PROGRESS_MODE = "YEAR_PROGRESS_MODE";
-    }
+public final class Constants {
 
     public static final String NIGHT_MODE_CHANGE_INTENT = "xyz.sealynn0.androidfun.nightmodechange";
 
+//    SharedPreference Key
+    public static final String CONFIG_DEFAULT = "config";
+    public static final String YEAR_PROGRESS_PERCENT = "YEAR_PROGRESS_PERCENT";
+    public static final String YEAR_PROGRESS_MODE = "YEAR_PROGRESS_MODE";
 }

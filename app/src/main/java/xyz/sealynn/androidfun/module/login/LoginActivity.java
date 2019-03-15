@@ -1,27 +1,18 @@
 package xyz.sealynn.androidfun.module.login;
 
-import android.animation.Animator;
-import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.widget.AppCompatButton;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
-import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
 import xyz.sealynn.androidfun.module.register.RegisterActivity;
 import xyz.sealynn.androidfun.utils.ActivityUtils;
 
-public class LoginActivity extends BaseActivity<LoginContract.Presenter> implements LoginContract.View {
+public class LoginActivity extends ToolbarBaseActivity<LoginContract.Presenter> implements LoginContract.View {
 
     @BindView(R.id.et_username)
     TextInputEditText etUsername;
@@ -64,7 +55,10 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     @Override
     protected void initEvent() {
         btGo.setOnClickListener(view -> {
-            finish();
+            if (etUsername.getText() != null && etPassword.getText() != null)
+                getPresenter().login(etUsername.getText().toString().trim()
+                        , etPassword.getText().toString().trim());
+//            finish();
         });
         fab.setOnClickListener(view -> ActivityUtils.startActivity(this, RegisterActivity.class));
     }

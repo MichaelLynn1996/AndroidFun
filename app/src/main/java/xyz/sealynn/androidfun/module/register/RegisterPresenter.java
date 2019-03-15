@@ -7,12 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class RegisterPresenter extends BasePresenterImpl implements RegisterContract.Presenter {
-
-    private final RegisterContract.View mView;
+public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View> implements RegisterContract.Presenter {
 
     RegisterPresenter(RegisterContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

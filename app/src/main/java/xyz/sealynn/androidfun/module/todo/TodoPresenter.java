@@ -7,11 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class TodoPresenter extends BasePresenterImpl implements TodoContract.Presenter {
+public class TodoPresenter extends BasePresenterImpl<TodoContract.View> implements TodoContract.Presenter {
 
-    private final TodoContract.View mView;
     public TodoPresenter(TodoContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

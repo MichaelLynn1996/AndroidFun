@@ -19,8 +19,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
 
-public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> implements RegisterContract.View {
+public class RegisterActivity extends ToolbarBaseActivity<RegisterContract.Presenter> implements RegisterContract.View {
 
     //    @BindView(R.id.fab)
 //    FloatingActionButton fab;

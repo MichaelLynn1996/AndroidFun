@@ -7,9 +7,9 @@ import android.content.Context;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public interface BaseView<P> {
+public interface BaseView {
 
-    void setPresenter(P presenter);
+//    void setPresenter(P presenter);
 
     Context getContext();
 }

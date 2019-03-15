@@ -7,11 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class CollectionPresenter extends BasePresenterImpl implements CollectionContract.Presenter {
+public class CollectionPresenter extends BasePresenterImpl<CollectionContract.View> implements CollectionContract.Presenter {
 
-    private final CollectionContract.View mView;
     public CollectionPresenter(CollectionContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }
