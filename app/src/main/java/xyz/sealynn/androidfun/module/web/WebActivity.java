@@ -2,22 +2,19 @@ package xyz.sealynn.androidfun.module.web;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
+
+import com.google.android.material.appbar.AppBarLayout;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.appcompat.app.ActionBar;
+
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.just.agentweb.AgentWeb;
@@ -27,17 +24,17 @@ import com.just.agentweb.PermissionInterceptor;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
-import xyz.sealynn.androidfun.utils.ShareUtils;
+import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
+import xyz.sealynn.androidfun.utils.SharedUtils;
 
 /**
  * Created by SeaLynn0 on 2018/8/28 13:58
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class WebActivity extends BaseActivity<WebContract.Presenter> implements WebContract.View {
+public class WebActivity extends ToolbarBaseActivity<WebContract.Presenter> implements WebContract.View {
 
     @BindView(R.id.web_contain)
     CoordinatorLayout webContain;
@@ -48,6 +45,22 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     private Gson mGson = new Gson();
 
     String url;
+
+    private WebChromeClient mWebChromeClient = new WebChromeClient() {
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            actionBar.setTitle(title);
+        }
+    };
+
+    private WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            actionBar.setTitle("加载中......");
+        }
+    };
 
     @Override
     protected WebContract.Presenter createPresenter() {
@@ -128,7 +141,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 String value = getAgentWebView().getTitle()
                         + " "
                         + getAgentWebView().getUrl();
-                ShareUtils.shareText(WebActivity.this, value);
+                SharedUtils.shareText(WebActivity.this, value);
                 return true;
             case android.R.id.home:
                 finish();
@@ -137,10 +150,10 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
                 mAgentWeb.getUrlLoader().reload();
                 return true;
             case R.id.open_external_browser:
-                openBrowser(getAgentWebView().getUrl());
+                getPresenter().openBrowser(getAgentWebView().getUrl());
                 return true;
             case R.id.copy:
-                ShareUtils.copyText(WebActivity.this, getAgentWebView().getUrl());
+                SharedUtils.copyText(WebActivity.this, getAgentWebView().getUrl());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -170,40 +183,8 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         return mAgentWeb.handleKeyEvent(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
-    private WebChromeClient mWebChromeClient = new WebChromeClient() {
-        @Override
-        public void onReceivedTitle(WebView view, String title) {
-            super.onReceivedTitle(view, title);
-            actionBar.setTitle(title);
-        }
-    };
-
-    private WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            super.onPageStarted(view, url, favicon);
-            actionBar.setTitle("加载中......");
-        }
-    };
-
     private WebView getAgentWebView() {
         return mAgentWeb.getWebCreator().getWebView();
     }
 
-    /**
-     * 打开浏览器
-     *
-     * @param targetUrl 外部浏览器打开的地址
-     */
-    private void openBrowser(String targetUrl) {
-        if (TextUtils.isEmpty(targetUrl) || targetUrl.startsWith("file://")) {
-            Toast.makeText(this, targetUrl + " 该链接无法使用浏览器打开。", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        Intent intent = new Intent();
-        intent.setAction("android.intent.action.VIEW");
-        Uri mUri = Uri.parse(targetUrl);
-        intent.setData(mUri);
-        startActivity(intent);
-    }
 }

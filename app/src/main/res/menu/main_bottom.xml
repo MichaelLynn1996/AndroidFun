@@ -11,6 +11,11 @@
         android:icon="@drawable/ic_knowledge_tree"/>
 
     <item
+        android:id="@+id/wechat"
+        android:title="@string/wechat"
+        android:icon="@drawable/ic_wechat"/>
+
+    <item
         android:id="@+id/guidance"
         android:title="@string/guidance"
         android:icon="@drawable/ic_guidance"/>

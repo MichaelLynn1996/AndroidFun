@@ -1,21 +1,19 @@
 package xyz.sealynn.androidfun.module.year;
 
 import android.animation.ValueAnimator;
-import android.app.PendingIntent;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatImageButton;
-import android.support.v7.widget.AppCompatTextView;
+
+import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatTextView;
+
 import android.widget.ProgressBar;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import xyz.sealynn.androidfun.NotificationClickReceiver;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.utils.DateUtils;
-import xyz.sealynn.androidfun.utils.NotificationUtils;
-import xyz.sealynn.androidfun.utils.ShareUtils;
+import xyz.sealynn.androidfun.utils.SharedUtils;
 
 /**
  * Created by SeaLynn0 on 2018/10/13 15:57
@@ -41,6 +39,13 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     @BindString(R.string.progress_chanel)
     String name;
 
+    ValueAnimator animator;
+
+    @Override
+    protected void initToolbar() {
+
+    }
+
     @Override
     protected YearProgressContract.Presenter createPresenter() {
         return new YearProgressPresenter(this);
@@ -60,12 +65,14 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     protected void initView() {
         year.setText(DateUtils.getYear());
 
-        final ValueAnimator animator = ValueAnimator.ofInt(0, DateUtils.getIntOfTheYearPassed());
-        animator.setDuration(2000);
+        animator = ValueAnimator.ofInt(0, DateUtils.getIntOfTheYearPassed());
+        animator.setDuration(1000);
         animator.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
-            progressBar.setProgress(value);
-            percent.setText(String.valueOf(value + "%"));
+            if (progressBar != null && percent != null) {
+                progressBar.setProgress(value);
+                percent.setText(String.valueOf(value + "%"));
+            }
         });
         animator.start();
     }
@@ -82,20 +89,22 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
             String text = year.getText() + " is "
                     + percent.getText()
                     + " complete! - Shared Via WanAndroid - Year Progress";
-            ShareUtils.copyText(YearProgressActivity.this, text);
+            SharedUtils.copyText(YearProgressActivity.this, text);
         });
         share.setOnClickListener(v -> {
             String text = year.getText() + " is "
                     + percent.getText()
                     + " complete! - Shared Via WanAndroid - Year Progress";
-            ShareUtils.shareText(YearProgressActivity.this, text);
+            SharedUtils.shareText(YearProgressActivity.this, text);
         });
+    }
 
-        Intent intent = new Intent(YearProgressActivity.this, NotificationClickReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(YearProgressActivity.this, 0, intent, 0);
-        NotificationUtils notificationUtils = new NotificationUtils(this, "progress_channel", name);
-        notificationUtils.sendNotificationWithIntent("YearProgress", DateUtils.getYear() + " is "
-                + DateUtils.getPercentsofTheYearPassed()
-                + " complete!", pendingIntent);
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (animator != null) {
+            animator.cancel();
+            animator = null;
+        }
     }
 }

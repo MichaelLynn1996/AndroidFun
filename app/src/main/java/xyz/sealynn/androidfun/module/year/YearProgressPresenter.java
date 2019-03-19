@@ -7,12 +7,9 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-class YearProgressPresenter extends BasePresenterImpl implements YearProgressContract.Presenter {
-
-    private final YearProgressContract.View mView;
+class YearProgressPresenter extends BasePresenterImpl<YearProgressContract.View> implements YearProgressContract.Presenter {
 
     YearProgressPresenter(YearProgressContract.View view) {
-        mView = view;
-        this.mView.setPresenter(this);
+        super(view);
     }
 }

@@ -8,9 +8,9 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.BitmapFactory;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
 import xyz.sealynn.androidfun.R;
 
 
@@ -50,8 +50,8 @@ public class NotificationUtils extends ContextWrapper {
         return new Notification.Builder(getApplicationContext(), id)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setSmallIcon(R.drawable.logo)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
+                .setSmallIcon(R.drawable.ic_stat_logo)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_stat_logo))
                 .setAutoCancel(true);
     }
 
@@ -59,8 +59,8 @@ public class NotificationUtils extends ContextWrapper {
         return new NotificationCompat.Builder(getApplicationContext(), id)
                 .setContentTitle(title)
                 .setContentText(content)
-                .setSmallIcon(R.drawable.logo)
-                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.logo))
+                .setSmallIcon(R.drawable.ic_stat_logo)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_stat_logo))
                 .setAutoCancel(true);
     }
 

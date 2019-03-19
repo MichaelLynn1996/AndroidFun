@@ -15,15 +15,15 @@ public class DateUtils {
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
-    public static String getPercentsofTheYearPassed() {
-        return String.valueOf((int) Math.floor((float) getDaysofTheYearPassed() / (float) getDaysofTheYear() * 100)) + "%";
+    public static String getPercentsOfTheYearPassed() {
+        return String.valueOf((int) Math.floor((float) getDaysOfTheYearPassed() / (float) getDaysOfTheYear() * 100)) + "%";
     }
 
-    public static int getDaysofTheYearPassed() {
+    public static int getDaysOfTheYearPassed() {
         return calendar.get(Calendar.DAY_OF_YEAR);
     }
 
-    public static int getDaysofTheYear() {
+    public static int getDaysOfTheYear() {
         int year = calendar.get(Calendar.YEAR);
 
         if (year % 4 == 0)
@@ -36,6 +36,6 @@ public class DateUtils {
     }
 
     public static int getIntOfTheYearPassed(){
-        return (int) Math.floor((float) getDaysofTheYearPassed() / (float) getDaysofTheYear() * 100);
+        return (int) Math.floor((float) getDaysOfTheYearPassed() / (float) getDaysOfTheYear() * 100);
     }
 }
