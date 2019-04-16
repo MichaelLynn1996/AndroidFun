@@ -13,29 +13,21 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import xyz.sealynn.androidfun.R;
-import xyz.sealynn.androidfun.base.Constants;
-import xyz.sealynn.androidfun.utils.ActivityUtils;
-import xyz.sealynn.androidfun.utils.NightModeUtils;
-import xyz.sealynn.androidfun.utils.SharedPreferencesUtils;
-import xyz.sealynn.androidfun.utils.SharedUtils;
-
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
-import java.util.Objects;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatDelegate;
+import xyz.sealynn.androidfun.R;
+import xyz.sealynn.androidfun.base.Constants;
+import xyz.sealynn.androidfun.utils.NightModeUtils;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -173,7 +165,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     protected boolean isValidFragment(String fragmentName) {
         return PreferenceFragment.class.getName().equals(fragmentName)
                 || DisplayPreferenceFragment.class.getName().equals(fragmentName)
-                || AboutPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName);
     }
 
@@ -238,13 +229,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
         }
 
-        private void setNightModeState(int mode, Intent intent) {
-            NightModeUtils.setNightModeState((AppCompatPreferenceActivity) getActivity(), mode);
-            AppCompatDelegate.setDefaultNightMode(mode);
-            SharedPreferencesUtils.editDefaultConfig(getActivity(), "night_mode", mode);
-            getActivity().sendBroadcast(intent);
-            getActivity().recreate();
-        }
     }
 
     /**
@@ -277,66 +261,66 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     }
 
-    /**
-     * This fragment shows data and sync preferences only. It is used when the
-     * activity is showing a two-pane settings UI.
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class AboutPreferenceFragment extends PreferenceFragment {
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.pref_about_help);
-            setHasOptionsMenu(true);
-
-            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
-            // to their values. When their values change, their summaries are
-            // updated to reflect the new value, per the Android Design
-            // guidelines.
-//            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            int id = item.getItemId();
-            if (id == android.R.id.home) {
-                startActivity(new Intent(getActivity(), SettingsActivity.class));
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
-        }
-
-        @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-            findPreference("about").setOnPreferenceClickListener(preference -> {
-                ActivityUtils.startActivity(getActivity(), AboutActivity.class);
-                return false;
-            });
-            findPreference("licence").setOnPreferenceClickListener(preference -> {
-                ActivityUtils.startActivity(getActivity(), OpenSourceLicenceActivity.class);
-                return false;
-            });
-            findPreference("feedback").setOnPreferenceClickListener(preference -> {
-                final String[] items = {"评价", "反馈"};
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.comment_and_feedback)
-                        .setItems(items, (dialog, which) -> {
-                            switch (which) {
-                                case 0:
-                                    SharedUtils.goToMarket(getActivity());
-                                    break;
-                                case 1:
-                                    SharedUtils.mailToDeveloper(getActivity());
-                                    break;
-                            }
-                        }).show();
-                return false;
-            });
-//            findPreference("update").setOnPreferenceClickListener(preference -> {
+//    /**
+//     * This fragment shows data and sync preferences only. It is used when the
+//     * activity is showing a two-pane settings UI.
+//     */
+//    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+//    public static class AboutPreferenceFragment extends PreferenceFragment {
+//        @Override
+//        public void onCreate(Bundle savedInstanceState) {
+//            super.onCreate(savedInstanceState);
+//            addPreferencesFromResource(R.xml.pref_about_help);
+//            setHasOptionsMenu(true);
 //
+//            // Bind the summaries of EditText/List/Dialog/Ringtone preferences
+//            // to their values. When their values change, their summaries are
+//            // updated to reflect the new value, per the Android Design
+//            // guidelines.
+////            bindPreferenceSummaryToValue(findPreference("sync_frequency"));
+//        }
+//
+//        @Override
+//        public boolean onOptionsItemSelected(MenuItem item) {
+//            int id = item.getItemId();
+//            if (id == android.R.id.home) {
+//                startActivity(new Intent(getActivity(), SettingsActivity.class));
+//                return true;
+//            }
+//            return super.onOptionsItemSelected(item);
+//        }
+//
+//        @Override
+//        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+//            super.onViewCreated(view, savedInstanceState);
+//            findPreference("about").setOnPreferenceClickListener(preference -> {
+//                ActivityUtils.startActivity(getActivity(), AboutActivity.class);
 //                return false;
 //            });
-        }
-    }
+//            findPreference("licence").setOnPreferenceClickListener(preference -> {
+//                ActivityUtils.startActivity(getActivity(), OpenSourceLicenceActivity.class);
+//                return false;
+//            });
+//            findPreference("feedback").setOnPreferenceClickListener(preference -> {
+//                final String[] items = {"评价", "反馈"};
+//                new AlertDialog.Builder(getActivity())
+//                        .setTitle(R.string.comment_and_feedback)
+//                        .setItems(items, (dialog, which) -> {
+//                            switch (which) {
+//                                case 0:
+//                                    SharedUtils.goToMarket(getActivity());
+//                                    break;
+//                                case 1:
+//                                    SharedUtils.mailToDeveloper(getActivity());
+//                                    break;
+//                            }
+//                        }).show();
+//                return false;
+//            });
+////            findPreference("update").setOnPreferenceClickListener(preference -> {
+////
+////                return false;
+////            });
+//        }
+//    }
 }

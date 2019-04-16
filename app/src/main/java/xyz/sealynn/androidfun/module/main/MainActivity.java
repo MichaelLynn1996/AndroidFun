@@ -7,21 +7,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.reflect.TypeToken;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.ContentFrameLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -29,10 +30,11 @@ import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.APP;
 import xyz.sealynn.androidfun.R;
+import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.base.Constants;
-import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
-import xyz.sealynn.androidfun.model.Login;
+import xyz.sealynn.androidfun.model.User;
 import xyz.sealynn.androidfun.model.Result;
+import xyz.sealynn.androidfun.module.AboutActivity;
 import xyz.sealynn.androidfun.module.SettingsActivity;
 import xyz.sealynn.androidfun.module.collection.CollectionActivity;
 import xyz.sealynn.androidfun.module.guidance.GuidanceFragment;
@@ -42,38 +44,36 @@ import xyz.sealynn.androidfun.module.login.LoginActivity;
 import xyz.sealynn.androidfun.module.project.ProjectFragment;
 import xyz.sealynn.androidfun.module.search.SearchActivity;
 import xyz.sealynn.androidfun.module.todo.TodoActivity;
-import xyz.sealynn.androidfun.module.web.WebActivity;
 import xyz.sealynn.androidfun.module.wechat.WeChatFragment;
 import xyz.sealynn.androidfun.module.year.YearProgressActivity;
+import xyz.sealynn.androidfun.net.interceptor.SaveCookiesInterceptor;
 import xyz.sealynn.androidfun.receiver.NightModeChangeReceiver;
 import xyz.sealynn.androidfun.utils.ActivityUtils;
-import xyz.sealynn.androidfun.utils.NightModeUtils;
-import xyz.sealynn.androidfun.utils.ToastUtils;
 
-public class MainActivity extends ToolbarBaseActivity<MainContract.Presenter>
-        implements MainContract.View {
+public class MainActivity extends BaseActivity<MainContract.Presenter>
+        implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
 
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawer;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
-    @BindView(R.id.bt_exit)
-    AppCompatButton exit;
-    @BindView(R.id.bt_night_mode)
-    AppCompatButton nightMode;
     @BindView(R.id.content)
-    ContentFrameLayout content;
+    FrameLayout content;
     @BindView(R.id.bottomNavigationView)
     BottomNavigationView bottomNavigationView;
 
     View headerView;
+    AppCompatImageView avatar;
+    AppCompatTextView username;
+    ActionBar actionBar;
 
     NightModeChangeReceiver receiver;
 
     List<Fragment> listFragment = new ArrayList<>();
     private int lastFragment;   //用于记录上个选择的Fragment
+
+    public static final int REQUEST_LOGIN = 1;
+    public static final int ITEM_LOGOUT_ID = 120;
 
     @Override
     protected MainContract.Presenter createPresenter() {
@@ -91,80 +91,69 @@ public class MainActivity extends ToolbarBaseActivity<MainContract.Presenter>
 
     @Override
     protected void initView() {
+//        if (getSupportActionBar()!=null)
+        actionBar = getSupportActionBar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, getToolbar(), R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, drawer.getRootView().findViewById(R.id.toolbar)
+                , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         initNavigationView();
-        initFragments();
         initBottomNavigationView();
-        initHeader();
-
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
-            nightMode.setText(R.string.day_mode);
-            nightMode.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_action_day_mode), null, null, null);
-        } else if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
-            nightMode.setText(R.string.night_mode);
-            nightMode.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_action_night_mode), null, null, null);
-        } else if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_AUTO) {
-            nightMode.setText(R.string.auto);
-            nightMode.setCompoundDrawablesWithIntrinsicBounds(getResources().getDrawable(R.drawable.ic_action_night_mode_auto), null, null, null);
-        }
     }
 
-    private void initHeader() {
-        headerView = navigationView.getHeaderView(0);
-        headerView.setOnClickListener(v -> {
-            if (getContext().getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE).contains("login")){
-                ToastUtils.shortToast(getContext(),"已登录");
-            }else {
-                ActivityUtils.startActivity(MainActivity.this, LoginActivity.class);
-            }
-        });
+    /**
+     * 检查登录状态
+     */
+    private void checkUser() {
         if (Result.getResultBean(this, "login", Result.class) != null) {
-            Result<Login> data = Result.getResultBean(MainActivity.this, "login", new TypeToken<Result<Login>>() {
+            Result<User> data = Result.getResultBean(MainActivity.this, "login", new TypeToken<Result<User>>() {
             }.getType());
-            AppCompatTextView textView = headerView.findViewById(R.id.textView);
-            textView.setText(data.getData().getUsername());
+            username.setText(data.getData().getUsername());
+            //在Menu添加注销选项
+            navigationView.getMenu().addSubMenu(1, ITEM_LOGOUT_ID, 0, R.string.exit)
+                    .add(1, ITEM_LOGOUT_ID, 0, R.string.logout)
+                    .setIcon(R.drawable.ic_action_logout);
         }
     }
 
-    private void initFragments() {
+    /**
+     * 初始化底部导航栏
+     */
+    private void initBottomNavigationView() {
         listFragment.add(new HomeFragment());
         listFragment.add(new KnowledgeTreeFragment());
         listFragment.add(new WeChatFragment());
         listFragment.add(new GuidanceFragment());
         listFragment.add(new ProjectFragment());
 
-        getToolbar().setTitle(R.string.home);
+        actionBar.setTitle(R.string.home);
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), listFragment.get(0), R.id.content);
-    }
 
-    private void initBottomNavigationView() {
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             int id = menuItem.getItemId();
 
             switch (id) {
                 case R.id.home:
                     switchFragment(0);
-                    getToolbar().setTitle(R.string.home);
+                    actionBar.setTitle(R.string.home);
                     return true;
                 case R.id.knowledge_tree:
                     switchFragment(1);
-                    getToolbar().setTitle(R.string.knowledge_tree);
+                    actionBar.setTitle(R.string.knowledge_tree);
                     return true;
                 case R.id.wechat:
                     switchFragment(2);
-                    getToolbar().setTitle(R.string.wechat);
+                    actionBar.setTitle(R.string.wechat);
                     return true;
                 case R.id.guidance:
                     switchFragment(3);
-                    getToolbar().setTitle(R.string.guidance);
+                    actionBar.setTitle(R.string.guidance);
                     return true;
                 case R.id.project:
                     switchFragment(4);
-                    getToolbar().setTitle(R.string.project);
+                    actionBar.setTitle(R.string.project);
                     return true;
             }
             return false;
@@ -188,26 +177,15 @@ public class MainActivity extends ToolbarBaseActivity<MainContract.Presenter>
         }
     }
 
+    /**
+     * 初始化侧滑抽屉
+     */
     private void initNavigationView() {
-        navigationView.setNavigationItemSelectedListener(menuItem -> {
-            // Handle navigation view item clicks here.
-            int id = menuItem.getItemId();
-
-            if (id == R.id.nav_play_android) {
-                drawer.closeDrawer(GravityCompat.START);
-            } else if (id == R.id.nav_todo) {
-                ActivityUtils.startActivity(MainActivity.this, TodoActivity.class);
-            } else if (id == R.id.nav_year_progress) {
-                ActivityUtils.startActivity(MainActivity.this, YearProgressActivity.class);
-            } else if (id == R.id.nav_collection) {
-                ActivityUtils.startActivity(MainActivity.this, CollectionActivity.class);
-            } else if (id == R.id.nav_setting) {
-                ActivityUtils.startActivity(MainActivity.this, SettingsActivity.class);
-            }
-
-            drawer.closeDrawer(GravityCompat.START);
-            return true;
-        });
+        headerView = navigationView.getHeaderView(0);
+        avatar = headerView.findViewById(R.id.imageView);
+        username = headerView.findViewById(R.id.textView);
+        navigationView.setNavigationItemSelectedListener(this);
+        checkUser();
     }
 
     @Override
@@ -217,32 +195,9 @@ public class MainActivity extends ToolbarBaseActivity<MainContract.Presenter>
 
     @Override
     protected void initEvent() {
-        fab.setOnClickListener(view -> {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-            Intent intent = new Intent(this, WebActivity.class);
-            intent.putExtra("url", "http://android.myapp.com/");
-            startActivity(intent);
-        });
-        exit.setOnClickListener(v -> APP.exitApp());
-        nightMode.setOnClickListener(v -> {
-            if (NightModeUtils.getNightModeState(this) == AppCompatDelegate.MODE_NIGHT_YES) {
-//                Logger.d(true);
-                NightModeUtils.setNightModeState(this, AppCompatDelegate.MODE_NIGHT_NO);
-                nightMode.setText(R.string.night_mode);
-            } else if (NightModeUtils.getNightModeState(this) == AppCompatDelegate.MODE_NIGHT_NO) {
-//                Logger.d(false);
-                NightModeUtils.setNightModeState(this, AppCompatDelegate.MODE_NIGHT_YES);
-                nightMode.setText(R.string.day_mode);
-            } else if (NightModeUtils.getNightModeState(this) == AppCompatDelegate.MODE_NIGHT_AUTO) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle(R.string.NIGHT_MODE_OR_NOT)
-                        .setMessage(R.string.NIGHT_MODE_DISCUBUTION)
-                        .setPositiveButton(R.string.OFF,
-                                (dialog, which) -> NightModeUtils.setNightModeState(this, AppCompatDelegate.MODE_NIGHT_YES))
-                        .setNegativeButton(R.string.TEMP_NOT,
-                                (dialog, which) -> dialog.dismiss())
-                        .show();
+        headerView.setOnClickListener(v -> {
+            if (!getContext().getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE).contains("login")) {
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
             }
         });
         getPresenter().checkYearProgress();
@@ -253,13 +208,19 @@ public class MainActivity extends ToolbarBaseActivity<MainContract.Presenter>
         registerReceiver(receiver, new IntentFilter(Constants.NIGHT_MODE_CHANGE_INTENT));
     }
 
+    /**
+     * 重写返回键方法
+     * 在DrawerLayout打开时收起DrawerLayout
+     * 在主界面双击退出APP
+     */
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
+            APP.exitApp();
         }
     }
 
@@ -284,5 +245,59 @@ public class MainActivity extends ToolbarBaseActivity<MainContract.Presenter>
     protected void onDestroy() {
         unregisterReceiver(receiver);
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_LOGIN:
+                if (resultCode == RESULT_OK)
+                    checkUser();
+                break;
+        }
+    }
+
+    /**
+     * 监听抽屉item点击事件
+     *
+     * @param menuItem
+     * @return
+     */
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Handle navigation view item clicks here.
+        int id = menuItem.getItemId();
+
+        if (id == R.id.nav_play_android) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else if (id == R.id.nav_todo) {
+            ActivityUtils.startActivity(MainActivity.this, TodoActivity.class);
+        } else if (id == R.id.nav_year_progress) {
+            ActivityUtils.startActivity(MainActivity.this, YearProgressActivity.class);
+        } else if (id == R.id.nav_collection) {
+            ActivityUtils.startActivity(MainActivity.this, CollectionActivity.class);
+        } else if (id == R.id.nav_setting) {
+            ActivityUtils.startActivity(MainActivity.this, SettingsActivity.class);
+        } else if (id == R.id.nav_about) {
+            ActivityUtils.startActivity(MainActivity.this, AboutActivity.class);
+        } else if (id == ITEM_LOGOUT_ID) {
+            Logger.d("注销");
+            getPresenter().logout();
+        }
+
+        drawer.closeDrawer(GravityCompat.START);
+        return false;
+    }
+
+    @Override
+    public void logout() {
+        getContext()
+                .getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE)
+                .edit().remove("login").apply();
+        SaveCookiesInterceptor.clearCookie(MainActivity.this);
+        Logger.d(navigationView.getMenu().getItem(4).getItemId());
+        navigationView.getMenu().removeGroup(1);
+        username.setText(R.string.login_or_regist);
     }
 }

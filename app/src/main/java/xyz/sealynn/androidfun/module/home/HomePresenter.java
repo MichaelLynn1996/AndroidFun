@@ -7,9 +7,20 @@ import xyz.sealynn.androidfun.base.BasePresenterImpl;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {
+class HomePresenter extends BasePresenterImpl<HomeContract.View> implements HomeContract.Presenter {
 
-    public HomePresenter(HomeContract.View view) {
+    HomePresenter(HomeContract.View view) {
         super(view);
+    }
+
+
+    @Override
+    public void getBannerList() {
+
+    }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
     }
 }

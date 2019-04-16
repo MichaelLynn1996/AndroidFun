@@ -6,9 +6,8 @@ import android.view.MenuItem;
 
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
-import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
 
-public class CollectionActivity extends ToolbarBaseActivity<CollectionContract.Presenter> implements CollectionContract.View {
+public class CollectionActivity extends BaseActivity<CollectionContract.Presenter> implements CollectionContract.View {
 
     @Override
     protected CollectionContract.Presenter createPresenter() {

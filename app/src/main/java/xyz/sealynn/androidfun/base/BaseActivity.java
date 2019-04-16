@@ -2,7 +2,6 @@ package xyz.sealynn.androidfun.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.StrictMode;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +17,6 @@ import xyz.sealynn.androidfun.R;
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity
         implements BaseView {
-
-//    private Toolbar mToolbar;
 
     private Unbinder bind;
 
@@ -56,17 +53,14 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         initEvent();
     }
 
-    protected abstract void initToolbar();
-
-//    /**
-//     * 初始化Toolbar
-//     */
-//    private void initToolbar() {
-//        if (findViewById(R.id.toolbar) != null) {
-//            mToolbar = findViewById(R.id.toolbar);
-//            setSupportActionBar(mToolbar);
-//        }
-//    }
+    /**
+     * 初始化Toolbar
+     */
+    private void initToolbar() {
+        if (findViewById(R.id.toolbar) != null) {
+            setSupportActionBar(findViewById(R.id.toolbar));
+        }
+    }
 
     /**
      * 创建Presenter
@@ -111,23 +105,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         // ButterKnife解除绑定
         bind.unbind();
-//        // 销毁Presenter
-//        if (mPresenter != null) {
-//            mPresenter.onDestroy();
-//        }
         super.onDestroy();
     }
-
-//    protected Toolbar getToolbar() {
-//        return mToolbar;
-//    }
 
     @Override
     public Context getContext() {
         return this;
     }
 
-    protected P getPresenter(){
+    protected P getPresenter() {
         return mPresenter;
     }
 }

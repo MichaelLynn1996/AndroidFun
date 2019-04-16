@@ -42,11 +42,6 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     ValueAnimator animator;
 
     @Override
-    protected void initToolbar() {
-
-    }
-
-    @Override
     protected YearProgressContract.Presenter createPresenter() {
         return new YearProgressPresenter(this);
     }

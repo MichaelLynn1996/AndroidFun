@@ -2,7 +2,7 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_yearprogress_dark"
+        android:icon="@drawable/ic_action_year_progress"
         android:shortcutDisabledMessage="@string/yearprogress"
         android:shortcutId="year_progress"
         android:shortcutLongLabel="@string/yearprogress"
@@ -17,7 +17,7 @@
     </shortcut>
     <shortcut
         android:enabled="true"
-        android:icon="@drawable/ic_collection_dark"
+        android:icon="@drawable/ic_action_collection"
         android:shortcutDisabledMessage="@string/collection"
         android:shortcutId="collection"
         android:shortcutLongLabel="@string/collection"

@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import xyz.sealynn.androidfun.APP;
 import xyz.sealynn.androidfun.base.Constants;
 import xyz.sealynn.androidfun.net.interceptor.AddCookiesInterceptor;
 import xyz.sealynn.androidfun.net.interceptor.SaveCookiesInterceptor;
@@ -28,27 +29,27 @@ public class RetrofitManager {
     private static final int DEFAULT_READ_TIME_OUT = 20;
     private static final int DEFAULT_WRITE_TIME_OUT = 20;
 
-    private RetrofitManager(Context context) {
-        initRetrofit(context);
+    private RetrofitManager() {
+        initRetrofit();
     }
 
-    public static synchronized RetrofitManager getInstance(Context context) {
+    public static synchronized RetrofitManager getInstance() {
         if (mRetrofitManager == null) {
-            mRetrofitManager = new RetrofitManager(context);
+            mRetrofitManager = new RetrofitManager();
         }
         return mRetrofitManager;
     }
 
 
-    private void initRetrofit(Context context) {
+    private void initRetrofit() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        builder.addInterceptor(new SaveCookiesInterceptor(context))
-                .addInterceptor(new AddCookiesInterceptor(context));
+        builder.addInterceptor(new SaveCookiesInterceptor(APP.getAppContext()))
+                .addInterceptor(new AddCookiesInterceptor(APP.getAppContext()));
         //添加retrofit日志打印
-        if (AppUtils.isApkInDebug(context)) {
+        if (AppUtils.isApkInDebug(APP.getAppContext())) {
             builder.addInterceptor(interceptor);
         }
 

@@ -2,8 +2,9 @@ package xyz.sealynn.androidfun.module.login;
 
 import android.app.Activity;
 
+import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BasePresenterImpl;
-import xyz.sealynn.androidfun.model.Login;
+import xyz.sealynn.androidfun.model.User;
 import xyz.sealynn.androidfun.model.Result;
 import xyz.sealynn.androidfun.net.RetrofitManager;
 import xyz.sealynn.androidfun.utils.ToastUtils;
@@ -15,29 +16,32 @@ import xyz.sealynn.androidfun.utils.ToastUtils;
  */
 public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implements LoginContract.Presenter {
 
+    private static final int LOGIN = 0;
+
     public LoginPresenter(LoginContract.View view) {
         super(view);
     }
 
     @Override
     public void login(String u, String p) {
-        domine(RetrofitManager.getInstance(getView().getContext()).createReq().login(u, p), 1);
+        domine(RetrofitManager.getInstance().createReq().login(u, p), LOGIN);
     }
 
     @Override
     public void onResponse(Object t, int what) {
-        super.onResponse(t, what);
         switch (what) {
-            case 1:
-                Result<Login> requestBody = Result.cast(t);
+            case LOGIN:
+                Result<User> requestBody = Result.cast(t);
                 if (requestBody.getErrorCode() == 0) {
-                    ToastUtils.shortToast(getView().getContext(), "登陆成功");
+                    ToastUtils.shortToast(getView().getContext(), R.string.login_success);
                     Result.putResultBean(getView().getContext(), "login", requestBody);
                     Activity activity = (Activity) getView().getContext();
+                    activity.setResult(Activity.RESULT_OK, null);
                     activity.finish();
                 } else {
                     ToastUtils.shortToast(getView().getContext(), requestBody.getErrorMsg());
                 }
+                getView().unFreeze();
                 break;
         }
     }

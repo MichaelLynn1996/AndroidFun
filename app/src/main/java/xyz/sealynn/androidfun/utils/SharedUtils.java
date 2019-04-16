@@ -60,11 +60,11 @@ public class SharedUtils {
         }
     }
 
-    public static void mailToDeveloper(Context context){
+    public static void mailToDeveloper(Context context,String title,String content){
         Intent data=new Intent(Intent.ACTION_SENDTO);
-        data.setData(Uri.parse("mailto:sealinxy@outlook.com"));
-        data.putExtra(Intent.EXTRA_SUBJECT, "这是标题");
-        data.putExtra(Intent.EXTRA_TEXT, "这是内容");
+        data.setData(Uri.parse("mailto:sealynndev@gamil.com"));
+        data.putExtra(Intent.EXTRA_SUBJECT, title);
+        data.putExtra(Intent.EXTRA_TEXT, content);
         context.startActivity(data);
     }
 }

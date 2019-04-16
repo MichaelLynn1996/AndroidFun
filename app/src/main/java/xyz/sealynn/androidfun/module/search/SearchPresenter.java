@@ -12,4 +12,9 @@ public class SearchPresenter extends BasePresenterImpl<SearchContract.View> impl
     public SearchPresenter(SearchContract.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

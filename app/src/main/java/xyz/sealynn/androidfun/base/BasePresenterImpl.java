@@ -19,11 +19,14 @@ import xyz.sealynn.androidfun.utils.ToastUtils;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public abstract class BasePresenterImpl<V extends BaseView> extends ViewModel implements BasePresenter<V>, OnHttpCallBackListener {
+public abstract class BasePresenterImpl<V extends BaseView> implements BasePresenter<V>, OnHttpCallBackListener {
 
     private CompositeDisposable compositeDisposable;
 
     private V mView;
+
+    public BasePresenterImpl() {
+    }
 
     protected BasePresenterImpl(V view) {
         this.mView = view;
@@ -114,11 +117,6 @@ public abstract class BasePresenterImpl<V extends BaseView> extends ViewModel im
 
     @Override
     public void onCompletes(int what) {
-
-    }
-
-    @Override
-    public void onResponse(Object t, int what) {
 
     }
 }

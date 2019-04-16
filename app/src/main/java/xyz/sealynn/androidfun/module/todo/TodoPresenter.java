@@ -12,4 +12,9 @@ public class TodoPresenter extends BasePresenterImpl<TodoContract.View> implemen
     public TodoPresenter(TodoContract.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

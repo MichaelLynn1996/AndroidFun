@@ -12,4 +12,9 @@ public class GuidancePresenter extends BasePresenterImpl<GuidanceContract.View> 
     public GuidancePresenter(GuidanceContract.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

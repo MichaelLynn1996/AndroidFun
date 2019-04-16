@@ -12,4 +12,9 @@ public class ProjectPresenter extends BasePresenterImpl<ProjectContract.View> im
     public ProjectPresenter(ProjectContract.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

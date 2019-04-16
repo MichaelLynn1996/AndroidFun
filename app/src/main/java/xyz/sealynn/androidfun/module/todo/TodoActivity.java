@@ -1,23 +1,12 @@
 package xyz.sealynn.androidfun.module.todo;
 
-import android.annotation.SuppressLint;
-import android.app.ActivityOptions;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.textfield.TextInputEditText;
-
-import androidx.appcompat.widget.AppCompatButton;
-import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
-import xyz.sealynn.androidfun.base.ToolbarBaseActivity;
-import xyz.sealynn.androidfun.module.register.RegisterActivity;
 
-public class TodoActivity extends ToolbarBaseActivity<TodoContract.Presenter> implements TodoContract.View {
+public class TodoActivity extends BaseActivity<TodoContract.Presenter> implements TodoContract.View {
 
     @Override
     protected TodoContract.Presenter createPresenter() {

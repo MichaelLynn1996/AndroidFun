@@ -62,7 +62,7 @@
         <activity android:name=".module.login.LoginActivity" />
         <activity
             android:name=".module.register.RegisterActivity"
-            android:theme="@style/Translucent" />
+            android:theme="@style/noAnimTheme" />
 
         <receiver android:name=".widget.ProgressWidgetWhite">
             <intent-filter>

@@ -12,4 +12,9 @@ public class CollectionPresenter extends BasePresenterImpl<CollectionContract.Vi
     public CollectionPresenter(CollectionContract.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

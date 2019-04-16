@@ -6,19 +6,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_play_android"
-            android:icon="@drawable/ic_android_dark"
+            android:icon="@drawable/ic_action_android"
             android:title="@string/wanaandroid" />
         <item
             android:id="@+id/nav_collection"
-            android:icon="@drawable/ic_collection_dark"
+            android:icon="@drawable/ic_action_collection"
             android:title="@string/collection" />
         <item
             android:id="@+id/nav_todo"
-            android:icon="@drawable/ic_todo_dark"
+            android:icon="@drawable/ic_action_todo"
             android:title="@string/todo" />
         <item
             android:id="@+id/nav_year_progress"
-            android:icon="@drawable/ic_yearprogress_dark"
+            android:icon="@drawable/ic_action_year_progress"
             android:title="@string/yearprogress" />
     </group>
 
@@ -26,8 +26,12 @@
         <menu>
             <item
                 android:id="@+id/nav_setting"
-                android:icon="@drawable/ic_setting_dark"
+                android:icon="@drawable/ic_action_setting"
                 android:title="@string/settings" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_action_about"
+                android:title="@string/about" />
         </menu>
     </item>
 

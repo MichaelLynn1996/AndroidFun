@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresPermission;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +24,11 @@ public class ActivityUtils {
 
     public static void startActivity(Context packageContext, Class<?> cls) {
         packageContext.startActivity(new Intent(packageContext, cls));
+    }
+
+    public static void startActivityForResult(@RequiresPermission Intent intent, int requestCode,
+                                              @Nullable Bundle options){
+
     }
 
     public static void addFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {

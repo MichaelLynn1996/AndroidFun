@@ -11,9 +11,11 @@ import xyz.sealynn.androidfun.base.BaseView;
 public interface MainContract {
 
     interface View extends BaseView {
+        void logout();
     }
 
     interface Presenter extends BasePresenter<View> {
         void checkYearProgress();
+        void logout();
     }
 }

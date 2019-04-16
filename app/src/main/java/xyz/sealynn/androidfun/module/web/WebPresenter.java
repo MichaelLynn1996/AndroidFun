@@ -35,4 +35,9 @@ class WebPresenter extends BasePresenterImpl<WebContract.View> implements WebCon
         intent.setData(mUri);
         getView().getContext().startActivity(intent);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

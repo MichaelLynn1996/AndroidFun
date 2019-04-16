@@ -11,8 +11,11 @@ import xyz.sealynn.androidfun.base.BaseView;
 public interface RegisterContract {
 
     interface View extends BaseView {
+        void freeze();
+        void unFreeze();
     }
 
     interface Presenter extends BasePresenter<View> {
+        void register(String u, String p, String rp);
     }
 }

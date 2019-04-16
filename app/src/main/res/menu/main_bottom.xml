@@ -3,25 +3,25 @@
     <item
         android:id="@+id/home"
         android:title="@string/home"
-        android:icon="@drawable/ic_home"/>
+        android:icon="@drawable/ic_action_home"/>
 
     <item
         android:id="@+id/knowledge_tree"
         android:title="@string/knowledge_tree"
-        android:icon="@drawable/ic_knowledge_tree"/>
+        android:icon="@drawable/ic_action_knowledge_tree"/>
 
     <item
         android:id="@+id/wechat"
         android:title="@string/wechat"
-        android:icon="@drawable/ic_wechat"/>
+        android:icon="@drawable/ic_action_wechat"/>
 
     <item
         android:id="@+id/guidance"
         android:title="@string/guidance"
-        android:icon="@drawable/ic_guidance"/>
+        android:icon="@drawable/ic_action_guidance"/>
 
     <item
         android:id="@+id/project"
         android:title="@string/project"
-        android:icon="@drawable/ic_project"/>
+        android:icon="@drawable/ic_action_project"/>
 </menu>

@@ -12,4 +12,9 @@ public class KnowledgeTreePresenter extends BasePresenterImpl<KnowledgeTreeConta
     public KnowledgeTreePresenter(KnowledgeTreeContarct.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

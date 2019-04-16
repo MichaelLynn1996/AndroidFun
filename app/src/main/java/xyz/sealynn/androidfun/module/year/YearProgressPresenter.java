@@ -12,4 +12,9 @@ class YearProgressPresenter extends BasePresenterImpl<YearProgressContract.View>
     YearProgressPresenter(YearProgressContract.View view) {
         super(view);
     }
+
+    @Override
+    public void onResponse(Object t, int what) {
+
+    }
 }

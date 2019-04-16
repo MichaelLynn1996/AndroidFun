@@ -1,15 +1,11 @@
 package xyz.sealynn.androidfun.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
-import com.orhanobut.logger.Logger;
 
-import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import androidx.room.Entity;
 import xyz.sealynn.androidfun.base.Constants;
 
 /**
@@ -17,9 +13,7 @@ import xyz.sealynn.androidfun.base.Constants;
  * <p>
  * Email：sealynndev@gmail.com
  */
-@Entity
 public class Result<T> {
-
 
     /**
      * data : {"chapterTops":[],"collectIds":[2683],"email":"","icon":"","id":3768,"password":"","token":"","type":0,"username":"SeaLynn0"}
@@ -30,16 +24,6 @@ public class Result<T> {
     private T data;
     private int errorCode;
     private String errorMsg;
-
-//    /**
-//     * @param obj
-//     * @param <P>
-//     * @return
-//     */
-//    @SuppressWarnings("unchecked")
-//    public static <P> P cast(Object obj) {
-//        return (P) obj;
-//    }
 
     public T getData() {
         return data;
@@ -65,6 +49,11 @@ public class Result<T> {
         this.errorMsg = errorMsg;
     }
 
+    /**
+     * @param obj
+     * @param <T>
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static <T> Result<T> cast(Object obj) {
         return (Result<T>) obj;
@@ -76,18 +65,31 @@ public class Result<T> {
      * @param result
      */
     public static void putResultBean(Context ctx, String key, Result result) {
-        String json = new Gson().toJson(result);
         ctx.getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE)
                 .edit()
-                .putString(key, json)
+                .putString(key, toJson(result))
                 .apply();
     }
 
+    public static String toJson(Result result) {
+        return new Gson().toJson(result);
+    }
+
+    /**
+     * @param ctx
+     * @param key
+     * @param typeOfData
+     * @param <T>
+     * @return
+     */
     public static <T> Result<T> getResultBean(Context ctx, String key, final Type typeOfData) {
-        Gson gson = new Gson();
         String json = ctx
                 .getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE)
                 .getString(key, "");
-        return gson.fromJson(json, typeOfData);
+        return toBean(json, typeOfData);
+    }
+
+    public static <T> Result<T> toBean(String json, final Type typeOfData) {
+        return new Gson().fromJson(json, typeOfData);
     }
 }
