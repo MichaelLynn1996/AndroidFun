@@ -9,6 +9,7 @@ import androidx.annotation.RequiresPermission;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import xyz.sealynn.androidfun.module.web.WebActivity;
 
 /**
  * Created by SeaLynn0 on 2019/1/3 20:47
@@ -17,17 +18,21 @@ import androidx.fragment.app.FragmentTransaction;
  */
 public class ActivityUtils {
 
-    private ActivityUtils(){
+    private ActivityUtils() {
         /* cannot be instantiated */
         throw new UnsupportedOperationException("cannot be instantiated");
     }
 
     public static void startActivity(Context packageContext, Class<?> cls) {
-        packageContext.startActivity(new Intent(packageContext, cls));
+        startActivity(packageContext, new Intent(packageContext, cls));
+    }
+
+    public static void startActivity(Context packageContext, Intent intent) {
+        packageContext.startActivity(intent);
     }
 
     public static void startActivityForResult(@RequiresPermission Intent intent, int requestCode,
-                                              @Nullable Bundle options){
+                                              @Nullable Bundle options) {
 
     }
 
@@ -46,7 +51,13 @@ public class ActivityUtils {
         packageContext.startActivity(new Intent(packageContext, cls), bundle);
     }
 
-    public static void replaceFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId){
-        fragmentManager.beginTransaction().replace(frameId,fragment).show(fragment).commit();
+    public static void replaceFragmentToActivity(FragmentManager fragmentManager, Fragment fragment, int frameId) {
+        fragmentManager.beginTransaction().replace(frameId, fragment).show(fragment).commit();
+    }
+
+    public static void startWebActivity(Context packageContext, String link) {
+        Intent intent = new Intent(packageContext, WebActivity.class);
+        intent.putExtra("url", link);
+        startActivity(packageContext, intent);
     }
 }

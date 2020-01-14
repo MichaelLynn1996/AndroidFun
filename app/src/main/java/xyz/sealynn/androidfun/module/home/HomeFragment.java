@@ -4,20 +4,20 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
-import xyz.sealynn.androidfun.base.BaseFragment;
+import xyz.sealynn.androidfun.module.BaseMainFragment;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 19:56
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class HomeFragment extends BaseFragment<HomeContract.Presenter> implements HomeContract.View {
+public class HomeFragment extends BaseMainFragment<HomeContract.Presenter> implements HomeContract.View {
 
-    @BindView(R.id.refresh)
-    SwipeRefreshLayout refreshLayout;
+//    @BindView(R.id.refresh)
+//    SwipeRefreshLayout refreshLayout;
     @BindView(R.id.home_list)
     RecyclerView homelist;
 
@@ -41,8 +41,8 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
     }
 
     @Override
-    protected void initView(View rootView) {
-
+    protected int getTitle() {
+        return R.string.home;
     }
 
     @Override
@@ -52,6 +52,6 @@ public class HomeFragment extends BaseFragment<HomeContract.Presenter> implement
 
     @Override
     public void loading(Boolean isLoading) {
-        refreshLayout.setRefreshing(isLoading);
+//        refreshLayout.setRefreshing(isLoading);
     }
 }

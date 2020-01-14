@@ -60,13 +60,13 @@ public class YearProgressActivity extends BaseActivity<YearProgressContract.Pres
     protected void initView() {
         year.setText(DateUtils.getYear());
 
-        animator = ValueAnimator.ofInt(0, DateUtils.getIntOfTheYearPassed());
+        animator = ValueAnimator.ofInt(0, (int) DateUtils.getIntOfTheYearPassed());
         animator.setDuration(1000);
         animator.addUpdateListener(animation -> {
             Integer value = (Integer) animation.getAnimatedValue();
             if (progressBar != null && percent != null) {
                 progressBar.setProgress(value);
-                percent.setText(String.valueOf(value + "%"));
+                percent.setText(DateUtils.getPercentsOfTheYearPassed());
             }
         });
         animator.start();

@@ -16,7 +16,7 @@ public class DateUtils {
     }
 
     public static String getPercentsOfTheYearPassed() {
-        return String.valueOf((int) Math.floor((float) getDaysOfTheYearPassed() / (float) getDaysOfTheYear() * 100)) + "%";
+        return (double) getDaysOfTheYearPassed() / (double) getDaysOfTheYear() * 100 + "%";
     }
 
     public static int getDaysOfTheYearPassed() {
@@ -35,7 +35,7 @@ public class DateUtils {
         return String.valueOf(calendar.get(Calendar.YEAR));
     }
 
-    public static int getIntOfTheYearPassed(){
-        return (int) Math.floor((float) getDaysOfTheYearPassed() / (float) getDaysOfTheYear() * 100);
+    public static double getIntOfTheYearPassed(){
+        return (double) getDaysOfTheYearPassed() / (double) getDaysOfTheYear() * 100;
     }
 }

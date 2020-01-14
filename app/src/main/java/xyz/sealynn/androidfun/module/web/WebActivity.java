@@ -12,15 +12,16 @@ import androidx.appcompat.app.ActionBar;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebChromeClient;
+
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 
 import com.google.gson.Gson;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.NestedScrollAgentWebView;
 import com.just.agentweb.PermissionInterceptor;
+import com.just.agentweb.WebChromeClient;
+import com.just.agentweb.WebViewClient;
 import com.orhanobut.logger.Logger;
 
 import butterknife.BindView;

@@ -157,5 +157,13 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="time">时间</string>
+    <string name="TODO">TODO</string>
+    <string name="article_collection">收藏博文</string>
+    <string name="common_websites">常用网站</string>
+    <string name="login_first">你需要先登录！</string>
+    <string name="delete_succ">删除成功！</string>
+    <string name="add">添加</string>
+    <string name="edit">编辑</string>
+    <string name="nothing_here">这里什么也没有\nㄟ( ▔, ▔ )ㄏ</string>
 
 </resources>

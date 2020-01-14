@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import xyz.sealynn.androidfun.base.Constants;
-import xyz.sealynn.androidfun.module.AppCompatPreferenceActivity;
 
 /**
  * Created by SeaLynn0 on 2018/10/13 11:52
@@ -38,14 +37,14 @@ public final class NightModeUtils {
         activity.recreate();
     }
 
-    public static void setNightModeState(AppCompatPreferenceActivity activity, int mode) {
-        AppCompatDelegate.setDefaultNightMode(mode);
-//        SharedPreferencesUtils.editDefaultConfig(activity, NIGHT_MODE_PREF, mode);
-        activity.getApplicationContext()
-                .getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE)
-                .edit()
-                .putInt(NIGHT_MODE_PREF, mode)
-                .apply();
-        activity.recreate();
-    }
+//    public static void setNightModeState(AppCompatPreferenceActivity activity, int mode) {
+//        AppCompatDelegate.setDefaultNightMode(mode);
+////        SharedPreferencesUtils.editDefaultConfig(activity, NIGHT_MODE_PREF, mode);
+//        activity.getApplicationContext()
+//                .getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE)
+//                .edit()
+//                .putInt(NIGHT_MODE_PREF, mode)
+//                .apply();
+//        activity.recreate();
+//    }
 }

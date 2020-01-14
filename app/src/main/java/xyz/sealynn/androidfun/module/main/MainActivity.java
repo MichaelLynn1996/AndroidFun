@@ -2,12 +2,20 @@ package xyz.sealynn.androidfun.module.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
@@ -15,27 +23,19 @@ import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Stack;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import xyz.sealynn.androidfun.APP;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.base.Constants;
-import xyz.sealynn.androidfun.model.User;
 import xyz.sealynn.androidfun.model.Result;
+import xyz.sealynn.androidfun.model.User;
 import xyz.sealynn.androidfun.module.AboutActivity;
-import xyz.sealynn.androidfun.module.SettingsActivity;
 import xyz.sealynn.androidfun.module.collection.CollectionActivity;
 import xyz.sealynn.androidfun.module.guidance.GuidanceFragment;
 import xyz.sealynn.androidfun.module.home.HomeFragment;
@@ -43,12 +43,13 @@ import xyz.sealynn.androidfun.module.knowledgetree.KnowledgeTreeFragment;
 import xyz.sealynn.androidfun.module.login.LoginActivity;
 import xyz.sealynn.androidfun.module.project.ProjectFragment;
 import xyz.sealynn.androidfun.module.search.SearchActivity;
+import xyz.sealynn.androidfun.module.setting.SettingsActivity;
 import xyz.sealynn.androidfun.module.todo.TodoActivity;
 import xyz.sealynn.androidfun.module.wechat.WeChatFragment;
 import xyz.sealynn.androidfun.module.year.YearProgressActivity;
 import xyz.sealynn.androidfun.net.interceptor.SaveCookiesInterceptor;
-import xyz.sealynn.androidfun.receiver.NightModeChangeReceiver;
 import xyz.sealynn.androidfun.utils.ActivityUtils;
+import xyz.sealynn.androidfun.utils.ToastUtils;
 
 public class MainActivity extends BaseActivity<MainContract.Presenter>
         implements MainContract.View, NavigationView.OnNavigationItemSelectedListener {
@@ -65,9 +66,9 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     View headerView;
     AppCompatImageView avatar;
     AppCompatTextView username;
-    ActionBar actionBar;
+//    ActionBar actionBar;
 
-    NightModeChangeReceiver receiver;
+//    NightModeChangeReceiver receiver;
 
     List<Fragment> listFragment = new ArrayList<>();
     private int lastFragment;   //用于记录上个选择的Fragment
@@ -92,12 +93,12 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     @Override
     protected void initView() {
 //        if (getSupportActionBar()!=null)
-        actionBar = getSupportActionBar();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, drawer.getRootView().findViewById(R.id.toolbar)
-                , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        actionBar = getSupportActionBar();
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, drawer.getRootView().findViewById(R.id.toolbar)
+//                , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
 
         initNavigationView();
         initBottomNavigationView();
@@ -128,7 +129,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
         listFragment.add(new GuidanceFragment());
         listFragment.add(new ProjectFragment());
 
-        actionBar.setTitle(R.string.home);
+//        actionBar.setTitle(R.string.home);
         ActivityUtils.replaceFragmentToActivity(getSupportFragmentManager(), listFragment.get(0), R.id.content);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
@@ -137,23 +138,23 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
             switch (id) {
                 case R.id.home:
                     switchFragment(0);
-                    actionBar.setTitle(R.string.home);
+//                    actionBar.setTitle(R.string.home);
                     return true;
                 case R.id.knowledge_tree:
                     switchFragment(1);
-                    actionBar.setTitle(R.string.knowledge_tree);
+//                    actionBar.setTitle(R.string.knowledge_tree);
                     return true;
                 case R.id.wechat:
                     switchFragment(2);
-                    actionBar.setTitle(R.string.wechat);
+//                    actionBar.setTitle(R.string.wechat);
                     return true;
                 case R.id.guidance:
                     switchFragment(3);
-                    actionBar.setTitle(R.string.guidance);
+//                    actionBar.setTitle(R.string.guidance);
                     return true;
                 case R.id.project:
                     switchFragment(4);
-                    actionBar.setTitle(R.string.project);
+//                    actionBar.setTitle(R.string.project);
                     return true;
             }
             return false;
@@ -200,12 +201,12 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
                 startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
             }
         });
-        getPresenter().checkYearProgress();
+//        getPresenter().checkYearProgress();
 
         //创建广播
-        receiver = new NightModeChangeReceiver(this);
+//        receiver = new NightModeChangeReceiver(this);
         //注册广播
-        registerReceiver(receiver, new IntentFilter(Constants.NIGHT_MODE_CHANGE_INTENT));
+//        registerReceiver(receiver, new IntentFilter(Constants.NIGHT_MODE_CHANGE_INTENT));
     }
 
     /**
@@ -228,7 +229,7 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -241,15 +242,16 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onDestroy() {
-        unregisterReceiver(receiver);
-        super.onDestroy();
-    }
+//    @Override
+//    protected void onDestroy() {
+////        unregisterReceiver(receiver);
+//        super.onDestroy();
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_LOGIN:
                 if (resultCode == RESULT_OK)
@@ -272,15 +274,25 @@ public class MainActivity extends BaseActivity<MainContract.Presenter>
         if (id == R.id.nav_play_android) {
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_todo) {
-            ActivityUtils.startActivity(MainActivity.this, TodoActivity.class);
+            //需要检查登录
+            if (!getContext().getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE).contains("login")) {
+                ToastUtils.shortToast(MainActivity.this, R.string.login_first);
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
+            } else
+                startActivity(new Intent(MainActivity.this, TodoActivity.class));
         } else if (id == R.id.nav_year_progress) {
-            ActivityUtils.startActivity(MainActivity.this, YearProgressActivity.class);
+            startActivity(new Intent(MainActivity.this, YearProgressActivity.class));
         } else if (id == R.id.nav_collection) {
-            ActivityUtils.startActivity(MainActivity.this, CollectionActivity.class);
+            //需要检查登录
+            if (!getContext().getSharedPreferences(Constants.CONFIG_DEFAULT, Context.MODE_PRIVATE).contains("login")) {
+                ToastUtils.shortToast(MainActivity.this, R.string.login_first);
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), REQUEST_LOGIN);
+            } else
+                startActivity(new Intent(MainActivity.this, CollectionActivity.class));
         } else if (id == R.id.nav_setting) {
-            ActivityUtils.startActivity(MainActivity.this, SettingsActivity.class);
+            startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         } else if (id == R.id.nav_about) {
-            ActivityUtils.startActivity(MainActivity.this, AboutActivity.class);
+            startActivity(new Intent(MainActivity.this, AboutActivity.class));
         } else if (id == ITEM_LOGOUT_ID) {
             Logger.d("注销");
             getPresenter().logout();

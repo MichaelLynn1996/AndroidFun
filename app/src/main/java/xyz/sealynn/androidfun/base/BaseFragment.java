@@ -10,6 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
+import com.orhanobut.logger.Logger;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import xyz.sealynn.androidfun.R;
@@ -25,7 +28,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
     private Unbinder mUnbind;
     private P mPresenter;
 
-    @Nullable
+    @NonNull
     @Override
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mPresenter = createPresenter();
@@ -59,6 +62,7 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
      * @param root
      */
     private void initToolbar(View root) {
+        Logger.d(root.findViewById(R.id.toolbar) != null);
         if (root.findViewById(R.id.toolbar) != null) {
 //            mToolbar = root.findViewById(R.id.toolbar);
             if (getActivity() != null)

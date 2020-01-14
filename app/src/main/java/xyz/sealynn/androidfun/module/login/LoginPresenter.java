@@ -45,4 +45,13 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
                 break;
         }
     }
+
+    @Override
+    public void onErrors(Throwable e, int what) {
+        super.onErrors(e, what);
+        switch (what){
+            case LOGIN:
+                getView().unFreeze();
+        }
+    }
 }

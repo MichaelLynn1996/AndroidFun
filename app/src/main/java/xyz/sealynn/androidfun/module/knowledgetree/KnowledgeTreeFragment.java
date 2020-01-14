@@ -5,13 +5,14 @@ import android.view.View;
 
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseFragment;
+import xyz.sealynn.androidfun.module.BaseMainFragment;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 20:05
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class KnowledgeTreeFragment extends BaseFragment<KnowledgeTreeContarct.Presenter> implements KnowledgeTreeContarct.View {
+public class KnowledgeTreeFragment extends BaseMainFragment<KnowledgeTreeContarct.Presenter> implements KnowledgeTreeContarct.View {
 
     @Override
     protected KnowledgeTreeContarct.Presenter createPresenter() {
@@ -34,8 +35,8 @@ public class KnowledgeTreeFragment extends BaseFragment<KnowledgeTreeContarct.Pr
     }
 
     @Override
-    protected void initView(View rootView) {
-
+    protected int getTitle() {
+        return R.string.knowledge_tree;
     }
 
     @Override

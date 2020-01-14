@@ -2,15 +2,13 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".module.register.RegisterActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="144dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
@@ -20,11 +18,8 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:title="@string/register"
-                app:titleTextColor="@android:color/white">
+                app:title="@string/register">
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -46,6 +41,7 @@
             android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginEnd="@dimen/dp_24"
+            android:transitionName="tilu"
             app:errorEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -53,7 +49,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/Username"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:transitionName="etu" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -64,6 +61,7 @@
             android:layout_marginStart="@dimen/dp_24"
             android:layout_marginTop="@dimen/dp_16"
             android:layout_marginEnd="@dimen/dp_24"
+            android:transitionName="tilp"
             app:errorEnabled="true"
             app:passwordToggleEnabled="true">
 
@@ -72,7 +70,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:transitionName="etp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -105,12 +104,5 @@
             android:textColor="@color/colorAccent" />
 
     </LinearLayout>
-
-    <View
-        android:id="@+id/view_puppet"
-        android:background="@color/colorPrimaryDark"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

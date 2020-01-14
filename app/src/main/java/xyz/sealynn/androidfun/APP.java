@@ -3,11 +3,11 @@ package xyz.sealynn.androidfun;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
 
-import androidx.appcompat.app.AppCompatDelegate;
 import xyz.sealynn.androidfun.utils.NightModeUtils;
 import xyz.sealynn.androidfun.utils.ToastUtils;
 
@@ -34,16 +34,16 @@ public class APP extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return;
+//        }
+//        LeakCanary.install(this);
         // Normal app init code...
         Logger.addLogAdapter(new AndroidLogAdapter());
         appContext = getApplicationContext();
-        AppCompatDelegate.setDefaultNightMode(NightModeUtils.getNightModeState(getAppContext()));
+//        AppCompatDelegate.setDefaultNightMode(NightModeUtils.getNightModeState(getAppContext()));
     }
 
     /**

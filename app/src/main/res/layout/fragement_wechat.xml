@@ -6,19 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".module.main.MainActivity">
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/pagers"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/view_toolbar" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable">
+            app:tabMode="scrollable"
+            android:background="@color/colorPrimary"
+            android:visibility="gone">
 
         </com.google.android.material.tabs.TabLayout>
 
-    </androidx.viewpager.widget.ViewPager>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pagers"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </androidx.viewpager2.widget.ViewPager2>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

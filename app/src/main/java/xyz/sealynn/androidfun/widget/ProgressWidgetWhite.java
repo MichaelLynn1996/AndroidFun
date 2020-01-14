@@ -23,7 +23,7 @@ public class ProgressWidgetWhite extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.progress_widget_white);
         views.setTextViewText(R.id.tv_percent, DateUtils.getPercentsOfTheYearPassed());
         views.setTextViewText(R.id.tv_year, DateUtils.getYear());
-        views.setProgressBar(R.id.progress_bar, 100, DateUtils.getIntOfTheYearPassed(), false);
+        views.setProgressBar(R.id.progress_bar, 100, (int)DateUtils.getIntOfTheYearPassed(), false);
 
         Intent intent = new Intent(context,YearProgressActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_UPDATE_CURRENT);

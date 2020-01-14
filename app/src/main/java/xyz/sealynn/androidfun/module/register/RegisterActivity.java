@@ -33,12 +33,12 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
     @BindView(R.id.til_repeat_password)
     TextInputLayout TILRePassword;
 
-    @BindView(R.id.root)
-    View content;//根布局对象（用来控制整个布局）
-    @BindView(R.id.view_puppet)
-    View mPuppet;//揭露层对象
-    private int mX;
-    private int mY;
+//    @BindView(R.id.root)
+//    View content;//根布局对象（用来控制整个布局）
+//    @BindView(R.id.view_puppet)
+//    View mPuppet;//揭露层对象
+//    private int mX;
+//    private int mY;
 
     @Override
     protected RegisterContract.Presenter createPresenter() {
@@ -59,12 +59,12 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
     protected void initView() {
         //动画需要依赖于某个视图才可启动，
         // 这里依赖于根布局对象，并且开辟一个子线程，充分利用资源
-        content.post(() -> {
-            mX = getIntent().getIntExtra("cx", 0);
-            mY = getIntent().getIntExtra("cy", 0);
-            Animator animator = createRevealAnimator(mX, mY);
-            animator.start();
-        });
+//        content.post(() -> {
+//            mX = getIntent().getIntExtra("cx", 0);
+//            mY = getIntent().getIntExtra("cy", 0);
+//            Animator animator = createRevealAnimator(mX, mY);
+//            animator.start();
+//        });
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
             getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
@@ -123,59 +123,59 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                finish();
+                finishAfterTransition();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private Animator createRevealAnimator(int x, int y) {
-        int startRadius = 0;
-        int endRadius = (int) Math.hypot(content.getHeight(), content.getWidth());
+//    private Animator createRevealAnimator(int x, int y) {
+//        int startRadius = 0;
+//        int endRadius = (int) Math.hypot(content.getHeight(), content.getWidth());
+//
+//        Animator animator = ViewAnimationUtils.createCircularReveal(
+//                content, x, y,
+//                startRadius,
+//                endRadius);
+//        animator.setDuration(660);
+//        animator.setInterpolator(new AccelerateDecelerateInterpolator());
+//        //判断标志位reversed，true则为添加返回键版动画监听器，false则为跳转动画开启版
+//        // if (!reversed)
+//        animator.addListener(animatorListener1);
+//        return animator;
+//    }
 
-        Animator animator = ViewAnimationUtils.createCircularReveal(
-                content, x, y,
-                startRadius,
-                endRadius);
-        animator.setDuration(660);
-        animator.setInterpolator(new AccelerateDecelerateInterpolator());
-        //判断标志位reversed，true则为添加返回键版动画监听器，false则为跳转动画开启版
-        // if (!reversed)
-        animator.addListener(animatorListener1);
-        return animator;
-    }
-
-    //定义动画状态监听器_跳转动画开启版
-    private Animator.AnimatorListener animatorListener1 = new Animator.AnimatorListener() {
-        @Override
-        public void onAnimationStart(Animator animation) {
-//            content.setVisibility(View.VISIBLE);//跳转进来时，（因为finish之前会将之设置为不可见，）
-            // 根布局要设置为可见，与finish部分的不可见相对应
-//            mPuppet.setAlpha(1);
-            mPuppet.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-            mPuppet.startAnimation(createAlphaAnimation());
-            mPuppet.setVisibility(View.INVISIBLE);//动画结束时，揭露动画设置为不可见
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-        }
-    };
-
-    private AlphaAnimation createAlphaAnimation() {
-        AlphaAnimation aa = new AlphaAnimation(1, 0);
-        aa.setDuration(400);
-        aa.setInterpolator(new AccelerateDecelerateInterpolator());//设置插值器
-        return aa;
-    }
+//    //定义动画状态监听器_跳转动画开启版
+//    private Animator.AnimatorListener animatorListener1 = new Animator.AnimatorListener() {
+//        @Override
+//        public void onAnimationStart(Animator animation) {
+////            content.setVisibility(View.VISIBLE);//跳转进来时，（因为finish之前会将之设置为不可见，）
+//            // 根布局要设置为可见，与finish部分的不可见相对应
+////            mPuppet.setAlpha(1);
+////            mPuppet.setVisibility(View.VISIBLE);
+//        }
+//
+//        @Override
+//        public void onAnimationEnd(Animator animation) {
+//            mPuppet.startAnimation(createAlphaAnimation());
+////            mPuppet.setVisibility(View.INVISIBLE);//动画结束时，揭露动画设置为不可见
+//        }
+//
+//        @Override
+//        public void onAnimationCancel(Animator animation) {
+//        }
+//
+//        @Override
+//        public void onAnimationRepeat(Animator animation) {
+//        }
+//    };
+//
+//    private AlphaAnimation createAlphaAnimation() {
+//        AlphaAnimation aa = new AlphaAnimation(1, 0);
+//        aa.setDuration(400);
+//        aa.setInterpolator(new AccelerateDecelerateInterpolator());//设置插值器
+//        return aa;
+//    }
 
     @Override
     public void freeze() {

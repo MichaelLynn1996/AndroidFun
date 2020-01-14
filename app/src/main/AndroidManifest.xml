@@ -21,9 +21,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity
-            android:name=".module.SettingsActivity"
-            android:label="@string/settings" />
         <activity android:name=".module.web.WebActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -55,14 +52,14 @@
         </activity>
         <activity
             android:name=".module.AboutActivity"
-            android:theme="@style/AppTheme.MaterialAboutActivity"/>
+            android:theme="@style/AppTheme.MaterialAboutActivity" />
         <activity
             android:name=".module.year.YearProgressActivity"
             android:theme="@style/FullScreenTheme" />
-        <activity android:name=".module.login.LoginActivity" />
         <activity
-            android:name=".module.register.RegisterActivity"
-            android:theme="@style/noAnimTheme" />
+            android:name=".module.login.LoginActivity" />
+        <activity
+            android:name=".module.register.RegisterActivity" />
 
         <receiver android:name=".widget.ProgressWidgetWhite">
             <intent-filter>
@@ -81,6 +78,7 @@
         <activity
             android:name=".module.OpenSourceLicenceActivity"
             android:theme="@style/AppTheme.MaterialAboutActivity" />
+        <activity android:name=".module.setting.SettingsActivity" />
     </application>
 
 </manifest>

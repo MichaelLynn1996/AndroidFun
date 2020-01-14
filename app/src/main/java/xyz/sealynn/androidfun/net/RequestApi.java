@@ -8,10 +8,12 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import xyz.sealynn.androidfun.model.ArticleCollection;
 import xyz.sealynn.androidfun.model.Banner;
-import xyz.sealynn.androidfun.model.HomeArticle;
+import xyz.sealynn.androidfun.model.ArticleRoot;
 import xyz.sealynn.androidfun.model.User;
 import xyz.sealynn.androidfun.model.Result;
+import xyz.sealynn.androidfun.model.WebCollection;
 import xyz.sealynn.androidfun.model.WxActicle;
 import xyz.sealynn.androidfun.model.WxChapter;
 
@@ -23,6 +25,9 @@ import xyz.sealynn.androidfun.model.WxChapter;
 public interface RequestApi {
 
     String BASE_URL = "https://www.wanandroid.com/";
+
+    int SUCC = 0;
+    int LOGIN_EXPIRE = -1001;
 
     /**
      * 登录
@@ -71,21 +76,39 @@ public interface RequestApi {
      */
     @FormUrlEncoded
     @GET("article/list/{page}/json")
-    Observable<Result<HomeArticle>> getHomeArticles(@Path("page") int page);
+    Observable<Result<ArticleRoot>> getHomeArticles(@Path("page") int page);
 
     /**
-     * 获取公众号列表
+     * @return 公众号作者
      */
     @GET("wxarticle/chapters/json")
     Observable<Result<List<WxChapter>>> getWeChatChapter();
 
     /**
-     * 查看某个公众号历史数据
-     *
-     * @param id
-     * @param page
-     * @return
+     * @param id   公众号id
+     * @param page 页数
+     * @return 某个公众号历史数据
      */
     @GET("wxarticle/list/{id}/{page}/json")
     Observable<Result<WxActicle>> getChapterArticles(@Path("id") int id, @Path("page") int page);
+
+    /**
+     * @return 收藏网站列表
+     */
+    @GET("lg/collect/usertools/json")
+    Observable<Result<List<WebCollection>>> getWebCollection();
+
+    /**
+     * @param id 网站id
+     * @return 删除结果
+     */
+    @FormUrlEncoded
+    @POST("lg/collect/deletetool/json")
+    Observable<Result> deleteTool(@Field("id") int id);
+
+    /**
+     * @return 收藏文章列表
+     */
+    @GET("lg/collect/list/{page}/json")
+    Observable<Result<ArticleRoot<List<ArticleCollection>>>> getArticleCollection(@Path("page") int page);
 }

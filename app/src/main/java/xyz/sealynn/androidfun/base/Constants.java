@@ -9,7 +9,7 @@ public final class Constants {
 
     public static final String NIGHT_MODE_CHANGE_INTENT = "xyz.sealynn0.androidfun.nightmodechange";
 
-//    SharedPreference Key
+    //    SharedPreference Key
     public static final String CONFIG_DEFAULT = "config";
     public static final String YEAR_PROGRESS_PERCENT = "YEAR_PROGRESS_PERCENT";
     public static final String YEAR_PROGRESS_MODE = "YEAR_PROGRESS_MODE";

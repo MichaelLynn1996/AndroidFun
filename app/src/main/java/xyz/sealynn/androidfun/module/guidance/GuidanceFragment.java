@@ -5,13 +5,14 @@ import android.view.View;
 
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseFragment;
+import xyz.sealynn.androidfun.module.BaseMainFragment;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 20:10
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class GuidanceFragment extends BaseFragment<GuidanceContract.Presenter> implements GuidanceContract.View {
+public class GuidanceFragment extends BaseMainFragment<GuidanceContract.Presenter> implements GuidanceContract.View {
 
     @Override
     protected GuidanceContract.Presenter createPresenter() {
@@ -34,8 +35,8 @@ public class GuidanceFragment extends BaseFragment<GuidanceContract.Presenter> i
     }
 
     @Override
-    protected void initView(View rootView) {
-
+    protected int getTitle() {
+        return R.string.guidance;
     }
 
     @Override

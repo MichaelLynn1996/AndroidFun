@@ -6,19 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".module.main.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:theme="@style/AppTheme.AppBarOverlay">
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize">-->
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+<!--        <include layout="@layout/view_toolbar"/>-->
 
-    </com.google.android.material.appbar.AppBarLayout>
+<!--        &lt;!&ndash;<androidx.appcompat.widget.Toolbar&ndash;&gt;-->
+<!--            &lt;!&ndash;android:id="@+id/toolbar"&ndash;&gt;-->
+<!--            &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+<!--            &lt;!&ndash;android:layout_height="?attr/actionBarSize"&ndash;&gt;-->
+<!--            &lt;!&ndash;android:background="?attr/colorPrimary" />&ndash;&gt;-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
 
     <androidx.appcompat.widget.ContentFrameLayout
         android:id="@+id/content"

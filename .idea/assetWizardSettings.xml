@@ -31,6 +31,17 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="clipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/C:/Users/SEALI/AppData/Local/JetBrains/Toolbox/apps/AndroidStudio/ch-0/182.5314842/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_search_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                       <entry key="image">
                                         <value>
                                           <PersistentState>
@@ -48,8 +59,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="D:\Downloads\alibaba.png" />
-                                      <entry key="outputName" value="ic_action_android" />
-                                      <entry key="themeColor" value="343434" />
+                                      <entry key="outputName" value="ic_action_search" />
+                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="themeColor" value="1263e6" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -88,7 +100,6 @@
                                   <option name="values">
                                     <map>
                                       <entry key="backgroundAssetType" value="COLOR" />
-                                      <entry key="backgroundColor" value="ffffff" />
                                       <entry key="foregroundImage" value="E:\Code\StudioProjects\AndroidFun\app\src\main\res\drawable\logo.png" />
                                     </map>
                                   </option>
