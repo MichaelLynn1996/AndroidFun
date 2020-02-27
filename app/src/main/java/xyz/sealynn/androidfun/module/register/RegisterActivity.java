@@ -1,12 +1,7 @@
 package xyz.sealynn.androidfun.module.register;
 
-import android.animation.Animator;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -46,7 +41,7 @@ public class RegisterActivity extends BaseActivity<RegisterContract.Presenter> i
     }
 
     @Override
-    protected int bindLayout() {
+    protected int bindView() {
         return R.layout.activity_register;
     }
 

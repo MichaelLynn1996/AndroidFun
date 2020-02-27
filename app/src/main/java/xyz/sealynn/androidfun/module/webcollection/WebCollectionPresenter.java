@@ -17,18 +17,18 @@ import xyz.sealynn.androidfun.utils.ToastUtils;
 public class WebCollectionPresenter extends BasePresenterImpl<WebCollectionContract.View> implements WebCollectionContract.Presenter {
 
 
-    public WebCollectionPresenter(WebCollectionContract.View view) {
+    WebCollectionPresenter(WebCollectionContract.View view) {
         super(view);
     }
 
     @Override
     public void onResponse(Object t, int what) {
-        switch (what) {
-            case 1:
-                Result<List<WebCollection>> requestBody = Result.cast(t);
-                if (requestBody.getErrorCode() == RequestApi.SUCC)
-                    getView().setUpChipGroup(requestBody.getData());
-                else ToastUtils.shortToast(getView().getContext(),requestBody.getErrorMsg());
+        if (what == 1) {
+            Result<List<WebCollection>> requestBody = Result.cast(t);
+            if (requestBody.getErrorCode() == RequestApi.SUCC)
+                getView().setUpChipGroup(requestBody.getData());
+            else ToastUtils.shortToast(getView().getContext(), requestBody.getErrorMsg());
+            getView().setRefreshing(false);
         }
     }
 

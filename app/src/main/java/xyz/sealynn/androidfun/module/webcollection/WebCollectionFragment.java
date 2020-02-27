@@ -1,21 +1,23 @@
 package xyz.sealynn.androidfun.module.webcollection;
 
 import android.os.Bundle;
+import android.view.DragEvent;
 import android.view.View;
 
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-//import com.classic.common.MultipleStatusView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
+import com.orhanobut.logger.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseFragment;
 import xyz.sealynn.androidfun.model.WebCollection;
+import xyz.sealynn.androidfun.utils.ActivityUtils;
+import xyz.sealynn.androidfun.utils.ToastUtils;
+import xyz.sealynn.androidfun.view.SwipeRefreshLayoutAtViewPager2;
 
 /**
  * Created by MichaelLynn on 2019/4/19 16:37
@@ -26,14 +28,8 @@ public class WebCollectionFragment extends BaseFragment<WebCollectionContract.Pr
 
     @BindView(R.id.web_group)
     ChipGroup group;
-    //    @BindView(R.id.fab)
-//    FloatingActionButton fab;
     @BindView(R.id.refresh)
-    SwipeRefreshLayout refreshLayout;
-    //    @BindView(R.id.status_view)
-//    MultipleStatusView statusView;
-
-    private ChipGroupManager chipGroupManager;
+    SwipeRefreshLayoutAtViewPager2 refreshLayout;
 
     @Override
     protected WebCollectionContract.Presenter createPresenter() {
@@ -42,7 +38,6 @@ public class WebCollectionFragment extends BaseFragment<WebCollectionContract.Pr
 
     @Override
     protected void prepareData(Bundle savedInstanceState) {
-        chipGroupManager = new ChipGroupManager(group, getContext());
         getPresenter().getWebs();
     }
 
@@ -58,27 +53,50 @@ public class WebCollectionFragment extends BaseFragment<WebCollectionContract.Pr
 
     @Override
     protected void initView(View rootView) {
-//        statusView.showEmpty();
-//        statusView.showContent();
     }
 
     @Override
     protected void initEvent() {
-
+        refreshLayout.setOnRefreshListener(() -> getPresenter().getWebs());
     }
 
     @Override
     public void setUpChipGroup(List<WebCollection> collectionList) {
-//        if (collectionList.isEmpty())
-////            statusView.showEmpty();
-//        else
-//            for (WebCollection collection : collectionList) {
-//                Chip chip = new Chip(getActivity());
-//                chipGroupManager.addChip(chip, collection);
-//            }
+        group.removeAllViews();
+        if (collectionList.isEmpty())
+            ToastUtils.shortToast(getContext(), "没有收藏");
+        else
+            for (WebCollection collection : collectionList) {
+                Chip chip = new Chip(Objects.requireNonNull(getActivity()));
+                chip.setText(collection.getName());
+                chip.setOnClickListener(v -> {
+                            if (!chip.isCloseIconVisible())
+                                ActivityUtils.startWebActivity(getContext(), collection.getLink());
+                        }
+                );
+                chip.setOnLongClickListener(v -> {
+                    if (chip.isCloseIconVisible())
+                        chip.setCloseIconVisible(false);
+                    else
+                        chip.setCloseIconVisible(true);
+                    return false;
+                });
+                chip.setOnDragListener(new View.OnDragListener() {
+                    @Override
+                    public boolean onDrag(View v, DragEvent event) {
+//                        v.layout();
+                        return false;
+                    }
+                });
+                chip.setTag(collection);
+                group.addView(chip);
+            }
+        Logger.d(group);
     }
 
-    public ChipGroupManager getChipGroupManager() {
-        return chipGroupManager;
+    @Override
+    public void setRefreshing(Boolean isRefreshing) {
+        refreshLayout.setRefreshing(isRefreshing);
     }
+
 }

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".module.year.YearProgressActivity">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/dark_scrim"
+            android:padding="@dimen/dp_8">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/preview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_56"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/share"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginStart="@dimen/dp_8"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_64"
+                android:onClick="shareImage"
+                android:text="@string/share"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_14" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp_36"
+                android:layout_marginStart="@dimen/dp_8"
+                android:gravity="center"
+                android:minWidth="@dimen/dp_64"
+                android:onClick="dismiss"
+                android:text="@string/cancel"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/sp_14" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.core.widget.NestedScrollView>

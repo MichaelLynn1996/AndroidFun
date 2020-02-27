@@ -2,8 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_edit"
-        android:title="@string/edit"
+        android:id="@+id/action_collect_off_site"
+        android:title="@string/collect_off_site"
         android:icon="@drawable/ic_action_edit"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_collect_domain"
+        android:title="@string/collect_domain"
+        android:icon="@drawable/ic_action_edit"
+        app:showAsAction="ifRoom" />
 </menu>

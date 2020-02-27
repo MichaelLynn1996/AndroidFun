@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<xyz.sealynn.androidfun.view.SwipeRefreshLayoutAtViewPager2 xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/refresh">
+    android:layout_height="match_parent">
 
-<!--    <com.classic.common.MultipleStatusView-->
-<!--        android:id="@+id/status_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:emptyView="@layout/view_tv_nothing">-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recycler_view"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-
-<!--        </androidx.recyclerview.widget.RecyclerView>-->
-<!--    </com.classic.common.MultipleStatusView>-->
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</xyz.sealynn.androidfun.view.SwipeRefreshLayoutAtViewPager2>

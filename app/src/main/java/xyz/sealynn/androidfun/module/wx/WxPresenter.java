@@ -1,4 +1,4 @@
-package xyz.sealynn.androidfun.module.wechat;
+package xyz.sealynn.androidfun.module.wx;
 
 import com.orhanobut.logger.Logger;
 
@@ -6,7 +6,8 @@ import java.util.List;
 
 import xyz.sealynn.androidfun.base.BasePresenterImpl;
 import xyz.sealynn.androidfun.model.Result;
-import xyz.sealynn.androidfun.model.WxChapter;
+import xyz.sealynn.androidfun.model.wxarticle.WxChapter;
+import xyz.sealynn.androidfun.net.RequestApi;
 import xyz.sealynn.androidfun.net.RetrofitManager;
 import xyz.sealynn.androidfun.utils.ToastUtils;
 
@@ -15,40 +16,38 @@ import xyz.sealynn.androidfun.utils.ToastUtils;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class WeChatPresenter extends BasePresenterImpl<WeChatContract.View> implements WeChatContract.Presenter {
+public class WxPresenter extends BasePresenterImpl<WxContract.View> implements WxContract.Presenter {
 
-    private static final int GET_WEHCAT_CHAPTER = 0;
+    private static final int GET_WECHAT_CHAPTER = 0;
 
 //    private MutableLiveData<List<WxChapter>> mWeChatChapters = new MutableLiveData<>();
 
-    public WeChatPresenter(WeChatContract.View view) {
+    WxPresenter(WxContract.View view) {
         super(view);
     }
 
     @Override
-    public void getWeChatChapter() {
+    public void getWxChapter() {
         getView().setLoading(true);
-        domine(RetrofitManager.getInstance().createReq().getWeChatChapter(), GET_WEHCAT_CHAPTER);
+        domine(RetrofitManager.getInstance().createReq().getWeChatChapter(), GET_WECHAT_CHAPTER);
     }
 
     @Override
     public void onResponse(Object t, int what) {
-        switch (what) {
-            case GET_WEHCAT_CHAPTER:
-                Result<List<WxChapter>> requestBody = Result.cast(t);
-                Logger.d(requestBody);
-                if (requestBody.getErrorCode() == 0) {
+        if (what == GET_WECHAT_CHAPTER) {
+            Result<List<WxChapter>> requestBody = Result.cast(t);
+            Logger.d(requestBody);
+            if (requestBody.getErrorCode() == RequestApi.SUCC) {
 //                    ToastUtils.shortToast(getView().getContext(), "登陆成功");
 //                    Result.putResultBean(getView().getContext(), "login", requestBody);
 //                    Activity activity = (Activity) getView().getContext();
 //                    activity.finish();
 //                    mWeChatChapters.postValue(requestBody.getData());
-                    getView().setTags(requestBody.getData());
-                } else {
-                    ToastUtils.shortToast(getView().getContext(), requestBody.getErrorMsg());
-                }
-                getView().setLoading(false);
-                break;
+                getView().setTags(requestBody.getData());
+            } else {
+                ToastUtils.shortToast(getView().getContext(), requestBody.getErrorMsg());
+            }
+            getView().setLoading(false);
         }
     }
 

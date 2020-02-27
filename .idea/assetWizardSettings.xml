@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="paddingPercent" value="10" />
+                                                <entry key="opacityPercent" value="60" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="jar:file:/C:/Users/SEALI/AppData/Local/JetBrains/Toolbox/apps/AndroidStudio/ch-0/182.5314842/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_search_black_24dp.xml" />
+                                                <entry key="url" value="jar:file:/C:/Users/Ocean/AppData/Local/JetBrains/Toolbox/apps/AndroidStudio/ch-0/191.6010548/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_image_black_24dp.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -48,6 +48,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
+                                                <entry key="opacityPercent" value="60" />
                                                 <entry key="trimmed" value="true" />
                                               </map>
                                             </option>
@@ -59,8 +60,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="D:\Downloads\alibaba.png" />
-                                      <entry key="outputName" value="ic_action_search" />
-                                      <entry key="theme" value="CUSTOM" />
+                                      <entry key="outputName" value="ic_action_image" />
                                       <entry key="themeColor" value="1263e6" />
                                     </map>
                                   </option>

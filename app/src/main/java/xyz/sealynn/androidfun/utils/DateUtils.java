@@ -7,7 +7,7 @@ import java.util.Calendar;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class DateUtils {
+public final class DateUtils {
     private static Calendar calendar = Calendar.getInstance();
 
     private DateUtils() {
@@ -16,7 +16,7 @@ public class DateUtils {
     }
 
     public static String getPercentsOfTheYearPassed() {
-        return (double) getDaysOfTheYearPassed() / (double) getDaysOfTheYear() * 100 + "%";
+        return (int) Math.floor((float) getDaysOfTheYearPassed() / (float) getDaysOfTheYear() * 100) + "%";
     }
 
     public static int getDaysOfTheYearPassed() {
@@ -35,7 +35,7 @@ public class DateUtils {
         return String.valueOf(calendar.get(Calendar.YEAR));
     }
 
-    public static double getIntOfTheYearPassed(){
-        return (double) getDaysOfTheYearPassed() / (double) getDaysOfTheYear() * 100;
+    public static int getIntOfTheYearPassed(){
+        return (int) Math.floor((float) getDaysOfTheYearPassed() / (float) getDaysOfTheYear() * 100);
     }
 }

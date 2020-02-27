@@ -38,22 +38,23 @@
         <!--android:overScrollMode="never"-->
         <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/pagers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </androidx.viewpager.widget.ViewPager>
+        </androidx.viewpager2.widget.ViewPager2>
 
     <!--</androidx.core.widget.NestedScrollView>-->
 
-    <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/dp_16"-->
-        <!--android:src="@drawable/ic_action_add" />-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/dp_16"
+        app:srcCompat="@drawable/ic_action_add"
+        android:onClick="showPopup"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

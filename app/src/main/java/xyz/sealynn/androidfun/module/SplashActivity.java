@@ -1,12 +1,12 @@
 package xyz.sealynn.androidfun.module;
 
-import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         alphaAnimation = new AlphaAnimation(0.3F, 1.0F);
-        alphaAnimation.setDuration(2000);
+        alphaAnimation.setDuration(600);
         alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {

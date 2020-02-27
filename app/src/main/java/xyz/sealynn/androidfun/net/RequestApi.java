@@ -14,8 +14,8 @@ import xyz.sealynn.androidfun.model.ArticleRoot;
 import xyz.sealynn.androidfun.model.User;
 import xyz.sealynn.androidfun.model.Result;
 import xyz.sealynn.androidfun.model.WebCollection;
-import xyz.sealynn.androidfun.model.WxActicle;
-import xyz.sealynn.androidfun.model.WxChapter;
+import xyz.sealynn.androidfun.model.wxarticle.WxActicle;
+import xyz.sealynn.androidfun.model.wxarticle.WxChapter;
 
 /**
  * Created by SeaLynn0 on 2018/12/5 2:36

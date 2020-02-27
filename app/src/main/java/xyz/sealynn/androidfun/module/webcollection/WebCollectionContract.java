@@ -11,10 +11,11 @@ import xyz.sealynn.androidfun.model.WebCollection;
  * <p>
  * Email: sealynndev@gamil.com
  */
-public class WebCollectionContract {
+class WebCollectionContract {
 
     interface View extends BaseView {
         void setUpChipGroup(List<WebCollection> collectionList);
+        void setRefreshing(Boolean isRefreshing);
     }
 
     interface Presenter extends BasePresenter<View> {

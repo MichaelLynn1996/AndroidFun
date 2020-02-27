@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import xyz.sealynn.androidfun.R;
@@ -28,7 +28,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @Override
     protected final void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(bindLayout());
+        setContentView(bindView());
 
         // ButterKnife绑定布局
         bind = ButterKnife.bind(this);
@@ -74,7 +74,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      *
      * @return 布局文件的资源ID
      */
-    protected abstract int bindLayout();
+    protected abstract int bindView();
 
     /**
      * 准备数据（从Intent获取上一个界面传过来的数据或其他需要初始化的数据）

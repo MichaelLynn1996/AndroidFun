@@ -16,9 +16,9 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            android:background="@color/colorPrimary"
-            android:visibility="gone">
+            style="@style/Widget.Design.TabLayout"
+            android:visibility="gone"
+            app:tabMode="scrollable">
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -28,6 +28,7 @@
         android:id="@+id/pagers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </androidx.viewpager2.widget.ViewPager2>

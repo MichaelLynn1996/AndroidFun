@@ -14,7 +14,7 @@ public class TodoActivity extends BaseActivity<TodoContract.Presenter> implement
     }
 
     @Override
-    protected int bindLayout() {
+    protected int bindView() {
         return R.layout.activity_todo;
     }
 

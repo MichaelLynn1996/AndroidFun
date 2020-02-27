@@ -1,5 +1,6 @@
-package xyz.sealynn.androidfun.module.wechat;
+package xyz.sealynn.androidfun.module.wx;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.model.Result;
-import xyz.sealynn.androidfun.model.WxActicle;
-import xyz.sealynn.androidfun.model.WxChapter;
+import xyz.sealynn.androidfun.model.wxarticle.WxActicle;
+import xyz.sealynn.androidfun.model.wxarticle.WxChapter;
 import xyz.sealynn.androidfun.net.RetrofitManager;
 
 /**
@@ -67,6 +68,7 @@ public class WxChapterListFragment extends BaseLazyLoadListFragment {
 
                     @Override
                     public void onNext(Result<WxActicle> wxActicleResult) {
+                        Logger.d(wxActicleResult);
                         datasBeans.addAll(wxActicleResult.getData().getDatas());
                     }
 
@@ -141,6 +143,7 @@ public class WxChapterListFragment extends BaseLazyLoadListFragment {
             }
             holder.mTitle.setText(datasBeans.get(position).getTitle());
             holder.mDate.setText((getString(R.string.time) + ":" + datasBeans.get(position).getNiceDate()));
+            convertView.setBackgroundColor(Color.BLUE);
             return convertView;
         }
 

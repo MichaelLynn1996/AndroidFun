@@ -68,7 +68,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     }
 
     @Override
-    protected int bindLayout() {
+    protected int bindView() {
         return R.layout.activity_web;
     }
 

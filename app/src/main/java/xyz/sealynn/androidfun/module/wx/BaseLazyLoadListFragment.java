@@ -1,4 +1,4 @@
-package xyz.sealynn.androidfun.module.wechat;
+package xyz.sealynn.androidfun.module.wx;
 
 import android.app.Activity;
 import android.os.Bundle;

@@ -110,8 +110,7 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
 
     @Override
     public void onErrors(Throwable e, int what) {
-        Logger.d("出错");
-        ToastUtils.longToast(getView().getContext(), "请检查网络连接");
+        ToastUtils.longToast(getView().getContext(), "似乎有点问题！");
         e.printStackTrace();
     }
 

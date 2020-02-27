@@ -1,14 +1,10 @@
 package xyz.sealynn.androidfun.module.login;
 
-import android.animation.Animator;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateDecelerateInterpolator;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -44,7 +40,7 @@ public class LoginActivity extends BaseActivity<LoginContract.Presenter> impleme
     }
 
     @Override
-    protected int bindLayout() {
+    protected int bindView() {
         return R.layout.activity_login;
     }
 

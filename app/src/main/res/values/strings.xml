@@ -24,7 +24,7 @@
     <string name="project">项目</string>
 
     <!--Year Progress-->
-    <string name="complete">complete</string>
+    <string name="complete">completed</string>
     <string name="zero_percent">0%</string>
     <string name="year">2017</string>
     <string name="copy_succ">已复制到剪切板</string>
@@ -165,5 +165,14 @@
     <string name="add">添加</string>
     <string name="edit">编辑</string>
     <string name="nothing_here">这里什么也没有\nㄟ( ▔, ▔ )ㄏ</string>
+    <string name="wan_footer_retry">重试</string>
+    <string name="collect_off_site">收藏站外文章</string>
+    <string name="collect_domain">收藏网址</string>
+    <string name="add_collection">添加收藏</string>
+    <string name="percent">%1$d%%</string>
+    <string name="share_as_text">以文本分享</string>
+    <string name="copy_text">复制文本</string>
+    <string name="cancel">取消</string>
+    <string name="share_as_image">以图片分享</string>
 
 </resources>

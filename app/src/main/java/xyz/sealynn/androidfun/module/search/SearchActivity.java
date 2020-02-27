@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.SearchView;
+
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 
@@ -21,7 +22,7 @@ public class SearchActivity extends BaseActivity<SearchContract.Presenter> imple
     }
 
     @Override
-    protected int bindLayout() {
+    protected int bindView() {
         return R.layout.activity_search;
     }
 

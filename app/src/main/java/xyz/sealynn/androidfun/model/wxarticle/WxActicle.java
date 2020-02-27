@@ -1,4 +1,6 @@
-package xyz.sealynn.androidfun.model;
+package xyz.sealynn.androidfun.model.wxarticle;
+
+import androidx.room.Entity;
 
 import java.util.List;
 
@@ -9,6 +11,7 @@ import java.util.List;
  * @description: TODO
  * @date 2019/4/120:30
  */
+@Entity
 public class WxActicle {
 
     /**

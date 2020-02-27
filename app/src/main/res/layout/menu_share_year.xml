@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dp_8"
+    android:paddingBottom="@dimen/dp_8"
+    tools:context=".module.year.YearProgressActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:onClick="shareText"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_16"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_action_text" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@string/share_as_text"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:onClick="copyText"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_16"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_action_copy_dark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@string/copy_text"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:onClick="shareAsImage"
+        android:paddingStart="@dimen/dp_8"
+        android:paddingEnd="@dimen/dp_8">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/dp_16"
+            android:layout_height="@dimen/dp_16"
+            android:layout_marginStart="@dimen/dp_16"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_action_image" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="@string/share_as_image"
+            android:textSize="@dimen/sp_16" />
+    </LinearLayout>
+
+</LinearLayout>

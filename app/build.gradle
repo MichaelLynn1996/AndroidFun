@@ -17,10 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '29.0.2'
+    buildToolsVersion '29.0.3'
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
+    }
+    viewBinding {
+        enabled = true
     }
 }
 
@@ -29,32 +32,43 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.2.0-alpha05'
     implementation 'androidx.preference:preference:1.1.0'
+    //ViewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
     // ViewModel and LiveData
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
-    //Room
-    implementation 'androidx.room:room-runtime:2.2.3'
-    annotationProcessor "androidx.room:room-compiler:2.2.3"
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+    //Room  ----------------------------------------------------------------
+    implementation 'androidx.room:room-runtime:2.2.4'
+    annotationProcessor "androidx.room:room-compiler:2.2.4"
     // optional - RxJava support for Room
-    implementation 'androidx.room:room-rxjava2:2.2.3'
-    //Rx Retrofit Gson
+    implementation 'androidx.room:room-rxjava2:2.2.4'
+    testImplementation "androidx.room:room-testing:2.2.4"
+
+    //Paging    -------------------------------------------------------------------------------
+    implementation "androidx.paging:paging-runtime:2.1.1" // For Kotlin use paging-runtime-ktx
+    // alternatively - without Android dependencies for testing
+    testImplementation "androidx.paging:paging-common:2.1.1" // For Kotlin use paging-common-ktx
+    // optional - RxJava support
+    implementation "androidx.paging:paging-rxjava2:2.1.1" // For Kotlin use paging-rxjava2-ktx
+
+    //Rx Retrofit Gson  ------------------------------------------------------------------------
     implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-java8:2.4.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.13.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.7.1'
+    implementation 'com.squareup.retrofit2:adapter-java8:2.7.1'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.4.0'
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.8.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
     //ButterKnife
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'

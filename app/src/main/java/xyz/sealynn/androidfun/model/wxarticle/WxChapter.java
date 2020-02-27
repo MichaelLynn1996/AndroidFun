@@ -1,4 +1,4 @@
-package xyz.sealynn.androidfun.model;
+package xyz.sealynn.androidfun.model.wxarticle;
 
 import java.util.List;
 
