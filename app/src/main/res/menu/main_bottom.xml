@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home"
+        android:id="@+id/home_fragment"
         android:title="@string/home"
         android:icon="@drawable/ic_action_home"/>
 
     <item
-        android:id="@+id/knowledge_tree"
+        android:id="@+id/knowledge_tree_fragment"
         android:title="@string/knowledge_tree"
         android:icon="@drawable/ic_action_knowledge_tree"/>
 
     <item
-        android:id="@+id/wechat"
+        android:id="@+id/wechat_fragment"
         android:title="@string/wechat"
         android:icon="@drawable/ic_action_wechat"/>
 
     <item
-        android:id="@+id/guidance"
+        android:id="@+id/guidance_fragment"
         android:title="@string/guidance"
         android:icon="@drawable/ic_action_guidance"/>
 
     <item
-        android:id="@+id/project"
+        android:id="@+id/project_fragment"
         android:title="@string/project"
         android:icon="@drawable/ic_action_project"/>
 </menu>

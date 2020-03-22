@@ -1,12 +1,11 @@
 package xyz.sealynn.androidfun.module.home;
 
 import android.os.Bundle;
-import android.view.View;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
+import xyz.sealynn.androidfun.databinding.FragmentHomeBinding;
 import xyz.sealynn.androidfun.module.BaseMainFragment;
 
 /**
@@ -14,12 +13,17 @@ import xyz.sealynn.androidfun.module.BaseMainFragment;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class HomeFragment extends BaseMainFragment<HomeContract.Presenter> implements HomeContract.View {
+public class HomeFragment extends BaseMainFragment<HomeContract.Presenter, FragmentHomeBinding> implements HomeContract.View {
 
 //    @BindView(R.id.refresh)
 //    SwipeRefreshLayout refreshLayout;
-    @BindView(R.id.home_list)
-    RecyclerView homelist;
+//    @BindView(R.id.home_list)
+//    RecyclerView homelist;
+
+    @Override
+    protected FragmentHomeBinding initBinding(LayoutInflater inflater, ViewGroup container) {
+        return FragmentHomeBinding.inflate(inflater, container, false);
+    }
 
     @Override
     protected HomeContract.Presenter createPresenter() {
@@ -28,11 +32,6 @@ public class HomeFragment extends BaseMainFragment<HomeContract.Presenter> imple
 
     @Override
     protected void prepareData(Bundle savedInstanceState) {
-    }
-
-    @Override
-    protected int bindLayout() {
-        return R.layout.fragment_home;
     }
 
     @Override

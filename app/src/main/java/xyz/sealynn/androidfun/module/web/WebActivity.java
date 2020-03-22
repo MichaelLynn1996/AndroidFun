@@ -24,9 +24,9 @@ import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 import com.orhanobut.logger.Logger;
 
-import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.databinding.ActivityWebBinding;
 import xyz.sealynn.androidfun.utils.SharedUtils;
 
 /**
@@ -34,10 +34,10 @@ import xyz.sealynn.androidfun.utils.SharedUtils;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class WebActivity extends BaseActivity<WebContract.Presenter> implements WebContract.View {
+public class WebActivity extends BaseActivity<WebContract.Presenter, ActivityWebBinding> implements WebContract.View {
 
-    @BindView(R.id.web_contain)
-    CoordinatorLayout webContain;
+//    @BindView(R.id.web_contain)
+//    CoordinatorLayout webContain;
 
     private ActionBar actionBar;
 
@@ -63,13 +63,13 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
     };
 
     @Override
-    protected WebContract.Presenter createPresenter() {
-        return new WebPresenter(this);
+    protected ActivityWebBinding initBinding() {
+        return ActivityWebBinding.inflate(getLayoutInflater());
     }
 
     @Override
-    protected int bindView() {
-        return R.layout.activity_web;
+    protected WebContract.Presenter createPresenter() {
+        return new WebPresenter(this);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class WebActivity extends BaseActivity<WebContract.Presenter> implements 
         lp.setBehavior(new AppBarLayout.ScrollingViewBehavior());
 
         mAgentWeb = AgentWeb.with(this)
-                .setAgentWebParent(webContain, 1, lp)//lp记得设置behavior属性
+                .setAgentWebParent(getBinding().webContain, 1, lp)//lp记得设置behavior属性
                 .useDefaultIndicator()
                 .setWebChromeClient(mWebChromeClient)
                 .setWebViewClient(mWebViewClient)

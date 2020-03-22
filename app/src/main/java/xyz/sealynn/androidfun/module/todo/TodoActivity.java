@@ -3,19 +3,19 @@ package xyz.sealynn.androidfun.module.todo;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.databinding.ActivityTodoBinding;
 
-public class TodoActivity extends BaseActivity<TodoContract.Presenter> implements TodoContract.View {
+public class TodoActivity extends BaseActivity<TodoContract.Presenter, ActivityTodoBinding> implements TodoContract.View {
+
+    @Override
+    protected ActivityTodoBinding initBinding() {
+        return ActivityTodoBinding.inflate(getLayoutInflater());
+    }
 
     @Override
     protected TodoContract.Presenter createPresenter() {
         return new TodoPresenter(this);
-    }
-
-    @Override
-    protected int bindView() {
-        return R.layout.activity_todo;
     }
 
     @Override

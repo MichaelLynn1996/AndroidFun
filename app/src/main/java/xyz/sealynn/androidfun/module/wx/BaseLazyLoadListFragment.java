@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
-import butterknife.ButterKnife;
 import xyz.sealynn.androidfun.R;
 
 /**
@@ -41,7 +40,6 @@ public abstract class BaseLazyLoadListFragment extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_list, container, false);
-        ButterKnife.bind(this, view);
         mContext = getActivity();
 
         this.initData();
@@ -96,11 +94,5 @@ public abstract class BaseLazyLoadListFragment extends ListFragment {
     public void onDestroy() {
         super.onDestroy();
         this.view = null;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.bind(mContext).unbind();
     }
 }

@@ -45,7 +45,9 @@ public abstract class BasePresenterImpl<V extends BaseView> implements BasePrese
     public <T> void domine(Observable<T> observable, final int what) {
 
 //网络处理使用的是RxJava+Retrofit的组合 通过回调进行获取网络数据，这样做的好处是对于请求的结果或者请求出现异常的处理可以全局设置也可以单个请求设置，灵活度高
-        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<T>() {
+        observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<T>() {
             @Override
             public void onSubscribe(@NonNull Disposable d) {
                 compositeDisposable.add(d);

@@ -10,11 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.viewbinding.ViewBinding;
 
 import com.orhanobut.logger.Logger;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import xyz.sealynn.androidfun.R;
 
 /**
@@ -22,29 +21,29 @@ import xyz.sealynn.androidfun.R;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public abstract class BaseFragment<P extends BasePresenter> extends Fragment
+public abstract class BaseFragment<P extends BasePresenter, B extends ViewBinding> extends Fragment
         implements BaseView {
 
-    private Unbinder mUnbind;
     private P mPresenter;
+    private B binding;
 
     @NonNull
     @Override
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = initBinding(inflater, container);
         mPresenter = createPresenter();
-
         getLifecycle().addObserver(mPresenter);
 
-        View root = inflater.inflate(bindLayout(), container, false);
-        mUnbind = ButterKnife.bind(this, root);
         prepareData(savedInstanceState);
-        initToolbar(root);
+        initToolbar(binding.getRoot());
         // 初始化视图
-        initView(root);
+        initView(binding.getRoot());
         initData(savedInstanceState);
         initEvent();
-        return root;
+        return binding.getRoot();
     }
+
+    protected abstract B initBinding(LayoutInflater inflater, ViewGroup container);
 
 
     protected abstract P createPresenter();
@@ -62,20 +61,13 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
      * @param root
      */
     private void initToolbar(View root) {
-        Logger.d(root.findViewById(R.id.toolbar) != null);
+        Logger.d(root.findViewById(R.id.toolbar));
         if (root.findViewById(R.id.toolbar) != null) {
 //            mToolbar = root.findViewById(R.id.toolbar);
             if (getActivity() != null)
                 ((AppCompatActivity) getActivity()).setSupportActionBar(root.findViewById(R.id.toolbar));
         }
     }
-
-    /**
-     * 绑定fragment的布局文件
-     *
-     * @return
-     */
-    protected abstract int bindLayout();
 
     /**
      * 初始化数据
@@ -96,16 +88,6 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
      */
     protected abstract void initEvent();
 
-
-    @Override
-    public void onDestroyView() {
-//        if (mPresenter != null) {
-//            mPresenter.onDestroy();
-//        }
-        super.onDestroyView();
-        mUnbind.unbind();
-    }
-
     @Override
     public Context getContext() {
         return super.getContext();
@@ -113,5 +95,9 @@ public abstract class BaseFragment<P extends BasePresenter> extends Fragment
 
     protected P getPresenter() {
         return mPresenter;
+    }
+
+    public B getBinding() {
+        return binding;
     }
 }

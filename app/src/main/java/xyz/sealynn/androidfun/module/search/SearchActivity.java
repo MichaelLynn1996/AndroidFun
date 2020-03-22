@@ -9,21 +9,22 @@ import androidx.appcompat.widget.SearchView;
 
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
+import xyz.sealynn.androidfun.databinding.ActivitySearchBinding;
 
 /**
  * Created by SeaLynn0 on 2018/12/26 13:16
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class SearchActivity extends BaseActivity<SearchContract.Presenter> implements SearchContract.View {
+public class SearchActivity extends BaseActivity<SearchContract.Presenter, ActivitySearchBinding> implements SearchContract.View {
     @Override
-    protected SearchContract.Presenter createPresenter() {
-        return new SearchPresenter(this);
+    protected ActivitySearchBinding initBinding() {
+        return ActivitySearchBinding.inflate(getLayoutInflater());
     }
 
     @Override
-    protected int bindView() {
-        return R.layout.activity_search;
+    protected SearchContract.Presenter createPresenter() {
+        return new SearchPresenter(this);
     }
 
     @Override

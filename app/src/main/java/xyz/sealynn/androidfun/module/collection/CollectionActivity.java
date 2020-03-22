@@ -14,27 +14,26 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseActivity;
 import xyz.sealynn.androidfun.base.BaseFragment;
+import xyz.sealynn.androidfun.databinding.ActivityCollectionBinding;
 import xyz.sealynn.androidfun.module.articlecollection.ArticleCollectionFragment;
 import xyz.sealynn.androidfun.module.webcollection.WebCollectionFragment;
 
-public class CollectionActivity extends BaseActivity<CollectionContract.Presenter> implements CollectionContract.View {
+public class CollectionActivity extends BaseActivity<CollectionContract.Presenter, ActivityCollectionBinding> implements CollectionContract.View {
 
-    @BindView(R.id.tabs)
-    TabLayout tabs;
-    @BindView(R.id.pagers)
-    ViewPager2 pager;
-    @BindView(R.id.fab)
+//    @BindView(R.id.tabs)
+//    TabLayout tabs;
+//    @BindView(R.id.pagers)
+//    ViewPager2 pager;
+//    @BindView(R.id.fab)
     FloatingActionButton fab;
 
     List<BaseFragment> fragments = new ArrayList<>();
@@ -45,13 +44,13 @@ public class CollectionActivity extends BaseActivity<CollectionContract.Presente
     BottomSheetDialog dialog;
 
     @Override
-    protected CollectionContract.Presenter createPresenter() {
-        return new CollectionPresenter(this);
+    protected ActivityCollectionBinding initBinding() {
+        return ActivityCollectionBinding.inflate(getLayoutInflater());
     }
 
     @Override
-    protected int bindView() {
-        return R.layout.activity_collection;
+    protected CollectionContract.Presenter createPresenter() {
+        return new CollectionPresenter(this);
     }
 
     @Override
@@ -75,7 +74,7 @@ public class CollectionActivity extends BaseActivity<CollectionContract.Presente
             getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
         }
 
-        pager.setAdapter(new FragmentStateAdapter(this) {
+        getBinding().pagers.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -88,7 +87,7 @@ public class CollectionActivity extends BaseActivity<CollectionContract.Presente
             }
         });
 
-        new TabLayoutMediator(tabs, pager, (tab, position) -> tab.setText(titles[position])).attach();
+        new TabLayoutMediator(getBinding().tabs, getBinding().pagers, (tab, position) -> tab.setText(titles[position])).attach();
 
 
     }

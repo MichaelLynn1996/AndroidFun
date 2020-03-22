@@ -1,10 +1,15 @@
 package xyz.sealynn.androidfun.module.guidance;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.viewbinding.ViewBinding;
 
 import xyz.sealynn.androidfun.R;
 import xyz.sealynn.androidfun.base.BaseFragment;
+import xyz.sealynn.androidfun.databinding.FragmentGuidanceBinding;
 import xyz.sealynn.androidfun.module.BaseMainFragment;
 
 /**
@@ -12,7 +17,12 @@ import xyz.sealynn.androidfun.module.BaseMainFragment;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class GuidanceFragment extends BaseMainFragment<GuidanceContract.Presenter> implements GuidanceContract.View {
+public class GuidanceFragment extends BaseMainFragment<GuidanceContract.Presenter, FragmentGuidanceBinding> implements GuidanceContract.View {
+
+    @Override
+    protected FragmentGuidanceBinding initBinding(LayoutInflater inflater, ViewGroup container) {
+        return FragmentGuidanceBinding.inflate(inflater, container, false);
+    }
 
     @Override
     protected GuidanceContract.Presenter createPresenter() {
@@ -22,11 +32,6 @@ public class GuidanceFragment extends BaseMainFragment<GuidanceContract.Presente
     @Override
     protected void prepareData(Bundle savedInstanceState) {
 
-    }
-
-    @Override
-    protected int bindLayout() {
-        return R.layout.fragment_guidance;
     }
 
     @Override

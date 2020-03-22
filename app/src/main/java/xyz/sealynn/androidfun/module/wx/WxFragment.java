@@ -1,7 +1,9 @@
 package xyz.sealynn.androidfun.module.wx;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -11,10 +13,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-
-import butterknife.BindView;
 import xyz.sealynn.androidfun.R;
+import xyz.sealynn.androidfun.databinding.FragementWechatBinding;
 import xyz.sealynn.androidfun.model.wxarticle.WxChapter;
 import xyz.sealynn.androidfun.module.BaseMainFragment;
 
@@ -23,16 +23,12 @@ import xyz.sealynn.androidfun.module.BaseMainFragment;
  * <p>
  * Email：sealynndev@gmail.com
  */
-public class WxFragment extends BaseMainFragment<WxContract.Presenter> implements WxContract.View {
+public class WxFragment extends BaseMainFragment<WxContract.Presenter, FragementWechatBinding> implements WxContract.View {
 
-    @BindView(R.id.tabs)
-    TabLayout tabs;
-    @BindView(R.id.pagers)
-    ViewPager2 pager;
-//    @BindView(R.id.refresh_layout)
-//    SwipeRefreshLayout refresh;
-
-//    private WxPresenter viewModel;
+    @Override
+    protected FragementWechatBinding initBinding(LayoutInflater inflater, ViewGroup container) {
+        return FragementWechatBinding.inflate(getLayoutInflater());
+    }
 
     @Override
     protected WxContract.Presenter createPresenter() {
@@ -42,11 +38,6 @@ public class WxFragment extends BaseMainFragment<WxContract.Presenter> implement
     @Override
     protected void prepareData(Bundle savedInstanceState) {
 
-    }
-
-    @Override
-    protected int bindLayout() {
-        return R.layout.fragement_wechat;
     }
 
     @Override
@@ -71,11 +62,11 @@ public class WxFragment extends BaseMainFragment<WxContract.Presenter> implement
 
     @Override
     public void setTags(List<WxChapter> chapters) {
-        if (tabs.getVisibility() == View.GONE)
-            tabs.setVisibility(View.VISIBLE);
-        if (pager.getVisibility() == View.GONE)
-            pager.setVisibility(View.VISIBLE);
-        pager.setAdapter(new FragmentStateAdapter(this) {
+        if (getBinding().tabs.getVisibility() == View.GONE)
+            getBinding().tabs.setVisibility(View.VISIBLE);
+        if (getBinding().pagers.getVisibility() == View.GONE)
+            getBinding().pagers.setVisibility(View.VISIBLE);
+        getBinding().pagers.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -87,6 +78,6 @@ public class WxFragment extends BaseMainFragment<WxContract.Presenter> implement
                 return chapters.size();
             }
         });
-        new TabLayoutMediator(tabs, pager, (tab, position) -> tab.setText(chapters.get(position).getName())).attach();
+        new TabLayoutMediator(getBinding().tabs, getBinding().pagers, (tab, position) -> tab.setText(chapters.get(position).getName())).attach();
     }
 }

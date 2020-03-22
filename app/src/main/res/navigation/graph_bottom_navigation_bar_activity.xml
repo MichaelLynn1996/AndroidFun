@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/graph_bottom_navigation_bar_activity"
+    app:startDestination="@id/home_fragment">
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="xyz.sealynn.androidfun.module.home.HomeFragment"
+        android:label="@string/home">
+    </fragment>
+
+    <fragment
+        android:id="@+id/knowledge_tree_fragment"
+        android:name="xyz.sealynn.androidfun.module.knowledgetree.KnowledgeTreeFragment"
+        android:label="@string/knowledge_tree"/>
+
+    <fragment
+        android:id="@+id/wechat_fragment"
+        android:name="xyz.sealynn.androidfun.module.wx.WxFragment"
+        android:label="@string/wechat"/>
+
+    <fragment
+        android:id="@+id/guidance_fragment"
+        android:name="xyz.sealynn.androidfun.module.guidance.GuidanceFragment"
+        android:label="@string/guidance"/>
+
+    <fragment
+        android:id="@+id/project_fragment"
+        android:name="xyz.sealynn.androidfun.module.project.ProjectFragment"
+        android:label="@string/project"/>
+
+</navigation>

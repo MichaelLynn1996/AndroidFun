@@ -55,11 +55,8 @@
             android:theme="@style/AppTheme.MaterialAboutActivity" />
         <activity
             android:name=".module.year.YearProgressActivity"
-            android:theme="@style/FullScreenTheme" />
-        <activity
-            android:name=".module.login.LoginActivity" />
-        <activity
-            android:name=".module.register.RegisterActivity" />
+            android:theme="@style/FullScreenTheme"
+            android:launchMode="singleInstance"/>
 
         <receiver android:name=".widget.ProgressWidgetWhite">
             <intent-filter>
@@ -79,6 +76,7 @@
             android:name=".module.OpenSourceLicenceActivity"
             android:theme="@style/AppTheme.MaterialAboutActivity" />
         <activity android:name=".module.setting.SettingsActivity" />
+        <activity android:name=".module.SignActivity" />
     </application>
 
 </manifest>

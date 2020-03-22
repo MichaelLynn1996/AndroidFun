@@ -6,6 +6,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.viewbinding.ViewBinding;
 
 import com.orhanobut.logger.Logger;
 
@@ -18,10 +23,11 @@ import xyz.sealynn.androidfun.base.BasePresenter;
  * <p>
  * Email: sealynndev@gamil.com
  */
-public abstract class BaseMainFragment<P extends BasePresenter> extends BaseFragment<P> {
+public abstract class BaseMainFragment<P extends BasePresenter, B extends ViewBinding> extends BaseFragment<P, B> {
 
     private DrawerLayout drawer;
     private ActionBar actionBar;
+    private ActionBarDrawerToggle toggle;
 
     @Override
     protected void initView(View rootView) {
@@ -39,7 +45,7 @@ public abstract class BaseMainFragment<P extends BasePresenter> extends BaseFrag
                 if (actionBar != null)
                     actionBar.setTitle(getTitle());
             }
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+            toggle = new ActionBarDrawerToggle(
                     getActivity(), drawer, rootView.findViewById(R.id.toolbar)
                     , R.string.navigation_drawer_open, R.string.navigation_drawer_close);
             drawer.addDrawerListener(toggle);
@@ -51,5 +57,11 @@ public abstract class BaseMainFragment<P extends BasePresenter> extends BaseFrag
 
     public ActionBar getActionBar() {
         return actionBar;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        drawer.removeDrawerListener(toggle);    // 解除drawer对toggle的引用，避免内存泄漏
     }
 }

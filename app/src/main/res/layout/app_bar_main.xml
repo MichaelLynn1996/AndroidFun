@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,12 +20,15 @@
 
 <!--    </com.google.android.material.appbar.AppBarLayout>-->
 
-    <androidx.appcompat.widget.ContentFrameLayout
-        android:id="@+id/content"
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_marginBottom="?attr/actionBarSize"/>
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:navGraph="@navigation/graph_bottom_navigation_bar_activity"
+        app:defaultNavHost="true"/>
 
     <!--<com.google.android.material.floatingactionbutton.FloatingActionButton-->
         <!--android:id="@+id/fab"-->
@@ -47,4 +50,4 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/main_bottom" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

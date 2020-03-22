@@ -6,11 +6,8 @@ import android.view.animation.Animation;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import xyz.sealynn.androidfun.R;
+import xyz.sealynn.androidfun.databinding.ActivitySplashBinding;
 import xyz.sealynn.androidfun.module.main.MainActivity;
 import xyz.sealynn.androidfun.utils.ActivityUtils;
 
@@ -21,16 +18,15 @@ import xyz.sealynn.androidfun.utils.ActivityUtils;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    @BindView(R.id.layout_splash)
-    ConstraintLayout layout;
+    private ActivitySplashBinding binding;
 
-    AlphaAnimation alphaAnimation;
+    private AlphaAnimation alphaAnimation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
-        ButterKnife.bind(this);
+        binding = ActivitySplashBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         alphaAnimation = new AlphaAnimation(0.3F, 1.0F);
         alphaAnimation.setDuration(600);
@@ -50,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }
         });
-        layout.startAnimation(alphaAnimation);
+        binding.layoutSplash.startAnimation(alphaAnimation);
     }
 
     private void jumpToMain() {

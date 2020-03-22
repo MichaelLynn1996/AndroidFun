@@ -3,12 +3,14 @@ package xyz.sealynn.androidfun.base;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.viewbinding.ViewBinding;
+
 /**
  * Created by SeaLynn0 on 2018/12/5 15:12
  * <p>
  * Email：sealynndev@gmail.com
  */
-public abstract class BaseLazyLoadFragment<P extends BasePresenter> extends BaseFragment<P> {
+public abstract class BaseLazyLoadFragment<P extends BasePresenter, B extends ViewBinding> extends BaseFragment<P, B> {
 
     /**
      * 当前fragment是否可见
