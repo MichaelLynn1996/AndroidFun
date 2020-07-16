@@ -1,33 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/graph_bottom_navigation_bar_activity"
-    app:startDestination="@id/home_fragment">
+    app:startDestination="@id/home">
 
     <fragment
-        android:id="@+id/home_fragment"
-        android:name="xyz.sealynn.androidfun.module.home.HomeFragment"
-        android:label="@string/home">
+        android:id="@+id/home"
+        android:name="cn.mlynn.androidfun.module.home.HomeFragment"
+        android:label="@string/home"/>
+
+    <fragment
+        android:id="@+id/explore"
+        android:name="cn.mlynn.androidfun.module.explore.ExploreRootFragment"
+        android:label="@string/knowledge_tree">
+        <action
+            android:id="@+id/action_explore_to_squareFragment"
+            app:destination="@id/squareFragment" />
+        <action
+            android:id="@+id/action_explore_to_wendaFragment"
+            app:destination="@id/wendaFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/knowledge_tree_fragment"
-        android:name="xyz.sealynn.androidfun.module.knowledgetree.KnowledgeTreeFragment"
-        android:label="@string/knowledge_tree"/>
-
+        android:id="@+id/mine"
+        android:name="cn.mlynn.androidfun.module.mine.MineFragment"
+        android:label="@string/mine">
+        <action
+            android:id="@+id/action_mine_to_graph_setting_activity"
+            app:destination="@id/settingActivity" />
+    </fragment>
     <fragment
-        android:id="@+id/wechat_fragment"
-        android:name="xyz.sealynn.androidfun.module.wx.WxFragment"
-        android:label="@string/wechat"/>
-
+        android:id="@+id/squareFragment"
+        android:name="cn.mlynn.androidfun.module.square.SquareFragment"
+        android:label="@string/square" />
     <fragment
-        android:id="@+id/guidance_fragment"
-        android:name="xyz.sealynn.androidfun.module.guidance.GuidanceFragment"
-        android:label="@string/guidance"/>
+        android:id="@+id/wendaFragment"
+        android:name="cn.mlynn.androidfun.module.wenda.WendaFragment"
+        android:label="@string/wenda" />
+    <activity
+        android:id="@+id/settingActivity"
+        android:name="cn.mlynn.androidfun.module.setting.SettingsActivity"
+        android:label="@string/settings"/>
 
-    <fragment
-        android:id="@+id/project_fragment"
-        android:name="xyz.sealynn.androidfun.module.project.ProjectFragment"
-        android:label="@string/project"/>
+    <activity
+        android:id="@+id/yearProgressActivity"
+        android:name="cn.mlynn.androidfun.module.YearProgressActivity"
+        android:label="@string/yearprogress"/>
+
+    <activity
+        android:id="@+id/signActivity"
+        android:name="cn.mlynn.androidfun.module.sign.SignActivity" />
 
 </navigation>

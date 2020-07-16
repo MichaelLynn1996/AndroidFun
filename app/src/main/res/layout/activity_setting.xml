@@ -6,16 +6,26 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="wrap_content">
 
-        <include layout="@layout/view_toolbar"/>
+        <include layout="@layout/include_toolbar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.appcompat.widget.ContentFrameLayout
-        android:id="@+id/settings_container"
+<!--    <androidx.appcompat.widget.ContentFrameLayout-->
+<!--        android:id="@+id/settings_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
+
+    <fragment
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="?attr/actionBarSize"
+        app:navGraph="@navigation/graph_setting_activity"
+        app:defaultNavHost="true"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

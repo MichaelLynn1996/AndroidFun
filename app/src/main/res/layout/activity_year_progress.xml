@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
-    tools:context=".module.year.YearProgressActivity">
+    android:background="@color/colorPrimaryDark"
+    tools:context=".module.YearProgressActivity">
 
     <View
         android:id="@+id/scrim"
@@ -16,14 +16,15 @@
         android:visibility="invisible"
         app:layout_behavior="@string/fab_transformation_scrim_behavior" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/bt_back"
-        android:layout_width="wrap_content"
+    <com.google.android.material.appbar.AppBarLayout
+        style="@style/Widget.MaterialComponents.AppBarLayout.Primary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_action_back_dark" />
+        app:liftOnScroll="true">
+
+        <include layout="@layout/include_toolbar"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card"

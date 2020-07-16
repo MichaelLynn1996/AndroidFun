@@ -2,12 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/graph_sign_activity.xml"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="xyz.sealynn.androidfun.module.login.LoginFragment"
+        android:name="cn.mlynn.androidfun.module.sign.LoginFragment"
         android:label="@string/login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -16,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
-        android:name="xyz.sealynn.androidfun.module.register.RegisterFragment"
+        android:name="cn.mlynn.androidfun.module.sign.RegisterFragment"
         android:label="@string/register"
         tools:layout="@layout/fragment_register" />
 </navigation>

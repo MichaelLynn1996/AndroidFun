@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/graph_setting_activity"
+    app:startDestination="@+id/setting_home">
+
+    <fragment
+        android:id="@+id/setting_home"
+        android:name="cn.mlynn.androidfun.module.setting.SettingsFragment"
+        android:label="@string/settings">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/about_us"
+        android:name="cn.mlynn.androidfun.module.setting.AboutFragment"
+        android:label="@string/about">
+    </fragment>
+    <fragment
+        android:id="@+id/openSourceLicenceFragment"
+        android:name="cn.mlynn.androidfun.module.setting.OpenSourceLicenceFragment"
+        android:label="@string/open_source_licence" />
+
+</navigation>

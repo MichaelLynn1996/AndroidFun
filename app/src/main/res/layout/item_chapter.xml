@@ -1,42 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dp_72">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/like"
-        android:layout_width="@dimen/dp_24"
-        android:layout_height="@dimen/dp_24"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_action_collection"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_32"
-        android:layout_marginStart="@dimen/dp_16"
-        android:gravity="bottom"
-        android:maxLines="1"
-        android:text="@string/about"
+        android:layout_height="wrap_content"
+        android:text="@string/author"
         android:textSize="@dimen/sp_16"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/like"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/date"
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dp_20"
-        android:layout_marginStart="@dimen/dp_16"
-        android:gravity="bottom"
+        android:layout_height="wrap_content"
         android:text="@string/time"
-        android:textSize="@dimen/sp_12"
-        app:layout_constraintStart_toEndOf="@id/like"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        android:textSize="@dimen/sp_16"
+        android:layout_marginTop="@dimen/dp_8"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="xyz.sealynn.androidfun">
+    package="cn.mlynn.androidfun">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application
-        android:name=".APP"
+        android:name="cn.mlynn.androidfun.APP"
         android:allowBackup="false"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -21,7 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".module.web.WebActivity">
+        <activity android:name="cn.mlynn.androidfun.module.web.WebActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -30,16 +30,17 @@
 
                 <data
                     android:host="www.wanandroid.com"
-                    android:scheme="http" />
+                    android:scheme="https" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".module.main.MainActivity"
-            android:theme="@style/AppTheme" />
+            android:name="cn.mlynn.androidfun.module.MainActivity"
+            android:theme="@style/HomeTheme"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".module.SplashActivity"
+            android:name="cn.mlynn.androidfun.module.SplashActivity"
             android:exported="true"
-            android:theme="@style/FullScreenTheme">
+            android:theme="@style/HomeTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,14 +52,11 @@
                 android:resource="@xml/shortcuts" />
         </activity>
         <activity
-            android:name=".module.AboutActivity"
-            android:theme="@style/AppTheme.MaterialAboutActivity" />
-        <activity
-            android:name=".module.year.YearProgressActivity"
-            android:theme="@style/FullScreenTheme"
-            android:launchMode="singleInstance"/>
+            android:name="cn.mlynn.androidfun.module.YearProgressActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/HomeTheme" />
 
-        <receiver android:name=".widget.ProgressWidgetWhite">
+        <receiver android:name="cn.mlynn.androidfun.widget.ProgressWidgetWhite">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -67,16 +65,11 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/progress_widget_white_info" />
         </receiver>
-        <receiver android:name=".receiver.NotificationClickReceiver" />
+        <receiver android:name="cn.mlynn.androidfun.receiver.NotificationClickReceiver" />
 
-        <activity android:name=".module.search.SearchActivity" />
-        <activity android:name=".module.todo.TodoActivity" />
-        <activity android:name=".module.collection.CollectionActivity" />
-        <activity
-            android:name=".module.OpenSourceLicenceActivity"
-            android:theme="@style/AppTheme.MaterialAboutActivity" />
-        <activity android:name=".module.setting.SettingsActivity" />
-        <activity android:name=".module.SignActivity" />
+        <activity android:name="cn.mlynn.androidfun.module.setting.SettingsActivity" />
+        <activity android:name="cn.mlynn.androidfun.module.sign.SignActivity"
+            android:theme="@style/HomeTheme"/>
     </application>
 
 </manifest>
