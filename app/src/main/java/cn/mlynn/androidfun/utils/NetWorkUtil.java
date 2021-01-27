@@ -12,6 +12,8 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import cn.mlynn.androidfun.net.interceptor.CacheInterceptor;
+
 public class NetWorkUtil {
 
     /**  * 判断是否有网络连接  */  public static boolean isNetworkConnected(Context context) {

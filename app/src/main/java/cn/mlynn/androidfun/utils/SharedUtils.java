@@ -13,8 +13,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 
-import com.orhanobut.logger.Logger;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -53,8 +51,6 @@ public class SharedUtils {
         // 将ClipData内容放到系统剪贴板里。
         if (cm != null && cm.getPrimaryClip() != null) {
             cm.setPrimaryClip(mClipData);
-            Logger.d(cm.getPrimaryClip().toString().equals(text));
-            Logger.d(cm.getPrimaryClip().getItemAt(0).getText().toString());
             if (cm.getPrimaryClip().getItemAt(0).getText().toString().equals(text))
                 ToastUtils.shortToast(context, R.string.copy_succ);
         }

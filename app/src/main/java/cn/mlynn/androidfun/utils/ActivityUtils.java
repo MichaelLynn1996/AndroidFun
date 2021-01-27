@@ -9,7 +9,7 @@ import androidx.annotation.RequiresPermission;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import cn.mlynn.androidfun.module.web.WebActivity;
+import cn.mlynn.androidfun.module.WebActivity;
 
 /**
  * Created by SeaLynn0 on 2019/1/3 20:47

@@ -5,23 +5,30 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.AppBarLayout;
+
 import cn.mlynn.androidfun.R;
 import cn.mlynn.androidfun.base.BaseFragment;
 import cn.mlynn.androidfun.databinding.FragmentMineBinding;
+import cn.mlynn.androidfun.listener.AppBarStateChangeListener;
 import cn.mlynn.androidfun.recycler.viewholder.IconTitleViewHolder;
 import cn.mlynn.androidfun.recycler.viewholder.UserInformationViewHolder;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBinding> {
 
     IconTitleViewHolder.onItemClickListener listener = (view, data) -> {
@@ -34,7 +41,7 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
     };
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
         initToolbar();
         initRecyclerView();
     }
@@ -69,6 +76,21 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
                 actionBar.setTitle(R.string.mine);
             }
         }
+//        getBinding().appbarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
+//            @Override
+//            public void onStateChanged(AppBarLayout appBarLayout, State state) {
+//                if (state == State.EXPANDED) {
+//                    getViewModel().setAppbarStatus(true);
+//                    //展开状态
+//                } else if (state == State.COLLAPSED) {
+//                    getViewModel().setAppbarStatus(false);
+//                    //折叠状态
+//
+//                } else {
+//                    //中间状态
+//                }
+//            }
+//        });
     }
 
 
@@ -109,5 +131,14 @@ public class MineFragment extends BaseFragment<MineViewModel, FragmentMineBindin
     @Override
     protected MineViewModel initViewModel() {
         return new ViewModelProvider(requireActivity()).get(MineViewModel.class);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+//        getBinding().appbarLayout.post(() -> {
+//            getBinding().appbarLayout.setExpanded(getViewModel().getAppbarStatus(), false);
+//            initToolbar();
+//        });
     }
 }

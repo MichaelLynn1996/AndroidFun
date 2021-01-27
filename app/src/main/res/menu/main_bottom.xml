@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/home"
+        android:title="@string/home"
+        android:icon="@drawable/ic_action_home"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/explore"
+        android:title="@string/discovery"
+        android:icon="@drawable/ic_action_explore"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/mine"
+        android:title="@string/mine"
+        android:icon="@drawable/ic_action_person"
+        app:showAsAction="ifRoom"/>
+
+</menu>

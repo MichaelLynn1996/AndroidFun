@@ -5,7 +5,7 @@
     android:id="@+id/web_contain"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".module.web.WebActivity">
+    tools:context=".module.WebActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

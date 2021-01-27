@@ -8,18 +8,14 @@
  */
 package cn.mlynn.androidfun.model.wan;
 
-import androidx.room.Entity;
-import androidx.room.TypeConverters;
-
 import java.util.List;
 
 import cn.mlynn.androidfun.model.BaseEntity;
-import cn.mlynn.androidfun.typeconverter.ArticleListTypeConverter;
 
-@Entity(primaryKeys = {"cid", "key"})
+//@Entity(primaryKeys = {"cid", "key"})
 public class NavigationRoot extends BaseEntity {
 
-    @TypeConverters(ArticleListTypeConverter.class)
+//    @TypeConverters(ArticleListTypeConverter.class)
     private List<Article> articles;
     private int cid;
     private String name;

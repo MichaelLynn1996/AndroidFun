@@ -8,13 +8,13 @@
  */
 package cn.mlynn.androidfun.module.home;
 
+import androidx.hilt.Assisted;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.paging.Pager;
-import androidx.paging.PagingConfig;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.paging.PagingData;
-import androidx.paging.PagingLiveData;
 
 import java.util.List;
 
@@ -23,25 +23,21 @@ import cn.mlynn.androidfun.base.BaseViewModel;
 import cn.mlynn.androidfun.model.wan.Article;
 import cn.mlynn.androidfun.model.wan.Banner;
 import cn.mlynn.androidfun.model.wan.Result;
-import cn.mlynn.androidfun.pagingsource.HomePagingSource;
-import cn.mlynn.androidfun.pagingsource.LatestProjectPagingSource;
 import io.reactivex.rxjava3.annotations.NonNull;
 
 public class HomeViewModel extends BaseViewModel {
 
-    private HomeRepository repository = new HomeRepository();
+    private HomeRepository repository;
 
     private MutableLiveData<List<Banner>> banner;
 
     private MutableLiveData<List<Article>> topLiveData;
     private LiveData<PagingData<Article>> homeLiveData;
-    private LiveData<PagingData<Article>> projectLiveData;
 
-    private Pager<Integer, Article> pagerHome = new Pager<>(new PagingConfig(20), HomePagingSource::new);
-    private Pager<Integer, Article> pagerLatestProject = new Pager<>(new PagingConfig(20), LatestProjectPagingSource::new);
-
-    public HomeViewModel() {
-        super();
+    @ViewModelInject
+    public HomeViewModel(HomeRepository repository, @Assisted SavedStateHandle savedStateHandle) {
+        super(savedStateHandle);
+        this.repository = repository;
         topLiveData = new MutableLiveData<>();
         banner = new MutableLiveData<>();
     }
@@ -56,10 +52,6 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<PagingData<Article>> getHomeLiveData() {
         return homeLiveData;
-    }
-
-    public LiveData<PagingData<Article>> getProjectLiveData() {
-        return projectLiveData;
     }
 
     public void initialHomeLoad(Lifecycle lifecycle) {
@@ -100,12 +92,6 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void initHomeLiveData(Lifecycle lifecycle) {
-        homeLiveData = PagingLiveData.cachedIn(PagingLiveData.getLiveData(pagerHome)
-                , lifecycle);
-    }
-
-    public void initProjectLiveData(Lifecycle lifecycle) {
-        projectLiveData = PagingLiveData.cachedIn(PagingLiveData.getLiveData(pagerLatestProject)
-                , lifecycle);
+        homeLiveData = repository.initHomeLiveData(lifecycle);
     }
 }

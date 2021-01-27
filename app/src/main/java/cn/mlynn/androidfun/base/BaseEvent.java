@@ -9,7 +9,7 @@
 package cn.mlynn.androidfun.base;
 
 public class BaseEvent {
-    private int action;
+    private final int action;
 
     public BaseEvent(int action) {
         this.action = action;

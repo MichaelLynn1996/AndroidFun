@@ -2,20 +2,30 @@ package cn.mlynn.androidfun.module.sign;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import cn.mlynn.androidfun.R;
 import cn.mlynn.androidfun.base.BaseFragment;
 import cn.mlynn.androidfun.databinding.FragmentRegisterBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class RegisterFragment extends BaseFragment<SignViewModel, FragmentRegisterBinding> {
 
     @Override
-    protected void init(Bundle savedInstanceState) {
-        getBinding().btGo.setOnClickListener(view -> {
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getBinding().btGo.setOnClickListener(v -> {
             if (getBinding().etUsername.getText() != null
                     && getBinding().etPassword.getText() != null
                     && getBinding().etRepeatPassword.getText() != null) {

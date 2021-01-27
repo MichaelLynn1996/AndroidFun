@@ -3,17 +3,15 @@ package cn.mlynn.androidfun;
 import android.app.Application;
 import android.content.Context;
 
-import com.didichuxing.doraemonkit.DoraemonKit;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-
 import cn.mlynn.androidfun.utils.ToastUtils;
+import dagger.hilt.android.HiltAndroidApp;
 
 /**
  * Created by SeaLynn0 on 2018/8/28 19:56
  * <p>
  * Email：sealynndev@gmail.com
  */
+@HiltAndroidApp
 public class APP extends Application {
 
     private static Context appContext;
@@ -33,11 +31,7 @@ public class APP extends Application {
     public void onCreate() {
         super.onCreate();
         // Normal app init code...
-        Logger.addLogAdapter(new AndroidLogAdapter());
-        DoraemonKit.install(this);
         appContext = getApplicationContext();
-//        setRxJavaErrorHandler();
-//        AppCompatDelegate.setDefaultNightMode(NightModeUtils.getNightModeState(getAppContext()));
     }
 
     /**
@@ -51,9 +45,5 @@ public class APP extends Application {
             android.os.Process.killProcess(android.os.Process.myPid());
         }
 //        android.os.Process.killProcess(android.os.Process.myPid());
-    }
-
-    public static AppDatabase getDataBase(){
-        return AppDatabase.getInstance(getAppContext());
     }
 }

@@ -27,13 +27,13 @@ public abstract class RefreshRecyclerFragment<VM extends BaseViewModel>
     }
 
     @Override
-    protected void dismissLoading() {
+    protected final void dismissLoading() {
         if (getBinding() != null && getBinding().refresh.isRefreshing())
             getBinding().refresh.setRefreshing(false);
     }
 
     @Override
-    protected void startLoading() {
+    protected final void startLoading() {
         if (getBinding() != null && !getBinding().refresh.isRefreshing())
             getBinding().refresh.setRefreshing(true);
     }

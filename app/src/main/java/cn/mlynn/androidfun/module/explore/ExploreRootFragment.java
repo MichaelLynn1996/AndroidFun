@@ -1,20 +1,15 @@
 package cn.mlynn.androidfun.module.explore;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-import androidx.paging.Pager;
-import androidx.paging.PagingConfig;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -30,40 +25,85 @@ import java.util.List;
 
 import cn.mlynn.androidfun.R;
 import cn.mlynn.androidfun.base.BaseFragment;
-import cn.mlynn.androidfun.databinding.LayoutToolbarTabPagerBinding;
+import cn.mlynn.androidfun.databinding.LayoutSearchAppbarTabPagerBinding;
 import cn.mlynn.androidfun.model.local.SearchRecord;
-import cn.mlynn.androidfun.model.wan.Article;
 import cn.mlynn.androidfun.model.wan.HotKey;
 import cn.mlynn.androidfun.module.navigation.NavigationFragment;
 import cn.mlynn.androidfun.module.tree.TreeFragment;
 import cn.mlynn.androidfun.module.wenda.WendaFragment;
-import cn.mlynn.androidfun.pagingsource.SearchPagingSource;
 import cn.mlynn.androidfun.recycler.adapter.ArticlePagingAdapter;
 import cn.mlynn.androidfun.recycler.viewholder.TitleChipViewHolder;
+import dagger.hilt.android.AndroidEntryPoint;
 
-public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutToolbarTabPagerBinding> {
+@AndroidEntryPoint
+public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutSearchAppbarTabPagerBinding> {
 
     static final String VIEW_MODEL_KEY = ExploreRootFragment.class.getSimpleName();
 
-    public static final String KEY_TARGET_PAGE = "targetPage";
+    private List<SearchRecord> records = new ArrayList<>();
+    private List<HotKey> hotKeys = new ArrayList<>();
 
-    private TitleChipViewHolder hotKeyRecordViewHolder;
-    private TitleChipViewHolder searchRecordViewHolder;
-
-    private List<Chip> recordChip;
+    private boolean isCloseIconVisible = false;
 
     private ArticlePagingAdapter adapter = new ArticlePagingAdapter();
-    private RecyclerView.Adapter<RecyclerView.ViewHolder> normalAdapter = new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private RecyclerView.Adapter<TitleChipViewHolder> normalAdapter = new RecyclerView.Adapter<TitleChipViewHolder>() {
         @NonNull
         @Override
-        public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if (viewType == 0) return hotKeyRecordViewHolder;
-            else if (viewType == 1) return searchRecordViewHolder;
-            return null;
+        public TitleChipViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+            if (viewType == 0) {
+                TitleChipViewHolder hotKeyRecordViewHolder = new TitleChipViewHolder(cn.mlynn.androidfun.databinding.ItemTitleChipBinding
+                        .inflate(LayoutInflater.from(getContext()), getBinding().getRoot(), false)
+                        , R.string.everybody_searching);
+                return hotKeyRecordViewHolder;
+            } else {
+                TitleChipViewHolder searchRecordViewHolder = new TitleChipViewHolder(cn.mlynn.androidfun.databinding.ItemTitleChipBinding
+                        .inflate(LayoutInflater.from(getContext()), getBinding().getRoot(), false)
+                        , R.string.searching_history);
+                searchRecordViewHolder.getBinding().text.setOnClickListener(view -> getViewModel().removeAllRecord());
+                searchRecordViewHolder.getBinding().text.setVisibility(View.VISIBLE);
+                return searchRecordViewHolder;
+            }
         }
 
         @Override
-        public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull TitleChipViewHolder holder, int position) {
+            List<Chip> chips = new ArrayList<>();
+            if (position == 0) {
+                for (HotKey k : hotKeys) {
+                    Chip chip = new Chip(requireContext());
+                    chip.setText(k.getName());
+                    chip.setOnClickListener(view ->
+                            getViewModel()
+                                    .getKeywordLiveData().setValue(k.getName()));
+                    chips.add(chip);
+                }
+            } else {
+                for (SearchRecord record : records) {
+                    Chip chip = new Chip(requireContext());
+                    chip.setText(record.getText());
+                    chip.setOnClickListener(view ->
+                            getViewModel()
+                                    .getKeywordLiveData().setValue(record.getText()));
+                    chip.setOnLongClickListener(view -> {
+                        if (chip.isCloseIconVisible()) {
+                            for (Chip c : chips)
+                                c.setCloseIconVisible(false);
+                            isCloseIconVisible = false;
+                        } else {
+                            for (Chip c : chips)
+                                c.setCloseIconVisible(true);
+                            isCloseIconVisible = true;
+                        }
+                        return true;
+                    });
+                    chip.setCloseIconVisible(isCloseIconVisible);
+                    chip.setOnCloseIconClickListener(view ->
+                            getViewModel().removeRecordByText(chip.getText().toString().trim()));
+                    chips.add(chip);
+                }
+            }
+            holder.bind(chips);
         }
 
         @Override
@@ -78,88 +118,23 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
     };
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                if (getBinding().materialSearchView.hasFocus())
-                    getBinding().materialSearchView.clearFocus();
-                else
-                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigateUp();
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
-    }
-
-    @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
 //        initToolbar();
-        initSearchRecordViewHolder();
         initSearchView();
 
         initViewPager2();
         initTabLayout();
-
-        getViewModel()
-                .getHotKeyLiveData()
-                .observe(getViewLifecycleOwner()
-                        , hotKeys -> {
-                            List<Chip> chips = new ArrayList<>();
-                            for (HotKey k : hotKeys) {
-                                Chip chip = new Chip(requireContext());
-                                chip.setText(k.getName());
-                                chip.setOnClickListener(view ->
-                                        getViewModel()
-                                                .getKeywordLiveData().setValue(k.getName()));
-                                chips.add(chip);
-                            }
-                            hotKeyRecordViewHolder.bind(chips);
-                        });
-        getViewModel()
-                .getRecordLiveData()
-                .observe(getViewLifecycleOwner()
-                        , searchRecords -> {
-                            recordChip = new ArrayList<>();
-                            for (SearchRecord record : searchRecords) {
-                                Chip chip = new Chip(requireContext());
-                                chip.setText(record.getText());
-                                chip.setOnClickListener(view ->
-                                        getViewModel()
-                                                .getKeywordLiveData().setValue(record.getText()));
-                                chip.setOnLongClickListener(view -> {
-                                    if (chip.isCloseIconVisible())
-                                        for (Chip c : recordChip)
-                                            c.setCloseIconVisible(false);
-                                    else
-                                        for (Chip c : recordChip)
-                                            c.setCloseIconVisible(true);
-                                    return true;
-                                });
-                                chip.setOnCloseIconClickListener(view ->
-                                        getViewModel().removeRecordByText(chip.getText().toString().trim()));
-                                recordChip.add(chip);
-                            }
-                            searchRecordViewHolder.bind(recordChip);
-                        });
-        getViewModel()
-                .getKeywordLiveData()
-                .observe(getViewLifecycleOwner(), s -> {
-//                            if (!getBinding().materialSearchView.hasFocus())
-//                                getBinding().materialSearchView.requestFocus();
-                    getBinding().materialSearchView.setTextQuery(s, true);
-                    submitAction(s);
-                });
-
     }
 
     /**
      * 初始化SearchView
      */
     private void initSearchView() {
+        getBinding().materialSearchView.setClearFocusOnBackPressed(true);
         getBinding().materialSearchView.setAdapterLayoutManager(new LinearLayoutManager(getContext()));
 
         getBinding().materialSearchView.setAdapter(normalAdapter);
+
 
         getBinding().materialSearchView.setNavigationIconSupport(SearchLayout.NavigationIconSupport.SEARCH);
         getBinding().materialSearchView.setOnNavigationClickListener(() ->
@@ -177,9 +152,24 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
 
             @Override
             public boolean onQueryTextSubmit(@NotNull CharSequence charSequence) {
-                submitAction(charSequence.toString().trim());
-
-                getBinding().materialSearchView.hideKeyboard();
+//                submitAction(charSequence.toString().trim());
+                if (!TextUtils.isEmpty(charSequence)) {
+                    if (!getBinding().materialSearchView.hasFocus())
+                        getBinding().materialSearchView.requestFocus();
+                    getViewModel().initSearchResultLiveData(getLifecycle(), charSequence.toString().trim());
+                    getViewModel().getSearchResultLiveData().observe(getViewLifecycleOwner(),
+                            articlePagingData -> adapter.submitData(getLifecycle(), articlePagingData));
+                    getBinding().materialSearchView.setAdapter(adapter);
+                    //  添加记录
+                    SearchRecord record = new SearchRecord();
+                    record.setText(charSequence.toString().trim());
+                    getViewModel().insertSearchRecord(record);
+                    //  关闭键盘
+                    getBinding().materialSearchView.setFocusable(true);
+                    getBinding().materialSearchView.setFocusableInTouchMode(true);
+                    getBinding().materialSearchView.hideKeyboard();
+                }
+//                getBinding().materialSearchView.hideKeyboard();
                 return true;
             }
         });
@@ -205,7 +195,7 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
 //        })
 //
         getBinding().materialSearchView.setElevation(0f);
-//        setBackgroundStrokeWidth(resources.getDimensionPixelSize(R.dimen.search_stroke_width))
+//        getBinding().materialSearchView.setBackgroundStrokeWidth(0);
 //        setBackgroundStrokeColor(
 //                ContextCompat.getColor(
 //                        this@MainActivity,
@@ -220,57 +210,36 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
             } else {
                 getBinding().materialSearchView
                         .setNavigationIconSupport(SearchLayout.NavigationIconSupport.SEARCH);
-                for (Chip chip : recordChip) {
-                    if (chip.isCloseIconVisible()) chip.setCloseIconVisible(false);
-                }
+                isCloseIconVisible = false;
+                normalAdapter.notifyItemChanged(1);
             }
         });
-    }
-
-    private void submitAction(String s) {
-        if (!TextUtils.isEmpty(s)) {
-            if (!getBinding().materialSearchView.hasFocus())
-                getBinding().materialSearchView.requestFocus();
-            Pager<Integer, Article> pager = new Pager<>(new PagingConfig(20)
-                    , () -> new SearchPagingSource(s.trim()));
-            getViewModel().initSearchResultLiveData(getLifecycle(), pager);
-            getViewModel().getSearchResultLiveData().observe(getViewLifecycleOwner(),
-                    articlePagingData -> adapter.submitData(getLifecycle(), articlePagingData));
-            getBinding().materialSearchView.setAdapter(adapter);
-            //  添加记录
-            SearchRecord record = new SearchRecord();
-            record.setText(s.trim());
-            getViewModel().insertSearchRecord(record);
-            //  关闭键盘
-            getBinding().materialSearchView.setFocusable(true);
-            getBinding().materialSearchView.setFocusableInTouchMode(true);
-            getBinding().materialSearchView.hideKeyboard();
-
-//            InputMethodManager im = (InputMethodManager) requireContext()
-//                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-//            im.hideSoftInputFromWindow(getBinding().materialSearchView.getWindowToken(), 0);
-        }
-    }
-
-    private void initSearchRecordViewHolder() {
-        hotKeyRecordViewHolder = new TitleChipViewHolder(cn.mlynn.androidfun.databinding.ItemTitleChipBinding
-                .inflate(LayoutInflater.from(getContext()), getBinding().getRoot(), false)
-                , R.string.everybody_searching);
-        searchRecordViewHolder = new TitleChipViewHolder(cn.mlynn.androidfun.databinding.ItemTitleChipBinding
-                .inflate(LayoutInflater.from(getContext()), getBinding().getRoot(), false)
-                , R.string.searching_history);
-        searchRecordViewHolder.getBinding().text.setOnClickListener(view -> getViewModel().removeAllRecord());
-        searchRecordViewHolder.getBinding().text.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getBinding().pagers.post(() -> {
-            if (getArguments() != null && getArguments().getInt(KEY_TARGET_PAGE) != 0) {
-                getBinding().pagers.setCurrentItem(getArguments().getInt(KEY_TARGET_PAGE));
-            }
-        });
+    public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
+        getViewModel()
+                .getHotKeyLiveData()
+                .observe(getViewLifecycleOwner()
+                        , hotKeys -> {
+                            this.hotKeys.clear();
+                            this.hotKeys.addAll(hotKeys);
+                            normalAdapter.notifyItemChanged(0);
+                        });
+        getViewModel()
+                .getRecordLiveData()
+                .observe(getViewLifecycleOwner()
+                        , searchRecords -> {
+                            this.records.clear();
+                            this.records.addAll(searchRecords);
+                            normalAdapter.notifyItemChanged(1);
+                        });
+        getViewModel()
+                .getKeywordLiveData()
+                .observe(getViewLifecycleOwner(), s -> getBinding().materialSearchView.setTextQuery(s, true));
+        if (getViewModel().getHotKeyLiveData().getValue() == null)
+            getViewModel().queryHotKey(getLifecycle());
     }
 
     private void initTabLayout() {
@@ -278,13 +247,9 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
         String[] titles = {getString(R.string.discovery),
                 getString(R.string.navigation),
                 getString(R.string.knowledge_tree)};
-//        int[] icon = {R.drawable.ic_action_home, R.drawable.project, R.drawable.guangchang, R.drawable.wenda};
         new TabLayoutMediator(getBinding().tabs,
                 getBinding().pagers,
-                (tab, position) -> {
-//                    tab.setIcon(icon[position]);
-                    tab.setText(titles[position]);
-                }).attach();
+                (tab, position) -> tab.setText(titles[position])).attach();
     }
 
     private void initViewPager2() {
@@ -308,12 +273,14 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
             public int getItemCount() {
                 return 3;
             }
+
+
         });
     }
 
     @Override
-    protected LayoutToolbarTabPagerBinding initBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        return LayoutToolbarTabPagerBinding.inflate(getLayoutInflater());
+    protected LayoutSearchAppbarTabPagerBinding initBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        return LayoutSearchAppbarTabPagerBinding.inflate(getLayoutInflater());
     }
 
     @Override
@@ -333,8 +300,6 @@ public class ExploreRootFragment extends BaseFragment<ExploreViewModel, LayoutTo
 
     @Override
     public void onDestroyView() {
-        if (getBinding().materialSearchView.hasFocus())
-            getBinding().materialSearchView.clearFocus();
         getViewModel().getKeywordLiveData().removeObservers(getViewLifecycleOwner());
         getViewModel().getKeywordLiveData().setValue(null);
         super.onDestroyView();

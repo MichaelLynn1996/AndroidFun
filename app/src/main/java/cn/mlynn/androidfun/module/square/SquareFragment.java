@@ -9,21 +9,48 @@
 package cn.mlynn.androidfun.module.square;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.lifecycle.Observer;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.paging.LoadState;
-import androidx.paging.PagingData;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import cn.mlynn.androidfun.model.wan.Article;
-import cn.mlynn.androidfun.module.RefreshRecyclerFragment;
-import cn.mlynn.androidfun.recycler.adapter.ArticlePagingAdapter;
+import com.google.android.material.appbar.MaterialToolbar;
 
-public class SquareFragment extends RefreshRecyclerFragment<SquareViewModel> {
+import cn.mlynn.androidfun.R;
+import cn.mlynn.androidfun.base.BaseFragment;
+import cn.mlynn.androidfun.databinding.LayoutAppbarRefreshRecyclerBinding;
+import cn.mlynn.androidfun.databinding.LayoutRefreshRecyclerBinding;
+import cn.mlynn.androidfun.recycler.adapter.ArticlePagingAdapter;
+import dagger.hilt.android.AndroidEntryPoint;
+import kotlin.Unit;
+
+@AndroidEntryPoint
+public class SquareFragment extends BaseFragment<SquareViewModel, LayoutAppbarRefreshRecyclerBinding> {
 
     private ArticlePagingAdapter articlePagingAdapter;
+
+    private LayoutRefreshRecyclerBinding binding;
+
+    @Override
+    protected void dismissLoading() {
+        if (binding != null && binding.refresh.isRefreshing())
+            binding.refresh.setRefreshing(false);
+    }
+
+    @Override
+    protected void startLoading() {
+        if (binding != null && !binding.refresh.isRefreshing())
+            binding.refresh.setRefreshing(true);
+    }
 
     @Override
     protected SquareViewModel initViewModel() {
@@ -34,52 +61,47 @@ public class SquareFragment extends RefreshRecyclerFragment<SquareViewModel> {
     }
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
+        binding = getBinding().refreshRecycler;
 //        initVisitData();
         initRecyclerView();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         getViewModel().getSquareLiveData().observe(getViewLifecycleOwner()
                 , articlePagingData -> articlePagingAdapter.submitData(getLifecycle(), articlePagingData));
-        getBinding().refresh.setOnRefreshListener(() -> articlePagingAdapter.refresh());
+        binding.refresh.setOnRefreshListener(() -> articlePagingAdapter.refresh());
+
+        NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+        NavigationUI.setupWithNavController((MaterialToolbar)getBinding().getRoot().findViewById(R.id.toolbar)
+                , navController);
     }
 
     private void initRecyclerView() {
-        ConcatAdapter concatAdapter = new ConcatAdapter();
-
-//        concatAdapter.addAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-//            @NonNull
-//            @Override
-//            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                return null;
-//            }
-//
-//            @Override
-//            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//
-//            }
-//
-//            @Override
-//            public int getItemCount() {
-//                return 0;
-//            }
-//        });
-
         articlePagingAdapter = new ArticlePagingAdapter();
         articlePagingAdapter.addLoadStateListener(loadStates -> {
             if (loadStates.getRefresh() instanceof LoadState.Loading)
                 startLoading();
             else if (loadStates.getRefresh() instanceof LoadState.NotLoading)
                 dismissLoading();
-            return null;
+            return Unit.INSTANCE;
         });
-        concatAdapter.addAdapter(articlePagingAdapter);
 
-        getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        getBinding().recyclerView.
-        getBinding().recyclerView.setAdapter(concatAdapter);
+        binding.recyclerView.setAdapter(articlePagingAdapter);
+    }
+
+    @Override
+    protected LayoutAppbarRefreshRecyclerBinding initBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        return LayoutAppbarRefreshRecyclerBinding.inflate(inflater, container, false);
     }
 
     @Override
     public void onDestroyView() {
+        binding = null;
         super.onDestroyView();
     }
 }

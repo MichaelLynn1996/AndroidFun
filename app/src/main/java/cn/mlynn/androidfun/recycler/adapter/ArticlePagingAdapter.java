@@ -15,7 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.paging.PagingDataAdapter;
 
 import cn.mlynn.androidfun.databinding.ItemArticleBinding;
-import cn.mlynn.androidfun.diffutil.ArticleDiffUtilCallBack;
+import cn.mlynn.androidfun.recycler.diffutil.ArticleDiffUtilCallBack;
 import cn.mlynn.androidfun.model.wan.Article;
 import cn.mlynn.androidfun.recycler.viewholder.ArticleViewHolder;
 

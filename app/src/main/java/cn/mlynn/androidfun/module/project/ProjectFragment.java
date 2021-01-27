@@ -9,16 +9,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import cn.mlynn.androidfun.base.BaseFragment;
 import cn.mlynn.androidfun.databinding.FramentProjectBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 20:19
  * <p>
  * Email：sealynndev@gmail.com
  */
+@AndroidEntryPoint
 public class ProjectFragment extends BaseFragment<ProjectViewModel, FramentProjectBinding> {
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
 
     }
 

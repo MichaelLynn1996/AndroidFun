@@ -2,9 +2,11 @@ package cn.mlynn.androidfun.module.sign;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.FragmentNavigator;
@@ -12,13 +14,21 @@ import androidx.navigation.fragment.FragmentNavigator;
 import cn.mlynn.androidfun.R;
 import cn.mlynn.androidfun.base.BaseFragment;
 import cn.mlynn.androidfun.databinding.FragmentLoginBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class LoginFragment extends BaseFragment<SignViewModel, FragmentLoginBinding> {
 
     public static final int REQUEST_REGISTER = 1;
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View v, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
         getBinding().btGo.setOnClickListener(view -> {
             if (getBinding().etUsername.getText() != null && getBinding().etPassword.getText() != null) {
                 String u = getBinding().etUsername.getText().toString().trim();
@@ -37,11 +47,11 @@ public class LoginFragment extends BaseFragment<SignViewModel, FragmentLoginBind
                 }
             }
         });
-        getBinding().etUsername.setOnFocusChangeListener((v, hasFocus) -> {
+        getBinding().etUsername.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus && getBinding().tilUsername.isErrorEnabled())
                 getBinding().tilUsername.setErrorEnabled(false);
         });
-        getBinding().etPassword.setOnFocusChangeListener((v, hasFocus) -> {
+        getBinding().etPassword.setOnFocusChangeListener((view, hasFocus) -> {
             if (hasFocus && getBinding().tilPassword.isErrorEnabled())
                 getBinding().tilPassword.setErrorEnabled(false);
         });

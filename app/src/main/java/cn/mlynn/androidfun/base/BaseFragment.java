@@ -20,10 +20,21 @@ public abstract class BaseFragment<VM extends BaseViewModel, VB extends ViewBind
 
     @Nullable
     @Override
-    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    /**
+     * onCreateView中应该只有建立View的逻辑，而数据操作应该在onViewCreated中，故在这里初始化ViewModel
+     *
+     * @param view 已经创建的视图
+     * @param savedInstanceState savedInstanceState
+     */
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         viewModel = initViewModel();
         initViewModelEvent();
-        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     private void initViewModelEvent() {

@@ -8,33 +8,46 @@
  */
 package cn.mlynn.androidfun.module.explore;
 
+import androidx.hilt.Assisted;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.paging.Pager;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.paging.PagingData;
-import androidx.paging.PagingLiveData;
 
 import java.util.List;
 
+import cn.mlynn.androidfun.base.BaseRepository;
 import cn.mlynn.androidfun.base.BaseViewModel;
 import cn.mlynn.androidfun.model.local.SearchRecord;
 import cn.mlynn.androidfun.model.wan.Article;
+import cn.mlynn.androidfun.model.wan.Friend;
 import cn.mlynn.androidfun.model.wan.HotKey;
+import cn.mlynn.androidfun.model.wan.Result;
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class ExploreViewModel extends BaseViewModel {
 
-    private ExploreRepository repository = new ExploreRepository();
+    private ExploreRepository repository;
 
-    private LiveData<List<HotKey>> hotKeyLiveData = repository.getHotKeyLiveData();
-    private LiveData<List<SearchRecord>> recordLiveData = repository.getRecordLiveData();
+    private MutableLiveData<List<HotKey>> hotKeyLiveData;
+    private LiveData<List<SearchRecord>> recordLiveData;
     private LiveData<PagingData<Article>> searchResultLiveData;
+    private MutableLiveData<String> keywordLiveData;
+    private MutableLiveData<List<Friend>> friendLiveData;
 
-    private MutableLiveData<String> keywordLiveData = new MutableLiveData<>();
+    @ViewModelInject
+    public ExploreViewModel(ExploreRepository repository, @Assisted SavedStateHandle savedStateHandle) {
+        super(savedStateHandle);
+        this.repository = repository;
+        hotKeyLiveData = new MutableLiveData<>();
+        keywordLiveData = new MutableLiveData<>();
+        recordLiveData = repository.getRecordLiveData();
+        friendLiveData = new MutableLiveData<>();
+    }
 
-    private boolean isFirstLoaded = false;
-
-    public LiveData<List<HotKey>> getHotKeyLiveData() {
+    public MutableLiveData<List<HotKey>> getHotKeyLiveData() {
         return hotKeyLiveData;
     }
 
@@ -50,21 +63,52 @@ public class ExploreViewModel extends BaseViewModel {
         return keywordLiveData;
     }
 
-    public boolean isFirstLoaded() {
-        return isFirstLoaded;
-    }
-
-    public void setFirstLoaded(boolean firstLoaded) {
-        isFirstLoaded = firstLoaded;
+    public MutableLiveData<List<Friend>> getFriendLiveData() {
+        return friendLiveData;
     }
 
     public void queryHotKey(Lifecycle lifecycle) {
-        repository.queryHotKey(lifecycle, getViewControlHelper());
+        repository.queryHotKey(lifecycle, new BaseRepository.QueryCallBack<Result<List<HotKey>>>() {
+            @Override
+            public void onSuccess(Result<List<HotKey>> entity) {
+                if (getViewControlHelper().isLoadSuccess(entity.getErrorCode())){
+                    hotKeyLiveData.setValue(entity.getData());
+                    getViewControlHelper().dismissLoading();
+                } else {
+                    getViewControlHelper().onLoadFailed(entity.getErrorMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Throwable e) {
+                getViewControlHelper().onLoadFailed(e);
+            }
+        });
     }
 
-    public void initSearchResultLiveData(Lifecycle lifecycle, Pager<Integer, Article> pager) {
-        searchResultLiveData = PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager)
-                , lifecycle);
+    public void queryFriend(Lifecycle lifecycle) {
+        repository.queryFriend(lifecycle, new BaseRepository.QueryCallBack<Result<List<Friend>>>() {
+            @Override
+            public void onSuccess(Result<List<Friend>> entity) {
+                if (getViewControlHelper().isLoadSuccess(entity.getErrorCode())){
+                    friendLiveData.setValue(entity.getData());
+                    getViewControlHelper().dismissLoading();
+                } else {
+                    getViewControlHelper().onLoadFailed(entity.getErrorMsg());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Throwable e) {
+                getViewControlHelper().onLoadFailed(e);
+            }
+        });
+    }
+
+    public void initSearchResultLiveData(Lifecycle lifecycle, String k) {
+//        Pager<Integer, Article> pager = new Pager<>(new PagingConfig(20)
+//                , () -> new SearchPagingSource(repository.getRequestApi(), k));
+        searchResultLiveData = repository.initSearchResultLiveData(lifecycle, k);
     }
 
     public void insertSearchRecord(SearchRecord record) {

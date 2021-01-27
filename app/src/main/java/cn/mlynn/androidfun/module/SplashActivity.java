@@ -4,15 +4,20 @@ import android.os.Bundle;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.mlynn.androidfun.base.ExBaseActivity;
 import cn.mlynn.androidfun.databinding.ActivitySplashBinding;
 import cn.mlynn.androidfun.utils.ActivityUtils;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by SeaLynn0 on 2018/10/13 1:36
  * <p>
  * Email：sealynndev@gmail.com
  */
+@AndroidEntryPoint
 public class SplashActivity extends ExBaseActivity<ActivitySplashBinding> {
 
     private AlphaAnimation alphaAnimation;

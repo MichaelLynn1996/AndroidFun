@@ -10,51 +10,45 @@ package cn.mlynn.androidfun.module.explore;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
+import androidx.paging.Pager;
+import androidx.paging.PagingConfig;
+import androidx.paging.PagingData;
+import androidx.paging.PagingLiveData;
 
 import java.util.List;
 
-import cn.mlynn.androidfun.APP;
+import javax.inject.Inject;
+
 import cn.mlynn.androidfun.base.BaseRepository;
-import cn.mlynn.androidfun.dao.HotKeyDao;
-import cn.mlynn.androidfun.dao.SearchRecordDao;
+import cn.mlynn.androidfun.database.dao.SearchRecordDao;
 import cn.mlynn.androidfun.model.local.SearchRecord;
+import cn.mlynn.androidfun.model.wan.Article;
+import cn.mlynn.androidfun.model.wan.Friend;
 import cn.mlynn.androidfun.model.wan.HotKey;
 import cn.mlynn.androidfun.model.wan.Result;
-import cn.mlynn.androidfun.net.RetrofitManager;
-import io.reactivex.rxjava3.annotations.NonNull;
+import cn.mlynn.androidfun.net.RequestApi;
 
 public class ExploreRepository extends BaseRepository {
 
-    HotKeyDao hotKeyDao = APP.getDataBase().getHotKeyDao();
-    SearchRecordDao searchRecordDao = APP.getDataBase().getSearchRecordDao();
+//    private HotKeyDao hotKeyDao;
+    private SearchRecordDao searchRecordDao;
 
-    LiveData<List<HotKey>> getHotKeyLiveData() {
-        return hotKeyDao.loadAllHotKey();
+    @Inject
+    public ExploreRepository(RequestApi requestApi, SearchRecordDao searchRecordDao) {
+        super(requestApi);
+//        this.hotKeyDao = hotKeyDao;
+        this.searchRecordDao = searchRecordDao;
     }
+
+//    LiveData<List<HotKey>> getHotKeyLiveData() {
+//        return hotKeyDao.loadAllHotKey();
+//    }
     LiveData<List<SearchRecord>> getRecordLiveData() {
         return searchRecordDao.loadAllSearchRecord();
     }
 
-    public void queryHotKey(Lifecycle lifecycle, ExploreViewModel.ViewControlHelper helper) {
-        query(lifecycle, RetrofitManager.getInstance().createReq().getHotKey(), new QueryCallBack<Result<List<HotKey>>>() {
-            @Override
-            public void onSuccess(Result<List<HotKey>> entity) {
-                if (helper.isLoadSuccess(entity.getErrorCode())){
-                    getExecutor().execute(() -> {
-                        hotKeyDao.deleteAllHotKey();
-                        hotKeyDao.insertHotKey(entity.getData());
-                    });
-                    helper.dismissLoading();
-                } else {
-                    helper.onLoadFailed(entity.getErrorMsg());
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Throwable e) {
-                helper.onLoadFailed(e);
-            }
-        });
+    public void queryHotKey(Lifecycle lifecycle, QueryCallBack<Result<List<HotKey>>> callBack) {
+        query(lifecycle, getRequestApi().getHotKey(), callBack);
     }
 
     public void insertSearchRecord(SearchRecord record) {
@@ -70,5 +64,16 @@ public class ExploreRepository extends BaseRepository {
 
     public void deleteAllRecord() {
         getExecutor().execute(() -> searchRecordDao.deleteAllSearchRecord());
+    }
+
+    public LiveData<PagingData<Article>> initSearchResultLiveData(Lifecycle lifecycle, String k) {
+        Pager<Integer, Article> pager = new Pager<>(new PagingConfig(20)
+                , () -> new SearchPagingSource(getRequestApi(), k));
+        return PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager)
+                , lifecycle);
+    }
+
+    public void queryFriend(Lifecycle lifecycle, QueryCallBack<Result<List<Friend>>> callBack) {
+        query(lifecycle, getRequestApi().getFriend(), callBack);
     }
 }

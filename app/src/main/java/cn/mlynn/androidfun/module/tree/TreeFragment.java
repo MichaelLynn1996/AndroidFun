@@ -1,34 +1,38 @@
 package cn.mlynn.androidfun.module.tree;
 
 import android.os.Bundle;
+import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import cn.mlynn.androidfun.recycler.adapter.TreeAdapter;
 import cn.mlynn.androidfun.module.RefreshRecyclerFragment;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 20:05
  * <p>
  * Email：sealynndev@gmail.com
  */
+@AndroidEntryPoint
 public class TreeFragment extends RefreshRecyclerFragment<TreeViewModel> {
 
     private TreeAdapter adapter;
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
         initRecyclerView();
-        initRefresh();
-        getViewModel().getTreeLiveData().observe(this, children -> adapter.submitList(children));
-        if (!getViewModel().isFirstLoaded()) {
-            getViewModel().loadTree(getLifecycle());
-            getViewModel().setFirstLoaded(false);
-        }
     }
 
-    private void initRefresh() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getViewModel().getTreeLiveData().observe(getViewLifecycleOwner(), children -> adapter.submitList(children));
+        if (getViewModel().getTreeLiveData().getValue() == null)
+            getViewModel().loadTree(getLifecycle());
         getBinding().refresh.setOnRefreshListener(() -> getViewModel().loadTree(getLifecycle()));
     }
 

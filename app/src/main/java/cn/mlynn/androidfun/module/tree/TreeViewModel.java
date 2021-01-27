@@ -8,39 +8,51 @@
  */
 package cn.mlynn.androidfun.module.tree;
 
+import androidx.hilt.Assisted;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 
 import java.util.List;
 
+import cn.mlynn.androidfun.base.BaseRepository;
 import cn.mlynn.androidfun.base.BaseViewModel;
-import cn.mlynn.androidfun.model.wan.Children;
+import cn.mlynn.androidfun.model.wan.Chapter;
+import cn.mlynn.androidfun.model.wan.Result;
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class TreeViewModel extends BaseViewModel {
 
-    private TreeRepository repository = new TreeRepository();
+    private TreeRepository repository;
 
-    private LiveData<List<Children>> treeLiveData;
+    private MutableLiveData<List<Chapter>> treeLiveData;
 
-    private boolean isFirstLoaded = false;
-
-    public TreeViewModel() {
-        treeLiveData = repository.getChildrenLiveData();
+    @ViewModelInject
+    public TreeViewModel(TreeRepository repository, @Assisted SavedStateHandle savedStateHandle) {
+        super(savedStateHandle);
+        this.repository = repository;
+        this.treeLiveData = new MutableLiveData<>();
     }
 
-    public LiveData<List<Children>> getTreeLiveData() {
+    public MutableLiveData<List<Chapter>> getTreeLiveData() {
         return treeLiveData;
     }
 
     public void loadTree(Lifecycle lifecycle) {
-        repository.queryTree(lifecycle, getViewControlHelper());
-    }
+        repository.queryTree(lifecycle, new BaseRepository.QueryCallBack<Result<List<Chapter>>>() {
+            @Override
+            public void onSuccess(Result<List<Chapter>> entity) {
+                if (getViewControlHelper().isLoadSuccess(entity.getErrorCode())) {
+                    treeLiveData.setValue(entity.getData());
+                    getViewControlHelper().dismissLoading();
+                }else   getViewControlHelper().onLoadFailed(entity.getErrorMsg());
+            }
 
-    public boolean isFirstLoaded() {
-        return isFirstLoaded;
-    }
-
-    public void setFirstLoaded(boolean firstLoaded) {
-        isFirstLoaded = firstLoaded;
+            @Override
+            public void onFailure(@NonNull Throwable e) {
+                getViewControlHelper().onLoadFailed(e);
+            }
+        });
     }
 }

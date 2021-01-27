@@ -1,3 +1,7 @@
+package cn.mlynn.androidfun.base;
+
+import androidx.lifecycle.MutableLiveData;
+
 /**
  * @ProjectName: AndroidFun
  * @Package: xyz.sealynn.androidfun.base2
@@ -6,10 +10,6 @@
  * @Author: Michael Lynn
  * @CreateDate: 2020/6/10 13:26
  */
-package cn.mlynn.androidfun.base;
-
-import androidx.lifecycle.MutableLiveData;
-
 interface IViewModelAction {
 
     void startLoading();

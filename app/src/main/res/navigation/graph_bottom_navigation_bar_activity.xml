@@ -5,8 +5,12 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="cn.mlynn.androidfun.module.home.HomeFragment"
-        android:label="@string/home"/>
+        android:name="cn.mlynn.androidfun.module.HomeRootFragment"
+        android:label="@string/home">
+        <action
+            android:id="@+id/action_home_to_wendaFragment"
+            app:destination="@id/wendaFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/explore"
@@ -49,5 +53,14 @@
     <activity
         android:id="@+id/signActivity"
         android:name="cn.mlynn.androidfun.module.sign.SignActivity" />
+    <fragment
+        android:id="@+id/wxChapterFragment"
+        android:name="cn.mlynn.androidfun.module.wx.WxChapterFragment"
+        android:label="WxChapterFragment" >
+        <argument
+            android:name="Action"
+            app:argType="string"
+            android:defaultValue="WX" />
+    </fragment>
 
 </navigation>

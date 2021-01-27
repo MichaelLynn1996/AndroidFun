@@ -8,35 +8,52 @@
  */
 package cn.mlynn.androidfun.module.navigation;
 
+import androidx.hilt.Assisted;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 
 import java.util.List;
 
+import cn.mlynn.androidfun.base.BaseRepository;
 import cn.mlynn.androidfun.base.BaseViewModel;
 import cn.mlynn.androidfun.model.wan.NavigationRoot;
+import cn.mlynn.androidfun.model.wan.Result;
+import io.reactivex.rxjava3.annotations.NonNull;
 
 public class NavigationViewModel extends BaseViewModel {
 
-    private NavigationRepository repository = new NavigationRepository();
+    private NavigationRepository repository;
 
-    private LiveData<List<NavigationRoot>> navigationLiveData = repository.getNavigationLiveData();
+    private MutableLiveData<List<NavigationRoot>> navigationLiveData;
 
-    private boolean isFirstLoaded = false;
+    @ViewModelInject
+    public NavigationViewModel(NavigationRepository repository, @Assisted SavedStateHandle savedStateHandle) {
+        super(savedStateHandle);
+        this.repository = repository;
+        navigationLiveData  = new MutableLiveData<>();
+    }
 
-    public LiveData<List<NavigationRoot>> getNavigationLiveData() {
+    public MutableLiveData<List<NavigationRoot>> getNavigationLiveData() {
         return navigationLiveData;
     }
 
     public void loadNavigation(Lifecycle lifecycle) {
-        repository.queryNavigation(lifecycle, new ViewControlHelper());
-    }
+        repository.queryNavigation(lifecycle, new BaseRepository.QueryCallBack<Result<List<NavigationRoot>>>() {
+            @Override
+            public void onSuccess(Result<List<NavigationRoot>> entity) {
+                if (getViewControlHelper().isLoadSuccess(entity.getErrorCode())) {
+                    navigationLiveData.setValue(entity.getData());
+                    getViewControlHelper().dismissLoading();
+                } else getViewControlHelper().onLoadFailed(entity.getErrorMsg());
+            }
 
-    public boolean isFirstLoaded() {
-        return isFirstLoaded;
-    }
-
-    public void setFirstLoaded(boolean firstLoaded) {
-        isFirstLoaded = firstLoaded;
+            @Override
+            public void onFailure(@NonNull Throwable e) {
+                getViewControlHelper().onLoadFailed(e);
+            }
+        });
     }
 }

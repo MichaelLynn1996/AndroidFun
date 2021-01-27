@@ -14,18 +14,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.mlynn.androidfun.R;
 import cn.mlynn.androidfun.databinding.ItemIconTitleBinding;
+import cn.mlynn.androidfun.model.wan.Friend;
 import cn.mlynn.androidfun.module.RefreshRecyclerFragment;
+import cn.mlynn.androidfun.module.wx.WxChapterFragmentArgs;
 import cn.mlynn.androidfun.recycler.viewholder.IconTitleViewHolder;
+import cn.mlynn.androidfun.recycler.viewholder.TitleChipViewHolder;
+import cn.mlynn.androidfun.utils.ActivityUtils;
 
 public class ExploreFragment extends RefreshRecyclerFragment<ExploreViewModel> {
 
@@ -36,19 +44,23 @@ public class ExploreFragment extends RefreshRecyclerFragment<ExploreViewModel> {
             Navigation.findNavController(view).navigate(R.id.action_explore_to_squareFragment);
         else if (data.getTitle() == R.string.wenda)
             Navigation.findNavController(view).navigate(R.id.action_explore_to_wendaFragment);
+        else if (data.getTitle() == R.string.wechat)
+            Navigation.findNavController(view).navigate(R.id.wxChapterFragment);
     };
 
+    private TitleChipViewHolder friendViewHolder;
+
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
+        initFriendViewHolder();
         initRecyclerView();
+    }
 
-//        getViewModel().getHotKeyLiveData().observe(getViewLifecycleOwner(), hotKeys -> viewHolder.bind(hotKeys));
-
-        getBinding().refresh.setOnRefreshListener(() -> getViewModel().queryHotKey(getLifecycle()));
-
-        if (!getViewModel().isFirstLoaded()) {
-            getViewModel().queryHotKey(getLifecycle());
-        }else getViewModel().setFirstLoaded(true);
+    private void initFriendViewHolder() {
+        friendViewHolder = new TitleChipViewHolder(cn.mlynn.androidfun.databinding.ItemTitleChipBinding
+                .inflate(LayoutInflater.from(getContext()), getBinding().getRoot(), false)
+                , R.string.common_websites);
+        friendViewHolder.itemView.setVisibility(View.GONE);
     }
 
 
@@ -93,29 +105,28 @@ public class ExploreFragment extends RefreshRecyclerFragment<ExploreViewModel> {
             @NonNull
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//                if (viewType == R.layout.item_title_chip)
-//                    return viewHolder;
-//                else
+                if (viewType == list.size())
+                    return friendViewHolder;
+                else
                     return new IconTitleViewHolder(ItemIconTitleBinding.inflate(LayoutInflater
-                        .from(parent.getContext()), parent, false), listener);
+                            .from(parent.getContext()), parent, false), listener);
             }
 
             @Override
             public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
                 if (position != list.size() && holder instanceof IconTitleViewHolder)
-                    ((IconTitleViewHolder)holder).bind(list.get(position));
+                    ((IconTitleViewHolder) holder).bind(list.get(position));
             }
 
             @Override
             public int getItemCount() {
-                return list.size();
+                return list.size() + 1;
             }
 
-//            @Override
-//            public int getItemViewType(int position) {
-//                if (position == list.size()) return R.layout.item_title_chip;
-//                else return super.getItemViewType(position);
-//            }
+            @Override
+            public int getItemViewType(int position) {
+                return position;
+            }
         });
     }
 
@@ -124,4 +135,28 @@ public class ExploreFragment extends RefreshRecyclerFragment<ExploreViewModel> {
         return new ViewModelProvider(requireActivity()).get(ExploreRootFragment.VIEW_MODEL_KEY, ExploreViewModel.class);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getViewModel().getFriendLiveData().observe(getViewLifecycleOwner(), friends -> {
+            if (friendViewHolder.itemView.getVisibility() != View.VISIBLE)
+                friendViewHolder.itemView.setVisibility(View.VISIBLE);
+            List<Chip> chips = new ArrayList<>();
+            for (Friend friend : friends) {
+                Chip chip = new Chip(requireContext());
+                chip.setText(friend.getName());
+                chip.setOnClickListener(view1 -> {
+                    ActivityUtils.startWebActivity(requireContext(), friend.getLink());
+                });
+                chips.add(chip);
+            }
+            friendViewHolder.bind(chips);
+        });
+        if (getViewModel().getFriendLiveData().getValue() == null)
+            getViewModel().queryFriend(getLifecycle());
+        getBinding().refresh.setOnRefreshListener(() -> {
+            getViewModel().queryHotKey(getLifecycle());
+            getViewModel().queryFriend(getLifecycle());
+        });
+    }
 }

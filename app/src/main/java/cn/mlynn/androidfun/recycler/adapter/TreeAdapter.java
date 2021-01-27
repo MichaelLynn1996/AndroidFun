@@ -23,21 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.mlynn.androidfun.databinding.ItemTitleChipBinding;
-import cn.mlynn.androidfun.model.wan.Children;
+import cn.mlynn.androidfun.model.wan.Chapter;
 import cn.mlynn.androidfun.recycler.viewholder.TitleChipViewHolder;
-import cn.mlynn.androidfun.utils.ActivityUtils;
 
-public class TreeAdapter extends ListAdapter<Children, TitleChipViewHolder> {
+public class TreeAdapter extends ListAdapter<Chapter, TitleChipViewHolder> {
     public TreeAdapter() {
-        super(new DiffUtil.ItemCallback<Children>() {
+        super(new DiffUtil.ItemCallback<Chapter>() {
             @Override
-            public boolean areItemsTheSame(@NonNull Children oldItem, @NonNull Children newItem) {
+            public boolean areItemsTheSame(@NonNull Chapter oldItem, @NonNull Chapter newItem) {
                 return oldItem.getId() == newItem.getId();
             }
 
             @SuppressLint("DiffUtilEquals")
             @Override
-            public boolean areContentsTheSame(@NonNull Children oldItem, @NonNull Children newItem) {
+            public boolean areContentsTheSame(@NonNull Chapter oldItem, @NonNull Chapter newItem) {
                 return oldItem.equals(newItem);
             }
         });
@@ -55,7 +54,7 @@ public class TreeAdapter extends ListAdapter<Children, TitleChipViewHolder> {
 //        Children children = (Children)data;
         List<Chip> chips = new ArrayList<>();
         if (getItem(position).getChildren() != null)
-            for (Children c : getItem(position).getChildren()) {
+            for (Chapter c : getItem(position).getChildren()) {
                 Chip chip = new Chip(holder.itemView.getContext());
                 chip.setText(c.getName());
 //                chip.setOnClickListener(l -> ActivityUtils.startWebActivity(holder.itemView.getContext(), c.getLink()));

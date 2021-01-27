@@ -1,6 +1,8 @@
 package cn.mlynn.androidfun.base;
 
+import androidx.hilt.Assisted;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
 import cn.mlynn.androidfun.net.RequestApi;
@@ -11,8 +13,11 @@ public abstract class BaseViewModel extends ViewModel implements IViewModelActio
 
     protected MutableLiveData<BaseEventAction> actionLiveData;
 
-    public BaseViewModel() {
+    private final SavedStateHandle savedStateHandle;
+
+    public BaseViewModel(@Assisted SavedStateHandle savedStateHandle) {
         actionLiveData = new MutableLiveData<>();
+        this.savedStateHandle = savedStateHandle;
     }
 
     @Override
@@ -65,5 +70,9 @@ public abstract class BaseViewModel extends ViewModel implements IViewModelActio
         public boolean isLoadSuccess(int errorCode) {
             return errorCode == RequestApi.SUCC;
         }
+    }
+
+    public SavedStateHandle getSavedStateHandle() {
+        return savedStateHandle;
     }
 }

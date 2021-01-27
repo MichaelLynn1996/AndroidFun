@@ -1,8 +1,5 @@
 package cn.mlynn.androidfun.model.wan;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
 /**
  * Created by SeaLynn0 on 2019/3/16 0:57
  * <p>

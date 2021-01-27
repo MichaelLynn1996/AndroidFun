@@ -9,7 +9,9 @@ import androidx.navigation.Navigation;
 import cn.mlynn.androidfun.R;
 import cn.mlynn.androidfun.base.ExBaseActivity;
 import cn.mlynn.androidfun.databinding.ActivitySignBinding;
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class SignActivity extends ExBaseActivity<ActivitySignBinding> {
 
     NavController navController;

@@ -1,151 +1,121 @@
-/**
- * @ProjectName: AndroidFun
- * @Package: cn.mlynn.androidfun.module.home2
- * @ClassName: HomeFragment
- * @Description: //TODO
- * @Author: Michael Lynn
- * @CreateDate: 2020/6/29 11:18
- */
 package cn.mlynn.androidfun.module.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
-import com.orhanobut.logger.Logger;
-import com.youth.banner.indicator.CircleIndicator;
+import androidx.paging.LoadState;
+import androidx.recyclerview.widget.ConcatAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.mlynn.androidfun.R;
-import cn.mlynn.androidfun.recycler.adapter.HomeBannerAdapter;
-import cn.mlynn.androidfun.base.BaseFragment;
-import cn.mlynn.androidfun.databinding.FragmentHomeBinding;
-import cn.mlynn.androidfun.listener.AppBarStateChangeListener;
+import cn.mlynn.androidfun.databinding.ItemBannerBinding;
 import cn.mlynn.androidfun.model.wan.Banner;
+import cn.mlynn.androidfun.module.RefreshRecyclerFragment;
+import cn.mlynn.androidfun.recycler.adapter.ArticleAdapter;
+import cn.mlynn.androidfun.recycler.adapter.ArticlePagingAdapter;
+import cn.mlynn.androidfun.recycler.viewholder.BannerViewHolder;
+import dagger.hilt.android.AndroidEntryPoint;
+import kotlin.Unit;
 
-public class HomeFragment extends BaseFragment<HomeViewModel, FragmentHomeBinding> {
+@AndroidEntryPoint
+public class HomeFragment extends RefreshRecyclerFragment<HomeViewModel> {
 
-    static final String VIEW_MODEL_KEY = HomeFragment.class.getSimpleName();
+    private ArticleAdapter adapterTop;
+    private ArticlePagingAdapter adapterList;
+    private RecyclerView.Adapter<BannerViewHolder> bannerViewHolderAdapter;
 
-    private com.youth.banner.Banner<Banner, HomeBannerAdapter> banner;
-
-    private HomeBannerAdapter bannerAdapter;
+    private ConcatAdapter mergeAdapter;
 
     private List<Banner> banners = new ArrayList<>();
 
     @Override
-    protected void init(Bundle savedInstanceState) {
-        initToolbar();
-        initBanner();
-        initTabsAndPager();
+    protected void initView(Bundle savedInstanceState) {
+        initRecyclerView();
     }
 
-    private void initToolbar() {
-        if (getActivity() != null && ((AppCompatActivity) getActivity()).getSupportActionBar() != null) {
-            ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-            if (actionBar != null){
-                actionBar.setTitle(R.string.home);
-                getBinding().appbarLayout.addOnOffsetChangedListener(new AppBarStateChangeListener() {
-                    @Override
-                    public void onStateChanged(AppBarLayout appBarLayout, State state) {
-                        if (state == State.EXPANDED) {
-                            actionBar.setDisplayShowTitleEnabled(false);
-                            //展开状态
-
-                        } else if (state == State.COLLAPSED) {
-                            actionBar.setDisplayShowTitleEnabled(true);
-                            //折叠状态
-
-                        } else {
-                            actionBar.setDisplayShowTitleEnabled(false);
-                            //中间状态
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    private void initBanner() {
-        banner = getBinding().getRoot().findViewById(R.id.banner);
-        bannerAdapter = new HomeBannerAdapter(banners);
-        banner.addBannerLifecycleObserver(HomeFragment.this)//添加生命周期观察者
-                .setAdapter(bannerAdapter)
-                .setIndicator(new CircleIndicator(getBinding().getRoot().getContext()))
-                .start();
-        getBinding().banner.getAdapter().notifyDataSetChanged();
-        //  对Banner数据的监听
-        getViewModel().getBanner().observe(getViewLifecycleOwner(), banners -> {
-//            homeBannerAdapter.setBannerData(banners);
-            Logger.d(banners);
-            this.banners.clear();
-            this.banners.addAll(banners);
-            if (bannerAdapter != null)
-                bannerAdapter.notifyDataSetChanged();
+    private void initRecyclerView() {
+        //  置顶文章的Adapter
+        adapterTop = new ArticleAdapter(true);
+        //  首页文章的Adapter
+        adapterList = new ArticlePagingAdapter();
+        adapterList.addLoadStateListener(loadStates -> {
+            if (loadStates.getRefresh() instanceof LoadState.Loading)
+                startLoading();
+            else if (loadStates.getRefresh() instanceof LoadState.NotLoading)
+                dismissLoading();
+            return Unit.INSTANCE;
         });
-    }
+        // ItemBanner的Adapter
+        bannerViewHolderAdapter = new RecyclerView.Adapter<BannerViewHolder>() {
 
-    private void initTabsAndPager() {
-        //  TabLayout联动ViewPager2
-        getBinding().pagers.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
-            public Fragment createFragment(int position) {
-                if (position == 0)
-                    return new TopFragment();
-                else return new LatestProjectFragment();
+            public BannerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+                return new BannerViewHolder(ItemBannerBinding
+                        .inflate(LayoutInflater.from(parent.getContext()), parent, false)
+                        , getViewLifecycleOwner());
+            }
+
+            @Override
+            public void onBindViewHolder(@NonNull BannerViewHolder holder, int position) {
+                holder.bind(banners);
             }
 
             @Override
             public int getItemCount() {
-                return 2;
+                return 1;
             }
-        });
-        //  Tabs的数据
-        String[] titles = {getString(R.string.latest_article),
-                getString(R.string.latest_project)};
-//        int[] icon = {R.drawable.ic_action_home, R.drawable.project, R.drawable.guangchang, R.drawable.wenda};
-        new TabLayoutMediator(getBinding().tabs,
-                getBinding().pagers,
-                (tab, position) -> tab.setText(titles[position])).attach();
-    }
-
-    @Override
-    protected FragmentHomeBinding initBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        return FragmentHomeBinding.inflate(inflater, container, false);
-    }
-
-    @Override
-    protected void dismissLoading() {
-
-    }
-
-    @Override
-    protected void startLoading() {
-
+        };
+        mergeAdapter = new ConcatAdapter(bannerViewHolderAdapter, adapterTop, adapterList);
+        getBinding().recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        getBinding().recyclerView.setAdapter(mergeAdapter);
     }
 
     @Override
     protected HomeViewModel initViewModel() {
-        return new ViewModelProvider(requireActivity()).get(VIEW_MODEL_KEY, HomeViewModel.class);
+        HomeViewModel viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
+        viewModel.initHomeLiveData(getLifecycle());
+        return viewModel;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        adapterTop.setStateRestorationPolicy(RecyclerView.Adapter
+                .StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        adapterList.setStateRestorationPolicy(RecyclerView.Adapter
+                .StateRestorationPolicy.PREVENT_WHEN_EMPTY);
+        getViewModel().getHomeLiveData().observe(getViewLifecycleOwner()
+                , articles -> adapterList.submitData(getLifecycle(), articles));
+        getViewModel().getTopLiveData().observe(getViewLifecycleOwner()
+                , homeArticles -> adapterTop.submitList(homeArticles)
+        );
+        getViewModel().getBanner().observe(getViewLifecycleOwner(), banners
+                -> {
+            this.banners.clear();
+            this.banners.addAll(banners);
+            bannerViewHolderAdapter.notifyItemChanged(0);
+        });
+        getBinding().refresh.setOnRefreshListener(() -> {
+            adapterList.refresh();
+            getViewModel().initialHomeLoad(getLifecycle());
+        });
+        if (getViewModel().getBanner().getValue() == null
+                || getViewModel().getTopLiveData().getValue() == null)
+            getViewModel().initialHomeLoad(getLifecycle());
     }
 
     @Override
     public void onDestroyView() {
-        banner = null;
-        bannerAdapter = null;
+        mergeAdapter = null;
         super.onDestroyView();
     }
 }

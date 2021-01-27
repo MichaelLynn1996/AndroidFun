@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke android:width="1dip" android:color="@color/colorAccent"/>
+    <corners android:radius="@dimen/dp_1"/>
+</shape>
+<!--    ————————————————-->
+<!--    版权声明：本文为CSDN博主「jwzhangjie」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。-->
+<!--    原文链接：https://blog.csdn.net/jwzhangjie/article/details/9404823-->

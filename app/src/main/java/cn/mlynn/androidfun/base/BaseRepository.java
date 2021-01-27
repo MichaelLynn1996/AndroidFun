@@ -13,8 +13,13 @@ import androidx.lifecycle.Lifecycle;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import javax.inject.Inject;
+
 import autodispose2.AutoDispose;
 import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider;
+import cn.mlynn.androidfun.APP;
+import cn.mlynn.androidfun.net.RequestApi;
+import cn.mlynn.androidfun.utils.ToastUtils;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observable;
@@ -25,6 +30,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class BaseRepository {
 
     private Executor executor = Executors.newSingleThreadExecutor();
+
+    private RequestApi requestApi;
+
+    public BaseRepository(RequestApi requestApi) {
+        this.requestApi = requestApi;
+    }
 
     /**
      * @param observable Retrofit返回的对象
@@ -67,5 +78,9 @@ public class BaseRepository {
         void onSuccess(T entity);
 
         void onFailure(@NonNull Throwable e);
+    }
+
+    public RequestApi getRequestApi() {
+        return requestApi;
     }
 }

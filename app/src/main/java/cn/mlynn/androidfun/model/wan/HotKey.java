@@ -8,11 +8,9 @@
  */
 package cn.mlynn.androidfun.model.wan;
 
-import androidx.room.Entity;
-
 import cn.mlynn.androidfun.model.BaseEntity;
 
-@Entity(primaryKeys = {"id", "key"})
+//@Entity(primaryKeys = {"id", "key"})
 public class HotKey extends BaseEntity {
 
     private int id;

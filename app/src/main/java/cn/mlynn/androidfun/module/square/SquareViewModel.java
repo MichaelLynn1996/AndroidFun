@@ -8,22 +8,27 @@
  */
 package cn.mlynn.androidfun.module.square;
 
+import androidx.hilt.Assisted;
+import androidx.hilt.lifecycle.ViewModelInject;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LiveData;
-import androidx.paging.Pager;
-import androidx.paging.PagingConfig;
+import androidx.lifecycle.SavedStateHandle;
 import androidx.paging.PagingData;
-import androidx.paging.PagingLiveData;
 
 import cn.mlynn.androidfun.base.BaseViewModel;
 import cn.mlynn.androidfun.model.wan.Article;
-import cn.mlynn.androidfun.pagingsource.SquarePagingSource;
 
 public class SquareViewModel extends BaseViewModel {
 
+    private SquareRepository repository;
+
     private LiveData<PagingData<Article>> squareLiveData;
 
-    private Pager<Integer, Article> pager = new Pager<>(new PagingConfig(20), SquarePagingSource::new);
+    @ViewModelInject
+    public SquareViewModel(SquareRepository repository, @Assisted SavedStateHandle savedStateHandle) {
+        super(savedStateHandle);
+        this.repository = repository;
+    }
 
     public LiveData<PagingData<Article>> getSquareLiveData() {
         if (squareLiveData == null){
@@ -33,7 +38,6 @@ public class SquareViewModel extends BaseViewModel {
     }
 
     public void initSquareLiveData(Lifecycle lifecycle) {
-        squareLiveData = PagingLiveData.cachedIn(PagingLiveData.getLiveData(pager)
-                , lifecycle);
+        squareLiveData = repository.initSquareLiveData(lifecycle);
     }
 }

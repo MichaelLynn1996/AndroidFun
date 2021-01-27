@@ -1,13 +1,8 @@
 package cn.mlynn.androidfun.model.wan;
 
-import androidx.annotation.Nullable;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-import androidx.room.TypeConverters;
-
 import java.util.List;
 
-import cn.mlynn.androidfun.typeconverter.TagsTypeConverter;
+import cn.mlynn.androidfun.model.BaseEntity;
 
 /**
  * @author Michael Lynn
@@ -16,9 +11,7 @@ import cn.mlynn.androidfun.typeconverter.TagsTypeConverter;
  * @description: TODO
  * @date 2019/4/120:30
  */
-
-@Entity
-public class Article {
+public class Article extends BaseEntity {
 
     /**
      * apkLink :
@@ -86,7 +79,7 @@ public class Article {
     private int userId;
     private int visible;
     private int zan;
-    private List<?> tags;
+    private List<Tag> tags;
 
     public String getApkLink() {
         return apkLink;
@@ -336,11 +329,11 @@ public class Article {
         this.zan = zan;
     }
 
-    public List<?> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<?> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

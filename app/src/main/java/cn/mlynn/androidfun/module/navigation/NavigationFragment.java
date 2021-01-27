@@ -10,24 +10,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import cn.mlynn.androidfun.module.RefreshRecyclerFragment;
 import cn.mlynn.androidfun.recycler.adapter.NavigationAdapter;
+import dagger.hilt.android.AndroidEntryPoint;
 
 /**
  * Created by SeaLynn0 on 2018/12/6 20:10
  * <p>
  * Email：sealynndev@gmail.com
  */
+@AndroidEntryPoint
 public class NavigationFragment extends RefreshRecyclerFragment<NavigationViewModel> {
 
     private NavigationAdapter adapter;
 
     @Override
-    protected void init(Bundle savedInstanceState) {
+    protected void initView(Bundle savedInstanceState) {
         initRecyclerView();
-        getViewModel().getNavigationLiveData().observe(this, navigationRoots -> adapter.submitList(navigationRoots));
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        getViewModel().getNavigationLiveData().observe(getViewLifecycleOwner(), navigationRoots -> adapter.submitList(navigationRoots));
         getBinding().refresh.setOnRefreshListener(() -> getViewModel().loadNavigation(getLifecycle()));
-        if (!getViewModel().isFirstLoaded()) {
+        if (getViewModel().getNavigationLiveData().getValue() == null) {
             getViewModel().loadNavigation(getLifecycle());
-            getViewModel().setFirstLoaded(false);
         }
     }
 

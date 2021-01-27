@@ -6,9 +6,17 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:maxLines="3"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
         android:gravity="center_vertical">
 
         <com.google.android.material.textview.MaterialTextView
@@ -52,30 +60,18 @@
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary" />
 
-        <!--            <androidx.appcompat.widget.AppCompatImageButton-->
-        <!--                android:layout_width="@dimen/dp_40"-->
-        <!--                android:layout_height="@dimen/dp_40" />-->
     </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        android:text="@string/title"
-        android:textAppearance="?attr/textAppearanceSubtitle1"
-        android:textStyle="bold" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
+        android:layout_marginTop="@dimen/dp_16"
         android:text="@string/description"
         android:textAppearance="?attr/textAppearanceBody2"
         android:textColor="?android:attr/textColorSecondary"
         android:visibility="gone"
-        android:maxLines="2"
+        android:maxLines="3"
         android:ellipsize="end"/>
 
     <LinearLayout
@@ -91,6 +87,45 @@
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
             android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/own_publish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/tag_border"
+            android:text="@string/own_publish"
+            android:layout_marginStart="@dimen/dp_8"
+            android:paddingStart="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_2"
+            android:visibility="gone" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/tag_border"
+            android:text="@string/wenda"
+            android:layout_marginStart="@dimen/dp_8"
+            android:paddingStart="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_2"
+            android:visibility="gone" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/wx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/tag_border"
+            android:text="@string/wechat"
+            android:layout_marginStart="@dimen/dp_8"
+            android:paddingStart="@dimen/dp_2"
+            android:paddingEnd="@dimen/dp_2"
+            android:visibility="gone" />
 
     </LinearLayout>
 
